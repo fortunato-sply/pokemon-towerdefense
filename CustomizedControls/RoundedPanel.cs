@@ -34,7 +34,7 @@ namespace pokemon_towerdefense.CustomizedControls
                 path.AddArc(rect.Width - (Radius * 2), rect.Y, Radius * 2, Radius * 2, 270, 90);
                 path.AddArc(rect.Width - (Radius * 2), rect.Height - (Radius * 2), Radius * 2, Radius * 2, 0, 90);
                 path.AddArc(rect.X, rect.Height - (Radius * 2), Radius * 2, Radius * 2, 90, 90);
-                path.CloseFigure();
+                path.CloseFigure();/**/
 
                 Region = new Region(path);
             }

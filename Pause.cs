@@ -41,11 +41,6 @@ namespace pokemon_towerdefense
             };
         }
 
-        private void playButton_Click(object sender, EventArgs e)
-        {
-            resumeGame();
-        }
-
         private void resumeGame()
         {
             this.timer.Start();

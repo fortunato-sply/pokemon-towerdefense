@@ -86,7 +86,6 @@
             this.playButton.TabIndex = 0;
             this.playButton.Text = "Voltar";
             this.playButton.UseVisualStyleBackColor = false;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // label1
             // 

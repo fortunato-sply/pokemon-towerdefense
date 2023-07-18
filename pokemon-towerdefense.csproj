@@ -64,6 +64,8 @@
     <Compile Include="Game.Designer.cs">
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Point.cs" />
+    <Compile Include="Models\Pokeball.cs" />
     <Compile Include="Pause.cs">
       <SubType>Form</SubType>
     </Compile>

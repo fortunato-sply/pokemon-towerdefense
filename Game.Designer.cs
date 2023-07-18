@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -43,7 +42,7 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
             this.panelContainer = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Pokeball = new System.Windows.Forms.PictureBox();
             this.inventoryPanel = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.speedPanel6 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
@@ -63,7 +62,7 @@
             this.roundedPanel2 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.roundedPanel1 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.panelContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pokeball)).BeginInit();
             this.inventoryPanel.SuspendLayout();
             this.speedPanel6.SuspendLayout();
             this.speedPanel4.SuspendLayout();
@@ -195,17 +194,15 @@
             this.panelContainer.Size = new System.Drawing.Size(1317, 285);
             this.panelContainer.TabIndex = 4;
             // 
-            // pictureBox1
+            // Pokeball
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::pokemon_towerdefense.Properties.Resources.closedPokeball;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(1524, 767);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(211, 185);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.Pokeball.BackColor = System.Drawing.Color.Transparent;
+            this.Pokeball.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Pokeball.Location = new System.Drawing.Point(0, 0);
+            this.Pokeball.Name = "Pokeball";
+            this.Pokeball.Size = new System.Drawing.Size(1928, 1083);
+            this.Pokeball.TabIndex = 6;
+            this.Pokeball.TabStop = false;
             // 
             // inventoryPanel
             // 
@@ -395,11 +392,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1904, 1061);
+            this.ClientSize = new System.Drawing.Size(1924, 1061);
             this.Controls.Add(this.inventoryPanel);
             this.Controls.Add(this.panelContainer);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.Pokeball);
             this.Controls.Add(this.panel13);
             this.Controls.Add(this.panel12);
             this.Controls.Add(this.panel11);
@@ -417,7 +413,7 @@
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.panelContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Pokeball)).EndInit();
             this.inventoryPanel.ResumeLayout(false);
             this.inventoryPanel.PerformLayout();
             this.speedPanel6.ResumeLayout(false);
@@ -466,8 +462,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private CustomizedControls.RoundedPanel inventoryPanel;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox Pokeball;
     }
 }
