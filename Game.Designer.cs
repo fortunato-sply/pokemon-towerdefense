@@ -43,9 +43,9 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.inventoryPanel = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.speedPanel6 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.speedPanel4 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
@@ -63,8 +63,8 @@
             this.roundedPanel2 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.roundedPanel1 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.panelContainer.SuspendLayout();
-            this.inventoryPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.inventoryPanel.SuspendLayout();
             this.speedPanel6.SuspendLayout();
             this.speedPanel4.SuspendLayout();
             this.speedPanel2.SuspendLayout();
@@ -179,8 +179,6 @@
             // panelContainer
             // 
             this.panelContainer.BackColor = System.Drawing.Color.Transparent;
-            this.panelContainer.Controls.Add(this.inventoryPanel);
-            this.panelContainer.Controls.Add(this.pictureBox1);
             this.panelContainer.Controls.Add(this.speedPanel6);
             this.panelContainer.Controls.Add(this.speedPanel4);
             this.panelContainer.Controls.Add(this.speedPanel2);
@@ -194,14 +192,26 @@
             this.panelContainer.Controls.Add(this.roundedPanel1);
             this.panelContainer.Location = new System.Drawing.Point(151, 764);
             this.panelContainer.Name = "panelContainer";
-            this.panelContainer.Size = new System.Drawing.Size(1596, 285);
+            this.panelContainer.Size = new System.Drawing.Size(1317, 285);
             this.panelContainer.TabIndex = 4;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::pokemon_towerdefense.Properties.Resources.closedPokeball;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(1524, 767);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(211, 185);
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // inventoryPanel
             // 
             this.inventoryPanel.BackColor = System.Drawing.Color.Red;
             this.inventoryPanel.Controls.Add(this.label6);
-            this.inventoryPanel.Location = new System.Drawing.Point(1360, 213);
+            this.inventoryPanel.Location = new System.Drawing.Point(1540, 977);
             this.inventoryPanel.Name = "inventoryPanel";
             this.inventoryPanel.Radius = 10;
             this.inventoryPanel.Size = new System.Drawing.Size(179, 60);
@@ -217,17 +227,6 @@
             this.label6.Size = new System.Drawing.Size(155, 37);
             this.label6.TabIndex = 1;
             this.label6.Text = "Inventory";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::pokemon_towerdefense.Properties.Resources.closedPokeball;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(1344, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(211, 185);
-            this.pictureBox1.TabIndex = 6;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // speedPanel6
             // 
@@ -392,13 +391,15 @@
             this.roundedPanel1.TabIndex = 1;
             this.roundedPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanel1_Paint);
             // 
-            // Form2
+            // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1904, 1061);
+            this.Controls.Add(this.inventoryPanel);
             this.Controls.Add(this.panelContainer);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel13);
             this.Controls.Add(this.panel12);
             this.Controls.Add(this.panel11);
@@ -412,13 +413,13 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
-            this.Name = "Form2";
+            this.Name = "Game";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.panelContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.inventoryPanel.ResumeLayout(false);
             this.inventoryPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.speedPanel6.ResumeLayout(false);
             this.speedPanel6.PerformLayout();
             this.speedPanel4.ResumeLayout(false);
