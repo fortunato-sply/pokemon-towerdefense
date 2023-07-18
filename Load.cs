@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace pokemon_towerdefense
 {
-    public partial class Form1 : Form
+    public partial class Load : Form
     {
-        public Form1()
+        public Load()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
@@ -34,7 +34,7 @@ namespace pokemon_towerdefense
         private void roundedButton1_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form2 form = new Form2();
+            Game form = new Game();
             form.Show();
         }
 

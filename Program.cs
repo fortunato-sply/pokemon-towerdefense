@@ -17,7 +17,7 @@ namespace pokemon_towerdefense
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Form form = new Form1();
+            Form form = new Load();
 
             form.KeyPreview = true;
             form.KeyDown += (o, e) =>

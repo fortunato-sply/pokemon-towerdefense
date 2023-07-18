@@ -1,6 +1,6 @@
 ﻿namespace pokemon_towerdefense
 {
-    partial class Form2
+    partial class Game
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -43,6 +43,8 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
             this.panelContainer = new System.Windows.Forms.Panel();
+            this.inventoryPanel = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
+            this.label6 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.speedPanel6 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,16 +62,14 @@
             this.roundedPanel3 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.roundedPanel2 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
             this.roundedPanel1 = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
-            this.inventoryPanel = new pokemon_towerdefense.CustomizedControls.RoundedPanel();
-            this.label6 = new System.Windows.Forms.Label();
             this.panelContainer.SuspendLayout();
+            this.inventoryPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.speedPanel6.SuspendLayout();
             this.speedPanel4.SuspendLayout();
             this.speedPanel2.SuspendLayout();
             this.speedPanel1.SuspendLayout();
             this.roundedPanel7.SuspendLayout();
-            this.inventoryPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -197,6 +197,27 @@
             this.panelContainer.Size = new System.Drawing.Size(1596, 285);
             this.panelContainer.TabIndex = 4;
             // 
+            // inventoryPanel
+            // 
+            this.inventoryPanel.BackColor = System.Drawing.Color.Red;
+            this.inventoryPanel.Controls.Add(this.label6);
+            this.inventoryPanel.Location = new System.Drawing.Point(1360, 213);
+            this.inventoryPanel.Name = "inventoryPanel";
+            this.inventoryPanel.Radius = 10;
+            this.inventoryPanel.Size = new System.Drawing.Size(179, 60);
+            this.inventoryPanel.TabIndex = 7;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(12, 10);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(155, 37);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Inventory";
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::pokemon_towerdefense.Properties.Resources.closedPokeball;
@@ -206,6 +227,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(211, 185);
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // speedPanel6
             // 
@@ -370,27 +392,6 @@
             this.roundedPanel1.TabIndex = 1;
             this.roundedPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.roundedPanel1_Paint);
             // 
-            // inventoryPanel
-            // 
-            this.inventoryPanel.BackColor = System.Drawing.Color.Red;
-            this.inventoryPanel.Controls.Add(this.label6);
-            this.inventoryPanel.Location = new System.Drawing.Point(1360, 213);
-            this.inventoryPanel.Name = "inventoryPanel";
-            this.inventoryPanel.Radius = 10;
-            this.inventoryPanel.Size = new System.Drawing.Size(179, 60);
-            this.inventoryPanel.TabIndex = 7;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(12, 10);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(155, 37);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Inventory";
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -415,6 +416,8 @@
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.panelContainer.ResumeLayout(false);
+            this.inventoryPanel.ResumeLayout(false);
+            this.inventoryPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.speedPanel6.ResumeLayout(false);
             this.speedPanel6.PerformLayout();
@@ -426,8 +429,6 @@
             this.speedPanel1.PerformLayout();
             this.roundedPanel7.ResumeLayout(false);
             this.roundedPanel7.PerformLayout();
-            this.inventoryPanel.ResumeLayout(false);
-            this.inventoryPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }

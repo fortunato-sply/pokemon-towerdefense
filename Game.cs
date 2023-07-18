@@ -11,9 +11,9 @@ using pokemon_towerdefense.CustomizedControls;
 
 namespace pokemon_towerdefense
 {
-    public partial class Form2 : Form
+    public partial class Game : Form
     {
-        public Form2()
+        public Game()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
@@ -32,7 +32,32 @@ namespace pokemon_towerdefense
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            Timer timer = new Timer();
+            timer.Interval = 19;
+            timer.Tick += (s, ev) =>
+            {
+                
+            };
 
+            timer.Enabled= true;
+
+            this.KeyPreview = true;
+            this.KeyDown += (o, ev) =>
+            {
+                if (ev.KeyCode == Keys.Escape)
+                {
+                    Form pauseForm = new Pause(timer, this);
+                    this.Hide();
+                    timer.Stop();
+                    pauseForm.Show();
+                }
+            };
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -63,6 +88,11 @@ namespace pokemon_towerdefense
         private void roundedPanel8_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("oi");
         }
     }
 }

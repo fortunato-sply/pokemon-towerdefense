@@ -1,6 +1,6 @@
 ﻿namespace pokemon_towerdefense
 {
-    partial class Form1
+    partial class Load
     {
         /// <summary>
         /// Variável de designer necessária.
