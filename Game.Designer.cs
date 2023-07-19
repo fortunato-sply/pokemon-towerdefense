@@ -87,10 +87,10 @@
             // 
             this.roundedPanel7.BackColor = System.Drawing.Color.Black;
             this.roundedPanel7.Controls.Add(this.label1);
-            this.roundedPanel7.Location = new System.Drawing.Point(12, 989);
+            this.roundedPanel7.Location = new System.Drawing.Point(12, 986);
             this.roundedPanel7.Name = "roundedPanel7";
             this.roundedPanel7.Radius = 10;
-            this.roundedPanel7.Size = new System.Drawing.Size(524, 60);
+            this.roundedPanel7.Size = new System.Drawing.Size(527, 63);
             this.roundedPanel7.TabIndex = 3;
             // 
             // label1

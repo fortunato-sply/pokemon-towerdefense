@@ -87,7 +87,7 @@ namespace pokemon_towerdefense
                 {
                     RoundedRect rect = new RoundedRect();
                     var path = rect.setRect(100 + (i * 215), 750);
-                    g.FillPath(Brushes.Black, path);
+                    
 
                     if(this.selfPokemons.Count > i)
                     {
@@ -96,6 +96,11 @@ namespace pokemon_towerdefense
                         var level = pokemon.Level;
                         var sprite = pokemon.Sprite;
                         var xp = pokemon.Xp;
+
+                        if(pokemon.IsPlaced)
+                            g.FillPath(Brushes.Blue, path);
+                        else
+                            g.FillPath(Brushes.Black, path);
 
                         g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 760));
                         g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
@@ -109,14 +114,7 @@ namespace pokemon_towerdefense
                         else
                         {
                             Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
-                            if(!pokemon.IsPlaced)
-                            {
-                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
-                            }
-                            else
-                            {
-                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel, GetGrayImage());
-                            }
+                            g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
                         }
                     }
 
