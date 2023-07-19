@@ -7,7 +7,7 @@ namespace pokemon_towerdefense.Models
         public Point Location { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public Bitmap bmp = new Bitmap(Image.FromFile(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\closedPokeball.png"), 200, 200);
+        public Bitmap bmp = new Bitmap(Image.FromFile(@"..\..\assets\closedPokeball.png"), 200, 200);
         public bool isDragging { get; set; } = false;
 
         public Pokeball() {
