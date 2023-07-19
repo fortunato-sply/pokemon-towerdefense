@@ -12,6 +12,7 @@ namespace pokemon_towerdefense.Models
         private static List<Pokemon> allPokemons = new List<Pokemon>() 
         {
             new Charizard(),
+            new Gyarados()
         };
 
         private static List<Pokemon> pokemonsTier1 = allPokemons.Where(p => p.Tier == 1).ToList();

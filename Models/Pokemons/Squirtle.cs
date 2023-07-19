@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Charizard : Pokemon
+    public class Squirtle : Pokemon
     {
-        public Charizard(int level = 18)
+        public Squirtle(int level = 1)
         {
-            this.Name = "Charizard";
-            this.Sprite = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\pokemons\charizard.png");
+            this.Name = "Squirtle";
+            this.Sprite = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\pokemons\squirtle.png");
 
             this.Level = level;
 
-            this.minLevel = 18;
+            this.minLevel = 1;
             this.SelectedAttack = new Attack();
             this.Attacks = new List<Attack>();
         }

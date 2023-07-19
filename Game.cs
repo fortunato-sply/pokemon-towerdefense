@@ -55,8 +55,11 @@ namespace pokemon_towerdefense
             this.placements.Add(new Placement(new Rectangle(1414, 773, placementWidth, placementHeight)));
             this.placements.Add(new Placement(new Rectangle(1414, 925, placementWidth, placementHeight)));
 
-            this.selfPokemons.Add(new Charizard(18));
-            this.selfPokemons.Add(new Charizard(18));
+            // TESTE ADICIONANDO POKEMONS
+            this.selfPokemons.Add(new Charizard());
+            this.selfPokemons.Add(new Gyarados());
+            this.selfPokemons.Add(new Gengar());
+            this.selfPokemons.Add(new Squirtle());
 
             timer.Tick += delegate
             {
@@ -105,14 +108,14 @@ namespace pokemon_towerdefense
                         }
                         else
                         {
-                            Rectangle destRect = new Rectangle(125 + (i * 215), 780, 150, 150);
+                            Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
                             if(!pokemon.IsPlaced)
                             {
-                                g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
                             }
                             else
                             {
-                                g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel, GetGrayImage());
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel, GetGrayImage());
                             }
                         }
                     }

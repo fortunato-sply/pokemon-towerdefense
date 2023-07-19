@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Charizard : Pokemon
+    public class Gengar : Pokemon
     {
-        public Charizard(int level = 18)
+        public Gengar(int level = 18)
         {
-            this.Name = "Charizard";
-            this.Sprite = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\pokemons\charizard.png");
+            this.Name = "Gengar";
+            this.Sprite = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\pokemons\gengar.png");
 
             this.Level = level;
 
