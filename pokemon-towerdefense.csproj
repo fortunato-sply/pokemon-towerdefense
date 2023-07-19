@@ -64,8 +64,13 @@
     <Compile Include="Game.Designer.cs">
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Point.cs" />
+    <Compile Include="Models\Attack.cs" />
+    <Compile Include="Models\Charizard.cs" />
+    <Compile Include="Models\LifeBar.cs" />
+    <Compile Include="Models\Placement.cs" />
     <Compile Include="Models\Pokeball.cs" />
+    <Compile Include="Models\Pokemon.cs" />
+    <Compile Include="Models\RoundedRect.cs" />
     <Compile Include="Pause.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\closedPokeball.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\charizard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

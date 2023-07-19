@@ -57,5 +57,10 @@ namespace pokemon_towerdefense
         {
 
         }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            resumeGame();
+        }
     }
 }

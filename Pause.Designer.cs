@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.container = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.options = new System.Windows.Forms.Panel();
             this.exitButton = new pokemon_towerdefense.CustomizedControls.RoundedButton();
             this.playButton = new pokemon_towerdefense.CustomizedControls.RoundedButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.container.SuspendLayout();
             this.options.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +46,19 @@
             this.container.Name = "container";
             this.container.Size = new System.Drawing.Size(787, 405);
             this.container.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(328, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 55);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Pause";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // options
             // 
@@ -86,19 +99,7 @@
             this.playButton.TabIndex = 0;
             this.playButton.Text = "Voltar";
             this.playButton.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(328, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 55);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Pause";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // Pause
             // 
