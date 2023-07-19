@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using pokemon_towerdefense.Models;
 
 namespace pokemon_towerdefense
 {

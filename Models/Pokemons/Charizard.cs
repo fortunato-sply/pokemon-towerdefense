@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
 {
     public class Charizard : Pokemon
     {
-        public Charizard(int level)
+        public Charizard(int level = 18)
         {
             this.Name = "Charizard";
             this.Sprite = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\charizard.png");
