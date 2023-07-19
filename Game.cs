@@ -38,7 +38,7 @@ namespace pokemon_towerdefense
             PbScreen.Image = newBmp;
 
             Pen pen = new Pen(Color.Black);
-            var photo = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\cenario.jpg");
+            var photo = new Bitmap(@"..\..\assets\cenario.jpg");
 
             int placementWidth = 50, placementHeight = 55;
             this.placements.Add(new Placement(new Rectangle(724, 455, placementWidth, placementHeight)));
