@@ -65,6 +65,7 @@
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Attack.cs" />
+    <Compile Include="Models\Pokemons\ShinyCharizard.cs" />
     <Compile Include="Models\Pokemons\Squirtle.cs" />
     <Compile Include="Models\Pokemons\Gengar.cs" />
     <Compile Include="Models\Pokemons\Charizard.cs" />
@@ -130,6 +131,7 @@
     <None Include="assets\closedPokeball.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\pokemons\scharizard.png" />
     <Content Include="assets\pokemons\squirtle.png" />
     <Content Include="assets\pokemons\gengar.png" />
     <Content Include="assets\pokemons\gyarados.png" />

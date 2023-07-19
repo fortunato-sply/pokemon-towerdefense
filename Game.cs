@@ -60,6 +60,7 @@ namespace pokemon_towerdefense
             this.selfPokemons.Add(new Gyarados());
             this.selfPokemons.Add(new Gengar());
             this.selfPokemons.Add(new Squirtle());
+            this.selfPokemons.Add(new ShinyCharizard());
 
             timer.Tick += delegate
             {
@@ -86,7 +87,7 @@ namespace pokemon_towerdefense
                 for (int i = 0; i < 6; i++)
                 {
                     RoundedRect rect = new RoundedRect();
-                    var path = rect.setRect(100 + (i * 215), 750);
+                    var path = rect.setRect(100 + (i * 215), 730);
                     
 
                     if(this.selfPokemons.Count > i)
@@ -102,7 +103,7 @@ namespace pokemon_towerdefense
                         else
                             g.FillPath(Brushes.Black, path);
 
-                        g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 760));
+                        g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
                         g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
                         DrawXpBar(xp, 110 + (i * 215), 920);
 
@@ -116,6 +117,10 @@ namespace pokemon_towerdefense
                             Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
                             g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
                         }
+                    }
+                    else
+                    {
+                        g.FillPath(Brushes.Black, path);
                     }
 
 
@@ -173,9 +178,9 @@ namespace pokemon_towerdefense
                 if (ev.KeyCode == Keys.Escape)
                 {
                     Form pauseForm = new Pause(timer, this);
+                    pauseForm.Show();
                     this.Hide();
                     timer.Stop();
-                    pauseForm.Show();
                 }
             };
 

@@ -21,7 +21,7 @@ namespace pokemon_towerdefense.Models
 
         }
 
-        public GraphicsPath setRect(int x, int y, int width = 200, int height = 200)
+        public GraphicsPath setRect(int x, int y, int width = 200, int height = 220)
         {
             this.rectangle = new Rectangle(x, y, width, height);
 

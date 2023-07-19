@@ -43,9 +43,8 @@ namespace pokemon_towerdefense
 
         private void resumeGame()
         {
-            this.timer.Start();
-            this.Hide();
             game.Show();
+            this.Hide();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
