@@ -5,15 +5,16 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
-    public class RoundedRect
+    public class RoundedRect : PictureBox
     {
         public GraphicsPath path { get; set; } = new GraphicsPath();
 
         Rectangle rectangle;
-
+         
         int cornerRadius = 20;
 
         public RoundedRect()
@@ -30,10 +31,22 @@ namespace pokemon_towerdefense.Models
             path.AddArc(rectangle.Right - cornerRadius, rectangle.Bottom - cornerRadius, cornerRadius, cornerRadius, 0, 90); // Canto inferior direito
             path.AddArc(rectangle.X, rectangle.Bottom - cornerRadius, cornerRadius, cornerRadius, 90, 90); // Canto inferior esquerdo
             path.CloseFigure(); // Fecha o caminho
-
+            
             return path;
         }
 
-        
+        public bool isHandOn()
+        {
+            if (
+                Cursor.Position.X >= this.rectangle.X && 
+                Cursor.Position.X < this.rectangle.X + this.rectangle.Width &&
+                Cursor.Position.Y >= this.rectangle.Y &&
+                Cursor.Position.Y < this.rectangle.Y + this.rectangle.Height
+             )
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

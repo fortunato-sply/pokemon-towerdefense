@@ -6,6 +6,7 @@ using pokemon_towerdefense.CustomizedControls;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.Reflection.Emit;
 
 namespace pokemon_towerdefense
 {
@@ -17,6 +18,8 @@ namespace pokemon_towerdefense
         int grabbed = -1;
 
         Graphics g = null;
+
+        bool isPaused = false;
 
         List<Placement> placements = new List<Placement>();
 
@@ -31,8 +34,9 @@ namespace pokemon_towerdefense
             PbScreen.MouseUp += Form1_MouseUp;
 
             PbScreen.MouseClick += Placement_MouseClick;
+            PbScreen.MouseClick += BackButtonClick;
 
-            var newBmp = new Bitmap(1920, 1080);
+            var newBmp = new Bitmap(PbScreen.Width, PbScreen.Height);
 
             g = Graphics.FromImage(newBmp);
             PbScreen.Image = newBmp;
@@ -65,67 +69,86 @@ namespace pokemon_towerdefense
 
             timer.Tick += delegate
             {
-                // BACKGROUND
-                g.Clear(Color.Transparent);
-
-                g.DrawImage(
-                    photo,
-                    0,
-                    0
-                );
-
-                this.placements.ForEach(p => {
-                    g.DrawRectangle(Pens.Black, p.rect);
-
-                    if(p.hasPokemon)
-                    {
-                        var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
-                        g.DrawImage(p.Pokemon.Sprite, imgRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
-                    }
-                });
-
-
-                for (int i = 0; i < 6; i++)
+                if(isPaused)
                 {
-                    RoundedRect rect = new RoundedRect();
-                    var path = rect.setRect(100 + (i * 215), 730);
+                    g.Clear(Color.Black);
+                    g.DrawString("GAME PAUSED", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width/2 - 120, PbScreen.Height / 3 - 100));
+
+                    RoundedRect roundedRect = new RoundedRect();
+                    var backBtn = roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 150, 280, 80);
+                    g.FillPath(Brushes.Red, backBtn);
+
+                    g.DrawString("Voltar", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
                     
-
-                    if(this.selfPokemons.Count > i)
-                    {
-                        var pokemon = this.selfPokemons[i];
-                        var name = pokemon.Name;
-                        var level = pokemon.Level;
-                        var sprite = pokemon.Sprite;
-                        var xp = pokemon.Xp;
-
-                        if(pokemon.IsPlaced)
-                            g.FillPath(Brushes.Blue, path);
-                        else
-                            g.FillPath(Brushes.Black, path);
-
-                        g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
-                        g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
-                        DrawXpBar(xp, 110 + (i * 215), 920);
-
-                        if (i == grabbed)
-                        {
-                            Rectangle destRect = new Rectangle(Cursor.Position.X - 50, Cursor.Position.Y - 50, 100, 100);
-                            g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
-                        }
-                        else
-                        {
-                            Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
-                            g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
-                        }
-                    }
-                    else
-                    {
-                        g.FillPath(Brushes.Black, path);
-                    }
-
-
+                    roundedRect = new RoundedRect();
+                    var exitBtn = roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 50, 280, 80);
+                    g.FillPath(Brushes.Red, exitBtn);
+                    g.DrawString("Sair", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 50, PbScreen.Height / 2 - 20));
                 }
+                else
+                {
+                    // BACKGROUND
+                    g.Clear(Color.Transparent);
+
+                    g.DrawImage(
+                        photo,
+                        0,
+                        0
+                    );
+
+                    // PLACEMENTS
+                    this.placements.ForEach(p => {
+                        g.DrawRectangle(Pens.Black, p.rect);
+
+                        if (p.hasPokemon)
+                        {
+                            var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
+                            g.DrawImage(p.Pokemon.Sprite, imgRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
+                        }
+                    });
+
+                    // POKE CONTAINERS
+                    for (int i = 0; i < 6; i++)
+                    {
+                        RoundedRect rect = new RoundedRect();
+                        var path = rect.setRect(100 + (i * 215), 730);
+
+
+                        if (this.selfPokemons.Count > i)
+                        {
+                            var pokemon = this.selfPokemons[i];
+                            var name = pokemon.Name;
+                            var level = pokemon.Level;
+                            var sprite = pokemon.Sprite;
+                            var xp = pokemon.Xp;
+
+                            if (pokemon.IsPlaced)
+                                g.FillPath(Brushes.Blue, path);
+                            else
+                                g.FillPath(Brushes.Black, path);
+
+                            g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
+                            g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
+                            DrawXpBar(xp, 110 + (i * 215), 920);
+
+                            if (i == grabbed)
+                            {
+                                Rectangle destRect = new Rectangle(Cursor.Position.X - 50, Cursor.Position.Y - 50, 100, 100);
+                                g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
+                            }
+                            else
+                            {
+                                Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
+                            }
+                        }
+                        else
+                        {
+                            g.FillPath(Brushes.Black, path);
+                        }
+
+
+                    }
 
                 //WILD POKEMONS
                 phase.RunPhase(g);
@@ -148,6 +171,36 @@ namespace pokemon_towerdefense
                     );
                 }
 
+                    // INVENTORY BUTTON
+                    RoundedRect roundedRect = new RoundedRect();
+                    GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
+                    g.FillPath(Brushes.Red, invRect);
+                    g.DrawString("Inventário", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1548, 998));
+
+                    // SPEED CONTROL
+                    roundedRect = new RoundedRect();
+                    var background = roundedRect.setRect(12, 986, 526, 63);
+                    g.FillPath(Brushes.Black, background);
+                    g.DrawString("Speed", new Font("Press Start 2P", 24F, FontStyle.Regular), Brushes.White, new PointF(17, 1000));
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        roundedRect = new RoundedRect();
+                        var rect = roundedRect.setRect(208 + (88 * i), 987, 65, 60);
+                        g.FillPath(Brushes.Red, rect);
+                    }
+
+                    for (int i = 0, n = 0; i < 4; i++, n+= 2)
+                    {
+                        var text = "";
+                        if (n == 0)
+                            text = "1X";
+                        else
+                            text = $"{n}X";
+
+                        g.DrawString(text, new Font("Press Start 2P", 14F, FontStyle.Regular), Brushes.White, new PointF(215 + (90 * i), 1008));
+                    }
+                }
 
                 PbScreen.Refresh();
             };
@@ -181,10 +234,7 @@ namespace pokemon_towerdefense
             {
                 if (ev.KeyCode == Keys.Escape)
                 {
-                    Form pauseForm = new Pause(timer, this);
-                    pauseForm.Show();
-                    this.Hide();
-                    timer.Stop();
+                    this.isPaused = !this.isPaused;
                 }
             };
 
@@ -210,6 +260,28 @@ namespace pokemon_towerdefense
                             grabbed = i;
                         }
                     }
+                }
+            }
+        }
+
+        private void BackButtonClick(object sender, MouseEventArgs e)
+        {
+            if(isPaused)
+            {
+                RoundedRect roundedRect = new RoundedRect();
+                roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 150, 280, 80);
+
+                if (roundedRect.isHandOn())
+                {
+                    isPaused = false;
+                };
+
+                roundedRect = new RoundedRect();
+                roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 50, 280, 80);
+
+                if(roundedRect.isHandOn())
+                {
+                    Application.Exit();
                 }
             }
         }

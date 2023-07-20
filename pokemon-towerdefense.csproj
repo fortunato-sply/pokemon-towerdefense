@@ -76,7 +76,9 @@
     <Compile Include="Models\Pokemon.cs" />
     <Compile Include="Models\PokemonFactory.cs" />
     <Compile Include="Models\Pokemons\Gyarados.cs" />
-    <Compile Include="Models\RoundedRect.cs" />
+    <Compile Include="Models\RoundedRect.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Models\Wave.cs" />
     <Compile Include="Pause.cs">
       <SubType>Form</SubType>
