@@ -22,7 +22,9 @@ namespace pokemon_towerdefense.Models
         public Attack SelectedAttack {  get; protected set; }
         public List<Attack> Attacks { get; protected set; } = new List<Attack>();
         public List<Pokemon> Evolutions = null;
+
         public Bitmap Sprite = null;
+
         public bool IsPlaced = false;
         public int Life = 100;
         public int Speed = 0;
@@ -73,6 +75,34 @@ namespace pokemon_towerdefense.Models
         public void TakeDamage(int damage)
         {
             Life -= damage;
+        }
+
+        public Bitmap Animate()
+        {
+            int line = 0;
+
+            if(this.SpeedX != 0)
+            {
+                if (this.SpeedX > 0)
+                    line = 2;
+                else
+                    line = 1;
+            }
+            else if(this.SpeedY != 0)
+            {
+                if (this.SpeedY > 0)
+                    line = 0;
+                else
+                    line = 3;
+            }
+
+            int spriteWidth = 59;
+            int spriteHeight = 66;
+
+            var imgRect = new Rectangle(0, line * spriteHeight, this.Sprite.Width, spriteHeight);
+            Bitmap croppedSprite = this.Sprite.Clone(imgRect, this.Sprite.PixelFormat);
+
+            return croppedSprite;
         }
     }
 }

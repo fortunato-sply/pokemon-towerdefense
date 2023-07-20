@@ -41,6 +41,9 @@ namespace pokemon_towerdefense
             g = Graphics.FromImage(newBmp);
             PbScreen.Image = newBmp;
 
+            int speedImage = 0;
+            int actualImage = 0;
+
             Phase phase = new Phase();
             Pen pen = new Pen(Color.Black);
             var photo = new Bitmap(@"..\..\assets\cenario.jpg");
@@ -103,7 +106,16 @@ namespace pokemon_towerdefense
                         if (p.hasPokemon)
                         {
                             var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
-                            g.DrawImage(p.Pokemon.Sprite, imgRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
+                            var sprites = p.Pokemon.Animate();
+
+                            g.DrawImage(sprites, imgRect, 3 + ((actualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
+
+                            speedImage++;
+                            if (speedImage >= 10)
+                            {
+                                actualImage += 1;
+                                speedImage = 0;
+                            }
                         }
                     });
 
