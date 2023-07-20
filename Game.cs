@@ -37,6 +37,7 @@ namespace pokemon_towerdefense
             g = Graphics.FromImage(newBmp);
             PbScreen.Image = newBmp;
 
+            Phase phase = new Phase();
             Pen pen = new Pen(Color.Black);
             var photo = new Bitmap(@"..\..\assets\cenario.jpg");
 
@@ -125,6 +126,9 @@ namespace pokemon_towerdefense
 
 
                 }
+
+                //WILD POKEMONS
+                phase.RunPhase(g);
 
                 // POKEBALL
                 if (pokeball.isDragging)
@@ -244,7 +248,7 @@ namespace pokemon_towerdefense
             }
         }
 
-        private ImageAttributes GetGrayImage()
+        private ImageAttributes GrayImage()
         {
             ImageAttributes imageAttr = new ImageAttributes();
             ColorMatrix colorMatrix = new ColorMatrix(

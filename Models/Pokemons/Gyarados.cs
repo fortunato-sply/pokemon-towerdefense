@@ -11,13 +11,14 @@ namespace pokemon_towerdefense.Models
         public Gyarados(int level = 15)
         {
             this.Name = "Gyarados";
-            this.Sprite = new Bitmap(@"C:\Users\disrct\Desktop\pokemon-towerdefense\pokemon-towerdefense\assets\pokemons\gyarados.png");
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\gyarados.png");
 
             this.Level = level;
 
             this.minLevel = 15;
             this.SelectedAttack = new Attack();
             this.Attacks = new List<Attack>();
+            this.Speed = 10;
         }
     }
 }
