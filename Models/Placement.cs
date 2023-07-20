@@ -20,9 +20,13 @@ namespace pokemon_towerdefense.Models
 
         public void AddPokemon(Pokemon pokemon)
         {
-            pokemon.IsPlaced = true;
-            this.Pokemon = pokemon;
-            this.hasPokemon = true;
+            if(this.Pokemon == null)
+            {
+                pokemon.IsPlaced = true;
+                pokemon.Location = this.rect.Location;
+                this.Pokemon = pokemon;
+                this.hasPokemon = true;
+            }
         }
 
         public void RemovePokemon()
@@ -30,6 +34,7 @@ namespace pokemon_towerdefense.Models
             if (this.Pokemon != null)
             {
                 this.Pokemon.IsPlaced = false;
+                this.Pokemon.Location = new Point();
                 this.Pokemon = null;
                 this.hasPokemon = false;
             }

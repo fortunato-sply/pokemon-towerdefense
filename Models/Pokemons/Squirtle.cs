@@ -17,7 +17,7 @@ namespace pokemon_towerdefense.Models
             this.Level = level;
 
             this.minLevel = 1;
-            this.SelectedAttack = new Attack();
+            this.SelectedAttack = new Flamethrower();
             this.Attacks = new List<Attack>();
             this.Speed = 3;
         }

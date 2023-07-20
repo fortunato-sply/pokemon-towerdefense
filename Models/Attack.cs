@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Attack
+    public abstract class Attack
     {
         public int Damage { get; set; }
         public Bitmap[] Sprites { get; set; }
         public float Cooldown { get; set; }
         public Pokemon Target { get; set; }
+    }
+
+    public class Flamethrower : Attack
+    {
+        public Flamethrower() 
+        {
+            this.Damage = 20;
+        }
     }
 }

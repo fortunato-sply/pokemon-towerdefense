@@ -34,7 +34,17 @@ namespace pokemon_towerdefense.Models
 
             foreach (var pokemon in Waves[0].Pokemons)
             {
-                graphics.DrawImage(pokemon.Sprite, pokemon.Location.Value.X, pokemon.Location.Value.Y);
+                var imgRect = new Rectangle(pokemon.Location.Value.X, pokemon.Location.Value.Y, 70, 77);
+                var sprites = pokemon.Animate();
+
+                graphics.DrawImage(sprites, imgRect, 3 + ((pokemon.ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
+
+                pokemon.SpeedImage++;
+                if (pokemon.SpeedImage >= 6)
+                {
+                    pokemon.ActualImage += 1;
+                    pokemon.SpeedImage = 0;
+                }
             }
         }
         public void GenerateWaves(int quantity)
@@ -84,6 +94,15 @@ namespace pokemon_towerdefense.Models
                     }
                 }
             }
+        }
+
+        public void runTurrets(List<Pokemon> pokemons)
+        {
+            pokemons.ForEach(p =>
+            {
+                 p.selectTarget(Waves[0].Pokemons);
+                 p.GiveDamage();
+            });
         }
     }
 }

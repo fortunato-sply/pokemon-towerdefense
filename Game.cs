@@ -41,9 +41,6 @@ namespace pokemon_towerdefense
             g = Graphics.FromImage(newBmp);
             PbScreen.Image = newBmp;
 
-            int speedImage = 0;
-            int actualImage = 0;
-
             Phase phase = new Phase();
             Pen pen = new Pen(Color.Black);
             var photo = new Bitmap(@"..\..\assets\cenario.jpg");
@@ -69,6 +66,12 @@ namespace pokemon_towerdefense
             this.selfPokemons.Add(new Gengar());
             this.selfPokemons.Add(new Squirtle());
             this.selfPokemons.Add(new ShinyCharizard());
+
+            Color blueOpacity = Color.FromArgb(150, Color.Blue);
+            Brush brushBlueOpacity = new SolidBrush(blueOpacity);
+
+            Color blackOpacity = Color.FromArgb(150, Color.Black);
+            Brush brushBlackOpacity = new SolidBrush(blackOpacity);
 
             timer.Tick += delegate
             {
@@ -108,16 +111,38 @@ namespace pokemon_towerdefense
                             var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
                             var sprites = p.Pokemon.Animate();
 
-                            g.DrawImage(sprites, imgRect, 3 + ((actualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
+                            g.DrawImage(sprites, imgRect, 3 + ((p.Pokemon.ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
 
-                            speedImage++;
-                            if (speedImage >= 10)
+                            p.Pokemon.SpeedImage++;
+                            if (p.Pokemon.SpeedImage >= 10)
                             {
-                                actualImage += 1;
-                                speedImage = 0;
+                                p.Pokemon.ActualImage += 1;
+                                p.Pokemon.SpeedImage = 0;
                             }
                         }
                     });
+
+                    //WILD POKEMONS
+                    phase.RunPhase(g);
+                    phase.runTurrets(this.selfPokemons);
+
+                    // POKEBALL
+                    if (pokeball.isDragging)
+                    {
+                        g.DrawImage(
+                            pokeball.bmp,
+                            Cursor.Position.X - (pokeball.Width / 2),
+                            Cursor.Position.Y - (pokeball.Height / 2)
+                        );
+                    }
+                    else
+                    {
+                        g.DrawImage(
+                            pokeball.bmp,
+                            1524,
+                            767
+                        );
+                    }
 
                     // POKE CONTAINERS
                     for (int i = 0; i < 6; i++)
@@ -135,9 +160,9 @@ namespace pokemon_towerdefense
                             var xp = pokemon.Xp;
 
                             if (pokemon.IsPlaced)
-                                g.FillPath(Brushes.Blue, path);
+                                g.FillPath(brushBlueOpacity, path);
                             else
-                                g.FillPath(Brushes.Black, path);
+                                g.FillPath(brushBlackOpacity, path);
 
                             g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
                             g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
@@ -156,32 +181,9 @@ namespace pokemon_towerdefense
                         }
                         else
                         {
-                            g.FillPath(Brushes.Black, path);
+                            g.FillPath(brushBlackOpacity, path);
                         }
-
-
                     }
-
-                //WILD POKEMONS
-                phase.RunPhase(g);
-
-                // POKEBALL
-                if (pokeball.isDragging)
-                {
-                    g.DrawImage(
-                        pokeball.bmp,
-                        Cursor.Position.X - (pokeball.Width / 2),
-                        Cursor.Position.Y - (pokeball.Height / 2)
-                    );
-                }
-                else
-                {
-                    g.DrawImage(
-                        pokeball.bmp,
-                        1524,
-                        767
-                    );
-                }
 
                     // INVENTORY BUTTON
                     RoundedRect roundedRect = new RoundedRect();

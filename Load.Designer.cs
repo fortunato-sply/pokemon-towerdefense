@@ -54,13 +54,14 @@
             this.exitButton.BackColor = System.Drawing.Color.Red;
             this.exitButton.FlatAppearance.BorderSize = 0;
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.exitButton.Font = new System.Drawing.Font("Press Start 2P", 16F);
             this.exitButton.ForeColor = System.Drawing.Color.White;
             this.exitButton.Location = new System.Drawing.Point(84, 94);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(205, 64);
             this.exitButton.TabIndex = 1;
             this.exitButton.Text = "Sair";
+            this.exitButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.exitButton.UseVisualStyleBackColor = false;
             this.exitButton.Click += new System.EventHandler(this.roundedButton2_Click);
             // 
@@ -69,13 +70,14 @@
             this.playButton.BackColor = System.Drawing.Color.Red;
             this.playButton.FlatAppearance.BorderSize = 0;
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.playButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.playButton.Font = new System.Drawing.Font("Press Start 2P", 16F);
             this.playButton.ForeColor = System.Drawing.Color.White;
             this.playButton.Location = new System.Drawing.Point(84, 24);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(205, 64);
             this.playButton.TabIndex = 0;
             this.playButton.Text = "Jogar";
+            this.playButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.playButton.UseVisualStyleBackColor = false;
             this.playButton.Click += new System.EventHandler(this.roundedButton1_Click);
             // 

@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -19,9 +20,16 @@ namespace pokemon_towerdefense.Models
         public int Xp { get; protected set; } = 0;
         protected int minLevel { get; set; }
         public int Tier { get; set; }
+
+        public bool isWild = true;
+
+        public int SpeedImage = 0;
+        public int ActualImage = 0;
         public Attack SelectedAttack {  get; protected set; }
         public List<Attack> Attacks { get; protected set; } = new List<Attack>();
         public List<Pokemon> Evolutions = null;
+        public int Range = 200;
+        private Pokemon target = null;
 
         public Bitmap Sprite = null;
 
@@ -29,12 +37,15 @@ namespace pokemon_towerdefense.Models
         public int Life = 100;
         public int Speed = 0;
 
-        public virtual Pokemon Clone(int? newLevel = null)
+
+        public virtual Pokemon Clone(int? newLevel = null, bool? isWild = null)
         {
             Pokemon clonedPokemon = (Pokemon)this.MemberwiseClone();
 
-            if (Location.HasValue)
+            if(this.Location != null)
+            {
                 clonedPokemon.Location = new Point(Location.Value.X, Location.Value.Y);
+            }
 
             clonedPokemon.Attacks = new List<Attack>(Attacks.Select(a => a));
 
@@ -47,6 +58,9 @@ namespace pokemon_towerdefense.Models
 
             if (newLevel.HasValue)
                 clonedPokemon.Level = newLevel.Value;
+
+            if(isWild != null)
+                clonedPokemon.isWild = isWild.Value;
 
             return clonedPokemon;
         }
@@ -65,16 +79,52 @@ namespace pokemon_towerdefense.Models
             Xp += 5;
         }
 
-        public void GiveDamage(Pokemon target)
+        public void GiveDamage()
         {
-            target.TakeDamage(SelectedAttack.Damage);
-            if (target.Life <= 0)
-                GainXp();
+            if(target != null)
+            {
+                this.target.TakeDamage(SelectedAttack.Damage);
+                if (this.target.Life <= 0)
+                {
+                    MessageBox.Show("morreuai");
+                    GainXp();
+                }
+            }
+        }
+        public void selectTarget(List<Pokemon> pokemons)
+        {
+            this.target = null;
+            double distance = 0;
+            double lastDistance = 2000;
+            pokemons.ForEach(p =>
+            {
+                distance = this.CalculateDistance(p);
+                if (distance < lastDistance && distance < this.Range)
+                {
+                    lastDistance = distance;
+                    this.target = p;
+                }
+            });
         }
 
         public void TakeDamage(int damage)
         {
             Life -= damage;
+        }
+
+
+        private double CalculateDistance(Pokemon target)
+        {
+            if(this.Location != null)
+            {
+                int deltaX = target.Location.Value.X - this.Location.Value.X;
+                int deltaY = target.Location.Value.Y - this.Location.Value.Y;
+                double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                return distance;
+            }
+
+            return 0;
         }
 
         public Bitmap Animate()
@@ -97,7 +147,7 @@ namespace pokemon_towerdefense.Models
             }
 
             int spriteWidth = 59;
-            int spriteHeight = 66;
+            int spriteHeight = 65;
 
             var imgRect = new Rectangle(0, line * spriteHeight, this.Sprite.Width, spriteHeight);
             Bitmap croppedSprite = this.Sprite.Clone(imgRect, this.Sprite.PixelFormat);
