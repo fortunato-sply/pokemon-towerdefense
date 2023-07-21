@@ -7,6 +7,8 @@ using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Reflection.Emit;
+using System.Linq;
+using System.Media;
 
 namespace pokemon_towerdefense
 {
@@ -28,6 +30,7 @@ namespace pokemon_towerdefense
         public Game()
         {
             InitializeComponent();
+            PlayBattleTheme();
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             PbScreen.MouseDown += Form1_MouseDown;
@@ -124,7 +127,7 @@ namespace pokemon_towerdefense
 
                     //WILD POKEMONS
                     phase.RunPhase(g);
-                    phase.runTurrets(this.selfPokemons);
+                    phase.runTurrets(this.placements);
 
                     // POKEBALL
                     if (pokeball.isDragging)
@@ -349,6 +352,11 @@ namespace pokemon_towerdefense
 
             imageAttr.SetColorMatrix(colorMatrix);
             return imageAttr;
+        }
+        private void PlayBattleTheme()
+        {
+            SoundPlayer simpleSound = new SoundPlayer(@"..\..\assets\Battle_Theme.wav");
+            simpleSound.Play();
         }
     }
 }

@@ -133,6 +133,7 @@
     <None Include="assets\closedPokeball.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\Battle_Theme.wav" />
     <Content Include="assets\pokemons\scharizard.png" />
     <Content Include="assets\pokemons\squirtle.png" />
     <Content Include="assets\pokemons\gengar.png" />

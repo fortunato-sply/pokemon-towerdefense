@@ -20,6 +20,7 @@ namespace pokemon_towerdefense.Models
         public Flamethrower() 
         {
             this.Damage = 20;
+            this.Cooldown = 12;
         }
     }
 }

@@ -14,6 +14,7 @@ namespace pokemon_towerdefense.Models
         public List<Wave> Waves { get; set; } = new List<Wave>();
         public bool End { get; set; } = false;
         public List<Point> PhasePath { get; set; } = new List<Point> { };
+        public int GameTime = 0;
 
         public void RunPhase(Graphics graphics)
         {
@@ -34,16 +35,24 @@ namespace pokemon_towerdefense.Models
 
             foreach (var pokemon in Waves[0].Pokemons)
             {
-                var imgRect = new Rectangle(pokemon.Location.Value.X, pokemon.Location.Value.Y, 70, 77);
-                var sprites = pokemon.Animate();
-
-                graphics.DrawImage(sprites, imgRect, 3 + ((pokemon.ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
-
-                pokemon.SpeedImage++;
-                if (pokemon.SpeedImage >= 6)
+                if (pokemon.IsAlive)
                 {
-                    pokemon.ActualImage += 1;
-                    pokemon.SpeedImage = 0;
+                    var lifeBack = new Rectangle(pokemon.Location.Value.X, pokemon.Location.Value.Y - 8, 70, 10);
+                    var lifeFront = new Rectangle(pokemon.Location.Value.X+1, pokemon.Location.Value.Y - 7, 68 - Convert.ToInt16(Convert.ToDecimal(68/100) * pokemon.Life), 8);
+                    var imgRect = new Rectangle(pokemon.Location.Value.X, pokemon.Location.Value.Y, 70, 77);
+                    var sprites = pokemon.Animate();
+
+                    graphics.FillRectangle(Brushes.White, lifeBack);
+                    graphics.FillRectangle(Brushes.Blue, lifeFront);
+
+                    graphics.DrawImage(sprites, imgRect, 3 + ((pokemon.ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
+
+                    pokemon.SpeedImage++;
+                    if (pokemon.SpeedImage >= 6)
+                    {
+                        pokemon.ActualImage += 1;
+                        pokemon.SpeedImage = 0;
+                    }
                 }
             }
         }
@@ -63,6 +72,8 @@ namespace pokemon_towerdefense.Models
 
         public void runPokemons()
         {
+            Waves[0].IsEnded();
+
             if (Waves[0].End)
             {
                 Waves.RemoveAt(0);
@@ -96,12 +107,20 @@ namespace pokemon_towerdefense.Models
             }
         }
 
-        public void runTurrets(List<Pokemon> pokemons)
+        public void runTurrets(List<Placement> pokemons)
         {
+            GameTime++;
+
             pokemons.ForEach(p =>
             {
-                 p.selectTarget(Waves[0].Pokemons);
-                 p.GiveDamage();
+                if (p.hasPokemon)
+                {
+                    if (GameTime % p.Pokemon.SelectedAttack.Cooldown == 0)
+                    {
+                        p.Pokemon.selectTarget(Waves[0].Pokemons);
+                        p.Pokemon.GiveDamage();
+                    }
+                }
             });
         }
     }

@@ -28,7 +28,7 @@ namespace pokemon_towerdefense.Models
         public Attack SelectedAttack {  get; protected set; }
         public List<Attack> Attacks { get; protected set; } = new List<Attack>();
         public List<Pokemon> Evolutions = null;
-        public int Range = 200;
+        public int Range = 500;
         private Pokemon target = null;
 
         public Bitmap Sprite = null;
@@ -36,6 +36,7 @@ namespace pokemon_towerdefense.Models
         public bool IsPlaced = false;
         public int Life = 100;
         public int Speed = 0;
+        public bool IsAlive = true;
 
 
         public virtual Pokemon Clone(int? newLevel = null, bool? isWild = null)
@@ -83,11 +84,13 @@ namespace pokemon_towerdefense.Models
         {
             if(target != null)
             {
-                this.target.TakeDamage(SelectedAttack.Damage);
-                if (this.target.Life <= 0)
+                if (target.IsAlive)
                 {
-                    MessageBox.Show("morreuai");
-                    GainXp();
+                    this.target.TakeDamage(SelectedAttack.Damage);
+                    if (this.target.Life <= 0)
+                    {
+                        GainXp();
+                    }
                 }
             }
         }
@@ -109,7 +112,13 @@ namespace pokemon_towerdefense.Models
 
         public void TakeDamage(int damage)
         {
-            Life -= damage;
+            if(this.Life > 0)
+                Life -= damage;
+            else
+            {
+                Life = 0;
+                IsAlive = false;
+            }
         }
 
 

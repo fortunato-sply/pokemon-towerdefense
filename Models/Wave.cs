@@ -31,15 +31,16 @@ namespace pokemon_towerdefense.Models
             }    
         }
 
-        public void isEnded()
+        public void IsEnded()
         {
+            var count = 0;
             foreach (var pokemon in Pokemons)
             {
-                if (pokemon.Life <= 0)
-                    Pokemons.Remove(pokemon);        
+                if (pokemon.IsAlive)
+                    count++;
             }
 
-            if (Pokemons.Count <= 0)
+            if (count <= 0)
                 End = true;
         }
     }
