@@ -14,6 +14,7 @@ namespace pokemon_towerdefense
 {
     public partial class Game : Form
     {
+        Phase phase = new Phase();
         Pokeball pokeball = new Pokeball();
         Timer timer = new Timer();
 
@@ -26,6 +27,7 @@ namespace pokemon_towerdefense
         List<Placement> placements = new List<Placement>();
 
         List<Pokemon> selfPokemons = new List<Pokemon>();
+        List<Pokemon> InventoryPokemons = new List<Pokemon>();
 
         public Game()
         {
@@ -44,7 +46,6 @@ namespace pokemon_towerdefense
             g = Graphics.FromImage(newBmp);
             PbScreen.Image = newBmp;
 
-            Phase phase = new Phase();
             Pen pen = new Pen(Color.Black);
             var photo = new Bitmap(@"..\..\assets\cenario.jpg");
 
@@ -140,7 +141,7 @@ namespace pokemon_towerdefense
                         var WildPokemons = phase.GetWilds();
                         WildPokemons.ForEach(wild =>
                         {
-                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40)
+                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
                             {
                                 isOver = true;
                                 g.DrawImage(pokeball.BmpOpened, 
@@ -348,8 +349,21 @@ namespace pokemon_towerdefense
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            pokeball.isDragging = false;
-            if(grabbed != -1) {
+            if (pokeball.isDragging)
+            {
+                var WildPokemons = phase.GetWilds();
+                WildPokemons.ForEach(wild =>
+                {
+                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
+                    {
+                        selfPokemons.Add(wild);
+                        wild.IsAlive = false;
+                    }
+                });
+                pokeball.isDragging = false;
+            }
+
+            if (grabbed != -1) {
                placements.ForEach(p =>
                 {
                     if (Cursor.Position.X >= p.rect.X && Cursor.Position.X < p.rect.X + p.rect.Width &&

@@ -74,7 +74,12 @@ namespace pokemon_towerdefense.Models
                     var lifeFront = new Rectangle(pokemon.Location.Value.X + 1, pokemon.Location.Value.Y - 7, Convert.ToInt16(0.68f * pokemon.Life), 8);
                     graphics.DrawString(pokemon.Life.ToString(), new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(700, 700));
                     graphics.FillRectangle(Brushes.White, lifeBack);
-                    graphics.FillRectangle(Brushes.Blue, lifeFront);
+
+                    if(pokemon.Life < 25)
+                        graphics.FillRectangle(Brushes.Red, lifeFront);
+                    else
+                        graphics.FillRectangle(Brushes.Blue, lifeFront);
+
                     pokemon.Animate(graphics);
                     pokemon.SpeedImage++;
                     if (pokemon.SpeedImage >= 6)
