@@ -10,14 +10,16 @@ namespace pokemon_towerdefense.Models
     internal class Wave
     {
         public int WaveId = 1;
-        public List<Pokemon> Pokemons { get; set; }
+        public List<Pokemon> Pokemons { get; set; } = new List<Pokemon>();
         public bool End { get; set; } = false;
 
         public Wave(int id) {
             WaveId = id;
         }
-        public void AddPokemon(Pokemon pokemon)
+        public void AddPokemon(int phase, Point point)
         {
+            Pokemon pokemon = PokemonFactory.GetRandomPokemons(1, phase, phase + 3)[0];
+            pokemon.Location = point;
             Pokemons.Add(pokemon);
         }
 

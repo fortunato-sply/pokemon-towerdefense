@@ -64,11 +64,21 @@ namespace pokemon_towerdefense
             this.placements.Add(new Placement(new Rectangle(1414, 925, placementWidth, placementHeight)));
 
             // TESTE ADICIONANDO POKEMONS
-            this.selfPokemons.Add(new Charizard());
-            this.selfPokemons.Add(new Gyarados());
-            this.selfPokemons.Add(new Gengar());
-            this.selfPokemons.Add(new Squirtle());
-            this.selfPokemons.Add(new ShinyCharizard());
+            Pokemon zard = new Charizard();
+            zard.isWild = false;
+            Pokemon gengar = new Gengar();
+            gengar.isWild = false;
+            Pokemon squirtle = new Squirtle();
+            squirtle.isWild = false;
+            Pokemon shZard = new ShinyCharizard();
+            shZard.isWild = false;
+            Pokemon gyarados = new Gyarados();
+            gyarados.isWild = false;
+            this.selfPokemons.Add(zard);
+            this.selfPokemons.Add(gyarados);
+            this.selfPokemons.Add(gengar);
+            this.selfPokemons.Add(squirtle);
+            this.selfPokemons.Add(shZard);
 
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
             Brush brushBlueOpacity = new SolidBrush(blueOpacity);
@@ -112,9 +122,7 @@ namespace pokemon_towerdefense
                         if (p.hasPokemon)
                         {
                             var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
-                            var sprites = p.Pokemon.Animate();
-
-                            g.DrawImage(sprites, imgRect, 3 + ((p.Pokemon.ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
+                            p.Pokemon.Animate(g);
 
                             p.Pokemon.SpeedImage++;
                             if (p.Pokemon.SpeedImage >= 10)
@@ -125,23 +133,41 @@ namespace pokemon_towerdefense
                         }
                     });
 
-                    //WILD POKEMONS
-                    phase.RunPhase(g);
-                    phase.runTurrets(this.placements);
-
                     // POKEBALL
                     if (pokeball.isDragging)
                     {
-                        g.DrawImage(
-                            pokeball.bmp,
-                            Cursor.Position.X - (pokeball.Width / 2),
-                            Cursor.Position.Y - (pokeball.Height / 2)
-                        );
+                        var isOver = false;
+                        var WildPokemons = phase.GetWilds();
+                        WildPokemons.ForEach(wild =>
+                        {
+                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40)
+                            {
+                                isOver = true;
+                                g.DrawImage(pokeball.BmpOpened, 
+                                    Cursor.Position.X - 100,
+                                    Cursor.Position.Y - 180,
+                                    200, 360);
+                            }
+                        });
+
+                        phase.DrawWildPokemons(g);
+
+                        if (!isOver) {
+                            g.DrawImage(
+                                pokeball.BmpClosed,
+                                Cursor.Position.X - (pokeball.Width / 2),
+                                Cursor.Position.Y - (pokeball.Height / 2)
+                            );
+                        }
                     }
                     else
                     {
+                        //WILD POKEMONS
+                        phase.RunPhase(g);
+                        phase.runTurrets(g, this.placements);
+
                         g.DrawImage(
-                            pokeball.bmp,
+                            pokeball.BmpClosed,
                             1524,
                             767
                         );

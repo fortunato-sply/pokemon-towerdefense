@@ -28,7 +28,7 @@ namespace pokemon_towerdefense.Models
         public Attack SelectedAttack {  get; protected set; }
         public List<Attack> Attacks { get; protected set; } = new List<Attack>();
         public List<Pokemon> Evolutions = null;
-        public int Range = 500;
+        public int Range = 300;
         private Pokemon target = null;
 
         public Bitmap Sprite = null;
@@ -66,7 +66,7 @@ namespace pokemon_towerdefense.Models
             return clonedPokemon;
         }
 
-        public void LevelUp()
+        public void VerifyLevelUp()
         {
             if (Xp >= 100)
             {
@@ -78,14 +78,16 @@ namespace pokemon_towerdefense.Models
         public void GainXp()
         {
             Xp += 5;
+            VerifyLevelUp();
         }
 
-        public void GiveDamage()
+        public void GiveDamage(Graphics g)
         {
-            if(target != null)
+            if(this.target != null)
             {
-                if (target.IsAlive)
+                if (this.target.IsAlive)
                 {
+                    this.SelectedAttack.ShootAttack(g, this);
                     this.target.TakeDamage(SelectedAttack.Damage);
                     if (this.target.Life <= 0)
                     {
@@ -94,6 +96,7 @@ namespace pokemon_towerdefense.Models
                 }
             }
         }
+
         public void selectTarget(List<Pokemon> pokemons)
         {
             this.target = null;
@@ -106,8 +109,11 @@ namespace pokemon_towerdefense.Models
                 {
                     lastDistance = distance;
                     this.target = p;
+                    this.SelectedAttack.Target = this.target;
                 }
             });
+
+            
         }
 
         public void TakeDamage(int damage)
@@ -121,7 +127,7 @@ namespace pokemon_towerdefense.Models
             }
         }
 
-
+        Bitmap last = null;
         private double CalculateDistance(Pokemon target)
         {
             if(this.Location != null)
@@ -136,7 +142,7 @@ namespace pokemon_towerdefense.Models
             return 0;
         }
 
-        public Bitmap Animate()
+        public void Animate(Graphics graphics)
         {
             int line = 0;
 
@@ -158,10 +164,43 @@ namespace pokemon_towerdefense.Models
             int spriteWidth = 59;
             int spriteHeight = 65;
 
-            var imgRect = new Rectangle(0, line * spriteHeight, this.Sprite.Width, spriteHeight);
-            Bitmap croppedSprite = this.Sprite.Clone(imgRect, this.Sprite.PixelFormat);
+            if (line == 3)
+                spriteHeight = 63;
 
-            return croppedSprite;
+            var pbRect = new Rectangle(Location.Value.X - 8, Location.Value.Y - 10, 66, 69);
+
+            if(this.isWild)
+                graphics.DrawImage(Sprite, pbRect, 3 + ((ActualImage % 4) * 64), 10 + (65 * line), 59, 55, GraphicsUnit.Pixel);
+            else
+            {
+                var angle = getAngle();
+
+
+                if (angle >= 45 && angle < 135)
+                    line = 0;
+                else if (angle >= -45 && angle < 45)
+                    line = 1;
+                else if (angle < 45 && angle > -135)
+                    line = 3;
+                else
+                    line = 2;
+
+                graphics.DrawImage(Sprite, pbRect, 3 + ((ActualImage % 4) * 64), 10 + (65 * line), 59, 55, GraphicsUnit.Pixel);
+            }
+        }
+        
+        private double? getAngle()
+        {
+            if(target != null)
+            {
+                var CA = this.Location.Value.X - this.target.Location.Value.X;
+                var CO = this.Location.Value.Y - this.target.Location.Value.Y;
+
+                var radians = Math.Atan2(CO, CA);
+                var angle = radians * (180 / Math.PI);
+                return angle * -1;
+            }
+            return null;
         }
     }
 }
