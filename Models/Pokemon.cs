@@ -29,7 +29,7 @@ namespace pokemon_towerdefense.Models
         public List<Attack> Attacks { get; protected set; } = new List<Attack>();
         public List<Pokemon> Evolutions = null;
         public int Range = 300;
-        private Pokemon target = null;
+        public Pokemon target = null;
 
         public Bitmap Sprite = null;
 
@@ -104,16 +104,17 @@ namespace pokemon_towerdefense.Models
             double lastDistance = 2000;
             pokemons.ForEach(p =>
             {
-                distance = this.CalculateDistance(p);
-                if (distance < lastDistance && distance < this.Range)
+                if (p.IsAlive)
                 {
-                    lastDistance = distance;
-                    this.target = p;
-                    this.SelectedAttack.Target = this.target;
+                    distance = this.CalculateDistance(p);
+                    if (distance < lastDistance && distance < this.Range)
+                    {
+                        lastDistance = distance;
+                        this.target = p;
+                        this.SelectedAttack.Target = this.target;
+                    }
                 }
             });
-
-            
         }
 
         public void TakeDamage(int damage)

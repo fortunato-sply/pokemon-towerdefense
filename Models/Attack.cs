@@ -24,7 +24,7 @@ namespace pokemon_towerdefense.Models
 
         public void ShootAttack(Graphics g, Pokemon attacker)
         {
-            if (StartAttack && this.Target != null)
+            if (StartAttack && attacker.target != null)
             {
                 Point? targetPos = this.Target.Location.Value;
 
@@ -33,9 +33,10 @@ namespace pokemon_towerdefense.Models
                 {
                     var dx = targetPos.Value.X - attackerPos.Value.X;
                     var dy = targetPos.Value.Y - attackerPos.Value.Y;
-
+                    
                     StartPosition.X += dx / 8;
                     StartPosition.Y += dy / 8;
+
                     var pbRect = new Rectangle(StartPosition.X, StartPosition.Y, 66, 69);
                     g.DrawImage(attacker.Sprite, pbRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
 

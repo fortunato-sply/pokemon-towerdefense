@@ -356,8 +356,9 @@ namespace pokemon_towerdefense
                 {
                     if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
                     {
-                        selfPokemons.Add(wild);
+                        wild.isWild = false;
                         wild.IsAlive = false;
+                        selfPokemons.Add(wild);
                     }
                 });
                 pokeball.isDragging = false;

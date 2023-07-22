@@ -119,7 +119,7 @@ namespace pokemon_towerdefense.Models
 
             foreach (var Pokemon in Waves[0].Pokemons)
             {
-                if (Pokemon.PathPoint < PhasePath.Count)
+                if (Pokemon.PathPoint < PhasePath.Count && Pokemon.isWild)
                 {
                     Pokemon.Location
                         = new Point(Pokemon.Location.Value.X + Pokemon.SpeedX,
