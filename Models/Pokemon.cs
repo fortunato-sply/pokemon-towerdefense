@@ -35,9 +35,13 @@ namespace pokemon_towerdefense.Models
 
         public bool IsPlaced = false;
         public int Life = 100;
+        public int ActualLife = 100;
+        public int Defense = 40;
+        public int Power = 40;
         public int Speed = 0;
         public bool IsAlive = true;
-
+        public int XpEvolve = 100;
+        public int XpDrop = 0;
 
         public virtual Pokemon Clone(int? newLevel = null, bool? isWild = null)
         {
@@ -66,18 +70,29 @@ namespace pokemon_towerdefense.Models
             return clonedPokemon;
         }
 
+        public void UpdateStatus()
+        {
+            Life += 3;
+            Power += 3;
+            Defense += 3;
+            XpEvolve += Convert.ToInt16(XpEvolve * 0.20);
+        }
+
         public void VerifyLevelUp()
         {
-            if (Xp >= 100)
+            if (Xp >= XpEvolve)
             {
-                Level += Xp/100;
-                Xp = Xp % 100;
+                Level += 1;
+                Xp = Xp - XpEvolve;
+                UpdateStatus();
+                if (Xp >= XpEvolve)
+                    VerifyLevelUp();
             }
         }
 
-        public void GainXp()
+        public void GainXp(int dropXp)
         {
-            Xp += 5;
+            Xp += dropXp;
             VerifyLevelUp();
         }
 
@@ -88,10 +103,10 @@ namespace pokemon_towerdefense.Models
                 if (this.target.IsAlive)
                 {
                     this.SelectedAttack.ShootAttack(g, this);
-                    this.target.TakeDamage(SelectedAttack.Damage);
-                    if (this.target.Life <= 0)
+                    this.target.TakeDamage(SelectedAttack.Damage + Power);
+                    if (!this.target.IsAlive)
                     {
-                        GainXp();
+                        GainXp(this.target.XpDrop);
                     }
                 }
             }
@@ -119,11 +134,11 @@ namespace pokemon_towerdefense.Models
 
         public void TakeDamage(int damage)
         {
-            if(this.Life > 0)
-                Life -= damage;
-            else
+            if(this.ActualLife > 0)
+                ActualLife -= (damage - (Defense/10));
+            if(this.ActualLife <= 0)
             {
-                Life = 0;
+                ActualLife = 0;
                 IsAlive = false;
             }
         }

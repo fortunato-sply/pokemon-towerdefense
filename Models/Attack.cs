@@ -21,6 +21,12 @@ namespace pokemon_towerdefense.Models
         public int SpriteIndex = 1;
         public bool StartAttack = false;
         public Point StartPosition = new Point();
+        public int AttackTick = 0;
+
+        public void AddAttackTick()
+        {
+            AttackTick++;
+        }
 
         public void ShootAttack(Graphics g, Pokemon attacker)
         {
@@ -76,7 +82,7 @@ namespace pokemon_towerdefense.Models
         public Flamethrower() 
         {
             this.Damage = 20;
-            this.Cooldown = 12;
+            this.Cooldown = 25;
             this.IsMelee = true;
         }
     }
@@ -86,7 +92,7 @@ namespace pokemon_towerdefense.Models
         public Ember()
         {
             this.Damage = 15;
-            this.Cooldown = 10;
+            this.Cooldown = 20;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\ember-sprite.png"));
         }
@@ -96,7 +102,7 @@ namespace pokemon_towerdefense.Models
         public Bite()
         {
             this.Damage = 20;
-            this.Cooldown = 10;
+            this.Cooldown = 30;
             this.IsMelee = true;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\bite-sprite.png"));
