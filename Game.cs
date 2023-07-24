@@ -23,7 +23,8 @@ namespace pokemon_towerdefense
         Graphics g = null;
 
         bool isPaused = false;
-
+        bool showInventory = false;
+            
         List<Placement> placements = new List<Placement>();
 
         List<Pokemon> selfPokemons = new List<Pokemon>();
@@ -40,6 +41,7 @@ namespace pokemon_towerdefense
 
             PbScreen.MouseClick += Placement_MouseClick;
             PbScreen.MouseClick += BackButtonClick;
+            PbScreen.MouseClick += InventoryButtonClick;
 
             var newBmp = new Bitmap(PbScreen.Width, PbScreen.Height);
 
@@ -81,6 +83,13 @@ namespace pokemon_towerdefense
             this.selfPokemons.Add(squirtle);
             this.selfPokemons.Add(shZard);
 
+            this.InventoryPokemons.Add(zard);
+            this.InventoryPokemons.Add(gengar);
+            for(int i = 0; i < 8; i++)
+            {
+                this.InventoryPokemons.Add(gengar);
+            }
+
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
             Brush brushBlueOpacity = new SolidBrush(blueOpacity);
 
@@ -105,6 +114,78 @@ namespace pokemon_towerdefense
                     g.FillPath(Brushes.Red, exitBtn);
                     g.DrawString("Sair", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 50, PbScreen.Height / 2 - 20));
                 }
+                else if(showInventory)
+                {
+                    g.Clear(blackOpacity);
+                    g.DrawString("INVENTORY", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 120, PbScreen.Height / 3 - 250));
+
+                    for(int j = 1; j < 4; j++)
+                    {
+                        for(int i = 0; i < 8; i++)
+                        {
+                            RoundedRect rect = new RoundedRect();
+                            var path = rect.setRect(300 + (i * 160), 170 * j, 150, 150);
+                            g.FillPath(brushBlackOpacity, path);
+                        }
+                    }
+
+                    int contX = 330;
+                    int contY = 210;
+                    for(int i = 1; i < InventoryPokemons.Count+1; i++)
+                    {
+                        g.DrawString(InventoryPokemons[i-1].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * i), contY - 25 + (180 * (8 % (i + 1)))));
+                        g.DrawString("Lv " + InventoryPokemons[i-1].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * i), contY - 10 + (180 * (8 % (i + 1)))));
+                        Rectangle destRect = new Rectangle(contX + (160 * ((i) % 8)), contY + (180 * ((i) / 8)), 90, 100);
+                        InventoryPokemons[i-1].StaticAnimate(g, destRect);
+                    }
+
+                    // BACK INVENTORY BUTTON
+                    RoundedRect roundedRect = new RoundedRect();
+                    GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
+                    g.FillPath(Brushes.Red, invRect);
+                    g.DrawString("Voltar", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1580, 998));
+
+                    // POKE CONTAINERS
+                    for (int i = 0; i < 6; i++)
+                    {
+                        RoundedRect rect = new RoundedRect();
+                        var path = rect.setRect(100 + (i * 215), 780);
+
+
+                        if (this.selfPokemons.Count > i)
+                        {
+                            var pokemon = this.selfPokemons[i];
+                            var name = pokemon.Name;
+                            var level = pokemon.Level;
+                            var sprite = pokemon.Sprite;
+                            var xp = pokemon.Xp;
+
+                            if (pokemon.IsPlaced)
+                                g.FillPath(brushBlueOpacity, path);
+                            else
+                                g.FillPath(brushBlackOpacity, path);
+
+                            g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 790));
+                            g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 810));
+                            DrawXpBar(xp, 110 + (i * 215), 970);
+
+                            if (i == grabbed)
+                            {
+                                Rectangle destRect = new Rectangle(Cursor.Position.X - 50, Cursor.Position.Y - 50, 100, 100);
+                                g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
+                            }
+                            else
+                            {
+                                Rectangle destRect = new Rectangle(135 + (i * 215), 835, 130, 120);
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
+                            }
+                        }
+                        else
+                        {
+                            g.FillPath(brushBlackOpacity, path);
+                        }
+                    }
+                }
                 else
                 {
                     // BACKGROUND
@@ -112,8 +193,8 @@ namespace pokemon_towerdefense
 
                     g.DrawImage(
                         photo,
-                        0,
-                        0
+                        -1,
+                        -1
                     );
 
                     // PLACEMENTS
@@ -276,12 +357,20 @@ namespace pokemon_towerdefense
             this.KeyPreview = true;
             this.KeyDown += (o, ev) =>
             {
-                if (ev.KeyCode == Keys.Escape)
+                if(showInventory)
                 {
-                    this.isPaused = !this.isPaused;
+                    if (ev.KeyCode == Keys.Escape)
+                        this.showInventory = false;
                 }
-            };
+                else
+                {
+                    if (ev.KeyCode == Keys.Escape)
+                    {
+                        this.isPaused = !this.isPaused;
+                    }
+                }
 
+            };
         }
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -305,6 +394,15 @@ namespace pokemon_towerdefense
                         }
                     }
                 }
+            }
+        }
+
+        private void InventoryButtonClick(object sender, EventArgs e)
+        {
+            if (Cursor.Position.X >= 1540 && Cursor.Position.X < 1540 + 179
+                && Cursor.Position.Y >= 977 && Cursor.Position.Y <= 977 + 60)
+            {
+                this.showInventory = !this.showInventory; 
             }
         }
 

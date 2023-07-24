@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
 
 namespace pokemon_towerdefense.Models
 {
@@ -64,6 +65,18 @@ namespace pokemon_towerdefense.Models
                 clonedPokemon.isWild = isWild.Value;
 
             return clonedPokemon;
+        }
+
+        public void StaticAnimate(Graphics g, Rectangle destRect)
+        {
+            this.SpeedImage++;
+            if (this.SpeedImage >= 6)
+            {
+                this.ActualImage += 1;
+                this.SpeedImage = 0;
+            }
+
+            g.DrawImage(Sprite, destRect, 3 + ((ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
         }
 
         public void VerifyLevelUp()
