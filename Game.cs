@@ -9,7 +9,6 @@ using System.Drawing.Imaging;
 using System.Reflection.Emit;
 using System.Linq;
 using System.Media;
-using System.IO.Ports;
 
 namespace pokemon_towerdefense
 {
@@ -132,12 +131,23 @@ namespace pokemon_towerdefense
 
                     int contX = 330;
                     int contY = 210;
-                    for(int i = 1; i < InventoryPokemons.Count+1; i++)
+                    
+                    for(int i = 0; i < InventoryPokemons.Count; i++)
                     {
-                        g.DrawString(InventoryPokemons[i-1].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * i), contY - 25 + (180 * (8 % (i + 1)))));
-                        g.DrawString("Lv " + InventoryPokemons[i-1].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * i), contY - 10 + (180 * (8 % (i + 1)))));
-                        Rectangle destRect = new Rectangle(contX + (160 * ((i) % 8)), contY + (180 * ((i) / 8)), 90, 100);
-                        InventoryPokemons[i-1].StaticAnimate(g, destRect);
+                        if(i == 0)
+                        {
+                            g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15, contY - 25));
+                            g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60, contY - 10));
+                            Rectangle destRect = new Rectangle(contX, contY, 90, 100);
+                            InventoryPokemons[i].StaticAnimate(g, destRect);
+                        }
+                        else
+                        {
+                            g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * (i % 8)), contY - 25 + (170 * (i / 8))));
+                            g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * (i % 8)), contY - 10 + (170 * (i / 8))));
+                            Rectangle destRect = new Rectangle(contX + (160 * (i % 8)), contY + (170 * (i / 8)), 90, 100);
+                            InventoryPokemons[i].StaticAnimate(g, destRect);
+                        }
                     }
 
                     // BACK INVENTORY BUTTON
@@ -246,8 +256,8 @@ namespace pokemon_towerdefense
                     else
                     {
                         //WILD POKEMONS
-                        phase.runTurrets(g, this.placements);
                         phase.RunPhase(g);
+                        phase.runTurrets(g, this.placements);
 
                         g.DrawImage(
                             pokeball.BmpClosed,
@@ -270,7 +280,6 @@ namespace pokemon_towerdefense
                             var level = pokemon.Level;
                             var sprite = pokemon.Sprite;
                             var xp = pokemon.Xp;
-                            var xpEvolve = pokemon.XpEvolve;
 
                             if (pokemon.IsPlaced)
                                 g.FillPath(brushBlueOpacity, path);
@@ -279,7 +288,7 @@ namespace pokemon_towerdefense
 
                             g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
                             g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
-                            DrawXpBar(xp, 110 + (i * 215), 920, xpEvolve);
+                            DrawXpBar(xp, 110 + (i * 215), 920);
 
                             if (i == grabbed)
                             {
@@ -288,19 +297,8 @@ namespace pokemon_towerdefense
                             }
                             else
                             {
-                                ColorMatrix matrix = new ColorMatrix();
-
-                                //set the opacity  
-                                matrix.Matrix33 = 0.5f;
-
-                                //create image attributes  
-                                ImageAttributes attributes = new ImageAttributes();
-
-                                //set the color(opacity) of the image  
-                                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
                                 Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
-                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel, attributes);
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
                             }
                         }
                         else
@@ -344,11 +342,11 @@ namespace pokemon_towerdefense
             };
         }
 
-        private void DrawXpBar(int xp, int x, int y, int xpEvolve)
+        private void DrawXpBar(int xp, int x, int y)
         {
             int sizeXp = 140;
             Rectangle backRect = new Rectangle(x + 20, y, sizeXp, 20);
-            Rectangle frontRect = new Rectangle(x + 21, y+1, Convert.ToInt16(xp * (Convert.ToDecimal(sizeXp - 2) / xpEvolve)), 18);
+            Rectangle frontRect = new Rectangle(x + 21, y+1, Convert.ToInt16(xp * (Convert.ToDecimal(sizeXp - 2) / 100)), 18);
             g.FillRectangle(Brushes.White, backRect);
             g.FillRectangle(Brushes.Blue, frontRect);
         }

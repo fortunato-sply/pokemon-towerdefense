@@ -70,6 +70,18 @@ namespace pokemon_towerdefense.Models
             return clonedPokemon;
         }
 
+        public void StaticAnimate(Graphics g, Rectangle destRect)
+        {
+            this.SpeedImage++;
+            if (this.SpeedImage >= 6)
+            {
+                this.ActualImage += 1;
+                this.SpeedImage = 0;
+            }
+
+            g.DrawImage(Sprite, destRect, 3 + ((ActualImage % 4) * 64), 10, 59, 55, GraphicsUnit.Pixel);
+        }
+
         public void UpdateStatus()
         {
             Life += 3;
