@@ -142,7 +142,7 @@ namespace pokemon_towerdefense
                         var WildPokemons = phase.GetWilds();
                         WildPokemons.ForEach(wild =>
                         {
-                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
+                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
                             {
                                 isOver = true;
                                 g.DrawImage(pokeball.BmpOpened, 
@@ -207,19 +207,8 @@ namespace pokemon_towerdefense
                             }
                             else
                             {
-                                ColorMatrix matrix = new ColorMatrix();
-
-                                //set the opacity  
-                                matrix.Matrix33 = 0.5f;
-
-                                //create image attributes  
-                                ImageAttributes attributes = new ImageAttributes();
-
-                                //set the color(opacity) of the image  
-                                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
                                 Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
-                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel, attributes);
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
                             }
                         }
                         else
@@ -367,7 +356,7 @@ namespace pokemon_towerdefense
                 var WildPokemons = phase.GetWilds();
                 WildPokemons.ForEach(wild =>
                 {
-                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
+                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
                     {
                         wild.isWild = false;
                         wild.IsAlive = false;
