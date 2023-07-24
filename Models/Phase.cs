@@ -56,11 +56,11 @@ namespace pokemon_towerdefense.Models
             incrementator++;
             //            if (Waves.Count == 0)
             //                 GenerateWaves(3);
+
             if (Waves[0].Pokemons.Count > 0)
             {
                 runPokemons();
             }
-
             DrawWildPokemons(graphics);
         }
 
@@ -71,7 +71,7 @@ namespace pokemon_towerdefense.Models
                 if (pokemon.IsAlive)
                 {
                     var lifeBack = new Rectangle(pokemon.Location.Value.X, pokemon.Location.Value.Y - 8, 70, 10);
-                    var lifeFront = new Rectangle(pokemon.Location.Value.X + 1, pokemon.Location.Value.Y - 7, Convert.ToInt16(0.68f * pokemon.Life), 8);
+                    var lifeFront = new Rectangle(pokemon.Location.Value.X + 1, pokemon.Location.Value.Y - 7, Convert.ToInt16(0.68f * ((pokemon.ActualLife * 100) / pokemon.Life)), 8);
                     graphics.DrawString(pokemon.Life.ToString(), new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(700, 700));
                     graphics.FillRectangle(Brushes.White, lifeBack);
 
@@ -148,13 +148,12 @@ namespace pokemon_towerdefense.Models
 
         public void runTurrets(Graphics g, List<Placement> pokemons)
         {
-            GameTime++;
-
             pokemons.ForEach(p =>
             {
                 if (p.hasPokemon)
                 {
-                    if (GameTime % p.Pokemon.SelectedAttack.Cooldown == 0)
+                    p.Pokemon.SelectedAttack.AddAttackTick();
+                    if (p.Pokemon.SelectedAttack.AttackTick % p.Pokemon.SelectedAttack.Cooldown == 0)
                     {
                         p.Pokemon.selectTarget(Waves[0].Pokemons);
                         p.Pokemon.GiveDamage(g);
