@@ -419,6 +419,17 @@ namespace pokemon_towerdefense
                 {
                     if (selfPokemons.Count > inventoryHover)
                     {
+                        if (selfPokemons[inventoryHover].IsPlaced)
+                        {
+                            placements.ForEach(p =>
+                            {
+                                if(p.Pokemon == selfPokemons[inventoryHover])
+                                {
+                                    p.RemovePokemon();
+                                }
+                            });
+                        }
+
                         var pokemon = selfPokemons[inventoryHover];
                         selfPokemons[inventoryHover] = InventoryPokemons[inventoryGrabbed];
                         InventoryPokemons[inventoryGrabbed] = pokemon;
