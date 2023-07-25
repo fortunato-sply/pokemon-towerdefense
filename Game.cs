@@ -9,6 +9,9 @@ using System.Drawing.Imaging;
 using System.Reflection.Emit;
 using System.Linq;
 using System.Media;
+using System.Runtime.Remoting.Contexts;
+using static System.Windows.Forms.AxHost;
+using System.Security.Policy;
 
 namespace pokemon_towerdefense
 {
@@ -19,6 +22,8 @@ namespace pokemon_towerdefense
         Timer timer = new Timer();
 
         int grabbed = -1;
+        int inventoryGrabbed = -1;
+        int inventoryHover = -1;
 
         Graphics g = null;
 
@@ -37,7 +42,9 @@ namespace pokemon_towerdefense
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             PbScreen.MouseDown += Form1_MouseDown;
+            PbScreen.MouseDown += Inventory_MouseDown;
             PbScreen.MouseUp += Form1_MouseUp;
+            PbScreen.MouseMove += Inventory_MouseMove;
 
             PbScreen.MouseClick += Placement_MouseClick;
             PbScreen.MouseClick += BackButtonClick;
@@ -96,6 +103,9 @@ namespace pokemon_towerdefense
             Color blackOpacity = Color.FromArgb(150, Color.Black);
             Brush brushBlackOpacity = new SolidBrush(blackOpacity);
 
+            Color redOpacity = Color.FromArgb(150, Color.Red);
+            Brush brushRedOpacity = new SolidBrush(redOpacity);
+
             timer.Tick += delegate
             {
                 if(isPaused)
@@ -131,23 +141,6 @@ namespace pokemon_towerdefense
 
                     int contX = 330;
                     int contY = 210;
-                    
-                    for(int i = 0; i < InventoryPokemons.Count; i++)
-                    {
-                        var nextLineX = i == 0 ? 0 : i % 8;
-                        var nextLineY = i == 0 ? 0 : i / 8;
-
-                        g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * nextLineX), contY - 25 + (170 * nextLineY)));
-                        g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * nextLineX), contY - 10 + (170 * nextLineY)));
-                        Rectangle destRect = new Rectangle(contX + (160 * nextLineX), contY + (170 * nextLineY), 90, 100);
-                        InventoryPokemons[i].StaticAnimate(g, destRect);
-                    }
-
-                    // BACK INVENTORY BUTTON
-                    RoundedRect roundedRect = new RoundedRect();
-                    GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
-                    g.FillPath(Brushes.Red, invRect);
-                    g.DrawString("Voltar", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1580, 998));
 
                     // POKE CONTAINERS
                     for (int i = 0; i < 6; i++)
@@ -165,31 +158,51 @@ namespace pokemon_towerdefense
                             var xp = pokemon.Xp;
                             var xpEvolve = pokemon.XpEvolve;
 
-                            if (pokemon.IsPlaced)
-                                g.FillPath(brushBlueOpacity, path);
+                            if (i == inventoryHover)
+                                g.FillPath(brushRedOpacity, path);
                             else
                                 g.FillPath(brushBlackOpacity, path);
 
                             g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 790));
                             g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 810));
-                            DrawXpBar(xp, 110 + (i * 215), 920, xpEvolve);
+                            DrawXpBar(xp, 110 + (i * 215), 970, xpEvolve);
 
-                            if (i == grabbed)
-                            {
-                                Rectangle destRect = new Rectangle(Cursor.Position.X - 50, Cursor.Position.Y - 50, 100, 100);
-                                g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
-                            }
-                            else
-                            {
-                                Rectangle destRect = new Rectangle(135 + (i * 215), 835, 130, 120);
-                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
-                            }
+                            Rectangle destRect = new Rectangle(135 + (i * 215), 835, 130, 120);
+                            g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
                         }
                         else
                         {
-                            g.FillPath(brushBlackOpacity, path);
+                            if (i == inventoryHover)
+                                g.FillPath(brushBlueOpacity, path);
+                            else
+                                g.FillPath(brushBlackOpacity, path);
                         }
                     }
+
+                    for (int i = 0; i < InventoryPokemons.Count; i++)
+                    {
+                        if (i != inventoryGrabbed)
+                        {
+                            var nextLineX = i == 0 ? 0 : i % 8;
+                            var nextLineY = i == 0 ? 0 : i / 8;
+
+                            g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * nextLineX), contY - 25 + (170 * nextLineY)));
+                            g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * nextLineX), contY - 10 + (170 * nextLineY)));
+                            Rectangle destRect = new Rectangle(contX + (160 * nextLineX), contY + (170 * nextLineY), 90, 100);
+                            InventoryPokemons[i].StaticAnimate(g, destRect);
+                        }
+                        else
+                        {
+                            Rectangle destRect = new Rectangle(Cursor.Position.X - 45, Cursor.Position.Y - 50, 90, 100);
+                            InventoryPokemons[i].StaticAnimate(g, destRect);
+                        }
+                    }
+
+                    // BACK INVENTORY BUTTON
+                    RoundedRect roundedRect = new RoundedRect();
+                    GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
+                    g.FillPath(Brushes.Red, invRect);
+                    g.DrawString("Voltar", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1580, 998));
                 }
                 else
                 {
@@ -379,6 +392,65 @@ namespace pokemon_towerdefense
             };
         }
 
+        private void Inventory_MouseMove(object sender, MouseEventArgs e)
+        {
+            inventoryHover = -1;
+
+            if (inventoryGrabbed != -1)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    var startX = 100 + (i * 215);
+                    var startY = 780;
+
+                    if (Cursor.Position.X > startX && Cursor.Position.X < startX + 200 &&
+                        Cursor.Position.Y > startY && Cursor.Position.Y < startY + 220)
+                    {
+                        inventoryHover = i;
+                    }
+                }
+            }
+        }
+        private void Inventory_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (inventoryGrabbed != -1)
+            {
+                if (inventoryHover != -1)
+                {
+                    if (selfPokemons.Count > inventoryHover)
+                    {
+                        var pokemon = selfPokemons[inventoryHover];
+                        selfPokemons[inventoryHover] = InventoryPokemons[inventoryGrabbed];
+                        InventoryPokemons[inventoryGrabbed] = pokemon;
+                    }
+                    else
+                    {
+                        var pokemon = InventoryPokemons[inventoryGrabbed];
+                        selfPokemons.Add(pokemon);
+                        InventoryPokemons.Remove(InventoryPokemons[inventoryGrabbed]);
+                    }
+                }
+            }
+
+            inventoryGrabbed = -1;
+            
+            if (showInventory)
+            {
+                for (int i = 0; i < InventoryPokemons.Count; i++)
+                {
+                    var nextLineX = i == 0 ? 0 : i % 8;
+                    var nextLineY = i == 0 ? 0 : i / 8;
+                    var startX = 330 + (160 * nextLineX);
+                    var startY = 210 + (170 * nextLineY);
+
+                    if (Cursor.Position.X > startX && Cursor.Position.X < startX + 90 &&
+                        Cursor.Position.Y > startY && Cursor.Position.Y < startY + 100)
+                    {
+                        inventoryGrabbed = i;
+                    }
+                }
+            }
+        }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Location.X >= pokeball.Location.X && e.Location.X < (pokeball.Location.X + pokeball.Width) &&
@@ -460,9 +532,18 @@ namespace pokemon_towerdefense
                 {
                     if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
                     {
-                        wild.isWild = false;
-                        wild.IsAlive = false;
-                        selfPokemons.Add(wild);
+                        if (selfPokemons.Count < 6)
+                        {
+                            wild.isWild = false;
+                            wild.IsAlive = false;
+                            selfPokemons.Add(wild);
+                        }
+                        else if (InventoryPokemons.Count < 24)
+                        {
+                            wild.isWild = false;
+                            wild.IsAlive = false;
+                            InventoryPokemons.Add(wild);
+                        }
                     }
                 });
                 pokeball.isDragging = false;
