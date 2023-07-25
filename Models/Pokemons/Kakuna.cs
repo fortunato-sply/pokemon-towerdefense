@@ -4,19 +4,19 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Weedle : Pokemon
+    public class Kakuna : Pokemon
     {
-        public Weedle(int level = 1)
+        public Kakuna(int level = 5)
         {
-            this.Name = "Weedle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\weedle.png");
+            this.Name = "Kakuna";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\kakuna.png");
 
             this.Level = level;
 
             this.Type = Type.GetInstance("Bug");
             this.Tier = 1;
 
-            this.minLevel = 1;
+            this.minLevel = 5;
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
             this.Speed = 3;
@@ -30,7 +30,7 @@ namespace pokemon_towerdefense.Models
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
 
-            this.Evolution = new Kakuna();
+            this.Evolution = new Beedrill();
         }
     }
 }

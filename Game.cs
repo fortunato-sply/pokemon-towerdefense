@@ -78,9 +78,12 @@ namespace pokemon_towerdefense
             this.placements.Add(new Placement(new Rectangle(1414, 925, placementWidth, placementHeight)));
 
             // TESTE ADICIONANDO POKEMONS
-            Pokemon bulbasaur = new Bulbasaur();
-            bulbasaur.isWild = false;
-            this.selfPokemons.Add(bulbasaur);
+            Pokemon pidgey = new Vulpix();
+            pidgey.isWild = false;
+            this.selfPokemons.Add(pidgey);
+            Pokemon ninetales = new AlolaNinetales();
+            ninetales.isWild = false;
+            this.selfPokemons.Add(ninetales);
 
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
             Brush brushBlueOpacity = new SolidBrush(blueOpacity);

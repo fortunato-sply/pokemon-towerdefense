@@ -26,9 +26,14 @@ namespace pokemon_towerdefense.Models
             new Bulbasaur(),
             new Ivysaur(),
             new Venusaur(),
-            new Caterpie(),
+            //new Caterpie(),
             new Rattata(),
             new Weedle(),
+            new Kakuna(),
+            new Beedrill(),
+            new Vulpix(),
+            new Ninetales(),
+            new AlolaNinetales()
         };
 
         public static List<Pokemon> GetPokemonsByTier(int tier, int quantity = 10, int minLevel = 1, int maxLevel = 100)

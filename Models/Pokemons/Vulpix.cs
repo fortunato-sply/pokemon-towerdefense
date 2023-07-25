@@ -4,23 +4,23 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Weedle : Pokemon
+    public class Vulpix : Pokemon
     {
-        public Weedle(int level = 1)
+        public Vulpix(int level = 1)
         {
-            this.Name = "Weedle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\weedle.png");
+            this.Name = "Vulpix";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\vulpix.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Bug");
+            this.Type = Type.GetInstance("Fire");
             this.Tier = 1;
 
             this.minLevel = 1;
-            this.SelectedAttack = new Meelee();
+            this.SelectedAttack = new Ember();
             this.Attacks = new List<Attack>();
-            this.Speed = 3;
-            this.Power += 1 * Level;
+            this.Speed = 4;
+            this.Power += 2 * Level;
             this.Life += 2 * level;
             this.XpDrop = 60;
             ActualLife = Life;
@@ -30,7 +30,7 @@ namespace pokemon_towerdefense.Models
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
 
-            this.Evolution = new Kakuna();
+            this.Evolution = new Ninetales();
         }
     }
 }
