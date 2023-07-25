@@ -14,7 +14,7 @@ namespace pokemon_towerdefense.Models
             this.Level = level;
 
             this.Type = Type.GetInstance("Fire");
-            this.Tier = 1;
+            this.Tier = 2;
 
             this.minLevel = 14;
             this.SelectedAttack = new Ember();

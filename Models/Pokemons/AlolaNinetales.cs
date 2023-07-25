@@ -14,7 +14,7 @@ namespace pokemon_towerdefense.Models
             this.Level = level;
 
             this.Type = Type.GetInstance("Ice");
-            this.Tier = 1;
+            this.Tier = 4;
 
             this.minLevel = 14;
             this.SelectedAttack = new IcyWind();
