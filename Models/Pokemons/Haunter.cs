@@ -17,7 +17,7 @@ namespace pokemon_towerdefense.Models
             this.Tier = 2;
 
             this.minLevel = 7;
-            this.SelectedAttack = new Meelee();
+            this.SelectedAttack = new ShadowBall();
             this.Attacks = new List<Attack>();
             this.Speed = 3;
             this.Power += 2 * Level;

@@ -81,7 +81,7 @@ namespace pokemon_towerdefense
             Pokemon pidgey = new Pikachu();
             pidgey.isWild = false;
             this.selfPokemons.Add(pidgey);
-            Pokemon ninetales = new Abra();
+            Pokemon ninetales = new Rattata();
             ninetales.isWild = false;
             this.selfPokemons.Add(ninetales);
 

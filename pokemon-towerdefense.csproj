@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Models\Attack.cs" />
     <Compile Include="Models\Pokemons\Alakazam.cs" />
+    <Compile Include="Models\Pokemons\Magikarp.cs" />
     <Compile Include="Models\Pokemons\Haunter.cs" />
     <Compile Include="Models\Pokemons\Gastly.cs" />
     <Compile Include="Models\Pokemons\Kadabra.cs" />

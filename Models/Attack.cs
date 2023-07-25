@@ -167,4 +167,15 @@ namespace pokemon_towerdefense.Models
             this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\thundervolt.png"));
         }
     }
+
+    public class ShadowBall : Attack
+    {
+        public ShadowBall()
+        {
+            this.Damage = 20;
+            this.Cooldown = 20;
+
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\shadowball.png"));
+        }
+    }
 }
