@@ -4,23 +4,23 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Wartotle : Pokemon
+    public class Alakazam : Pokemon
     {
-        public Wartotle(int level = 7)
+        public Alakazam(int level = 15)
         {
-            this.Name = "Wartotle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\wartotle.png");
+            this.Name = "Alakazam";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\alakazam.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Water");
-            this.Tier = 2;
+            this.Type = Type.GetInstance("Psychic");
+            this.Tier = 3;
 
-            this.minLevel = 7;
-            this.SelectedAttack = new Bubbles();
+            this.minLevel = 15;
+            this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
-            this.Speed = 5;
-            this.Power += 2 * Level;
+            this.Speed = 3;
+            this.Power += 3 * Level;
             this.Life += 2 * level;
             this.XpDrop = 60;
             ActualLife = Life;
@@ -29,8 +29,6 @@ namespace pokemon_towerdefense.Models
                 XpDrop += Convert.ToInt16(XpDrop * 0.15);
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
-
-            this.Evolution = new Blastoise();
         }
     }
 }

@@ -4,24 +4,24 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Wartotle : Pokemon
+    public class Pikachu : Pokemon
     {
-        public Wartotle(int level = 7)
+        public Pikachu(int level = 12)
         {
-            this.Name = "Wartotle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\wartotle.png");
+            this.Name = "Pikachu";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\pikachu.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Water");
+            this.Type = Type.GetInstance("Electric");
             this.Tier = 2;
 
-            this.minLevel = 7;
-            this.SelectedAttack = new Bubbles();
+            this.minLevel = 12;
+            this.SelectedAttack = new ThunderVolt();
             this.Attacks = new List<Attack>();
             this.Speed = 5;
-            this.Power += 2 * Level;
-            this.Life += 2 * level;
+            this.Power += 3 * Level;
+            this.Life += 3 * level;
             this.XpDrop = 60;
             ActualLife = Life;
             for (int i = 0; i < Level; i++)
@@ -30,7 +30,7 @@ namespace pokemon_towerdefense.Models
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
 
-            this.Evolution = new Blastoise();
+            this.Evolution = new Raichu();
         }
     }
 }
