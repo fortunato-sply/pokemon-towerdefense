@@ -63,6 +63,7 @@ namespace pokemon_towerdefense.Models
             Type ghostType = Type.GetInstance("Ghost");
             Type flyingType = Type.GetInstance("Flying");
             Type iceType = Type.GetInstance("Ice");
+            Type dragonType = Type.GetInstance("Dragon");
 
             // colocar resistencias e weakness
             fireType.AddWeakness(waterType);

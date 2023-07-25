@@ -4,24 +4,24 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Pidgeot : Pokemon
+    public class Aerodactyl : Pokemon
     {
-        public Pidgeot(int level = 18)
+        public Aerodactyl(int level = 20)
         {
-            this.Name = "Pidgeot";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\pidgeot.png");
+            this.Name = "Aerodactyl";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\aerodactyl.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Flying");
-            this.Tier = 3;
+            this.Type = Type.GetInstance("Rock");
+            this.Tier = 5;
 
-            this.minLevel = 18;
+            this.minLevel = 20;
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
-            this.Speed = 8;
-            this.Power += 2 * Level;
-            this.Life += 2 * level;
+            this.Speed = 10;
+            this.Power += 5 * Level;
+            this.Life += 4 * level;
             this.XpDrop = 60;
             ActualLife = Life;
             for (int i = 0; i < Level; i++)
