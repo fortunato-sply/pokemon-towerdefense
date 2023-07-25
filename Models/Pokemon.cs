@@ -87,7 +87,7 @@ namespace pokemon_towerdefense.Models
             Life += 3;
             Power += 3;
             Defense += 3;
-            XpEvolve += Convert.ToInt16(XpEvolve * 0.20);
+            XpEvolve += Convert.ToInt16(XpEvolve * 0.15);
         }
 
         public void VerifyLevelUp()
@@ -213,7 +213,15 @@ namespace pokemon_towerdefense.Models
                 else
                     line = 2;
 
-                graphics.DrawImage(Sprite, pbRect, 3 + ((ActualImage % 4) * 64), 10 + (65 * line), 59, 55, GraphicsUnit.Pixel);
+                ColorMatrix matrix = new ColorMatrix();
+                matrix.Matrix33 = 0.5f;
+                ImageAttributes attributes = new ImageAttributes();
+                attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+                if (SelectedAttack.IsAttacking && SelectedAttack.IsMelee)
+                    graphics.DrawImage(Sprite, pbRect, 3 + ((ActualImage % 4) * 64), 10 + (65 * line), 59, 55, GraphicsUnit.Pixel, attributes);
+                else
+                    graphics.DrawImage(Sprite, pbRect, 3 + ((ActualImage % 4) * 64), 10 + (65 * line), 59, 55, GraphicsUnit.Pixel);
             }
         }
         

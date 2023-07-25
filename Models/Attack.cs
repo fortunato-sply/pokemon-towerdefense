@@ -22,6 +22,7 @@ namespace pokemon_towerdefense.Models
         public bool StartAttack = false;
         public Point StartPosition = new Point();
         public int AttackTick = 0;
+        public bool IsAttacking = false;
 
         public void AddAttackTick()
         {
@@ -32,6 +33,7 @@ namespace pokemon_towerdefense.Models
         {
             if (StartAttack && attacker.target != null)
             {
+                this.IsAttacking= true;
                 Point? targetPos = this.Target.Location.Value;
 
                 Point? attackerPos = attacker.Location.Value;
@@ -70,6 +72,7 @@ namespace pokemon_towerdefense.Models
                 if (SpriteIndex >= 8) {
                     SpriteIndex = 0;
                     StartAttack = false;
+                    IsAttacking = false;
                 }
 
                 SpriteIndex++;

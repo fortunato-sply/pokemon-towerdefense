@@ -233,7 +233,7 @@ namespace pokemon_towerdefense
                         var WildPokemons = phase.GetWilds();
                         WildPokemons.ForEach(wild =>
                         {
-                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
+                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
                             {
                                 isOver = true;
                                 g.DrawImage(pokeball.BmpOpened, 
@@ -463,7 +463,7 @@ namespace pokemon_towerdefense
                 var WildPokemons = phase.GetWilds();
                 WildPokemons.ForEach(wild =>
                 {
-                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && wild.Life < 25)
+                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
                     {
                         wild.isWild = false;
                         wild.IsAlive = false;

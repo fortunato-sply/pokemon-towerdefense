@@ -75,7 +75,7 @@ namespace pokemon_towerdefense.Models
                     graphics.DrawString(pokemon.Life.ToString(), new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(700, 700));
                     graphics.FillRectangle(Brushes.White, lifeBack);
 
-                    if(pokemon.Life < 25)
+                    if ((pokemon.ActualLife * 100) / pokemon.Life < 25)
                         graphics.FillRectangle(Brushes.Red, lifeFront);
                     else
                         graphics.FillRectangle(Brushes.Blue, lifeFront);
