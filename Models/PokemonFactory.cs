@@ -37,7 +37,12 @@ namespace pokemon_towerdefense.Models
             new Snorlax(),
             new Aerodactyl(),
             new Dragonair(),
-            new Dragonite()
+            new Dragonite(),
+            new Pikachu(),
+            new Raichu(),
+            new Abra(),
+            new Kadabra(),
+            new Alakazam()
         };
 
         public static List<Pokemon> GetPokemonsByTier(int tier, int quantity = 10, int minLevel = 1, int maxLevel = 100)
