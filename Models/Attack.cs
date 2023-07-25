@@ -24,6 +24,18 @@ namespace pokemon_towerdefense.Models
         public int AttackTick = 0;
         public bool IsAttacking = false;
 
+        public Attack Clone()
+        {
+            var clone = (Attack)this.MemberwiseClone();
+            if(clone.Sprite != null)
+                clone.Sprite = (Bitmap)this.Sprite.Clone();
+
+            clone.AttackTick = 0;
+            clone.IsAttacking = false;
+            clone.Target = null;
+
+            return clone;
+        }
         public void AddAttackTick()
         {
             AttackTick++;

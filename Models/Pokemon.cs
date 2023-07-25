@@ -53,11 +53,11 @@ namespace pokemon_towerdefense.Models
             }
 
             clonedPokemon.Attacks = new List<Attack>(Attacks.Select(a => a));
+            clonedPokemon.SelectedAttack = this.SelectedAttack.Clone();
 
             if (Evolution != null)
                 clonedPokemon.Evolution = Evolution.Clone();
 
-            // Certifique-se de que a imagem é clonada profundamente, pois é uma referência ao Bitmap
             if (Sprite != null)
                 clonedPokemon.Sprite = (Bitmap)Sprite.Clone();
 

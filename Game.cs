@@ -74,27 +74,9 @@ namespace pokemon_towerdefense
             this.placements.Add(new Placement(new Rectangle(1414, 925, placementWidth, placementHeight)));
 
             // TESTE ADICIONANDO POKEMONS
-            Pokemon zard = new Charizard();
-            zard.isWild = false;
             Pokemon bulbasaur = new Bulbasaur();
             bulbasaur.isWild = false;
-            Pokemon squirtle = new Squirtle();
-            squirtle.isWild = false;
-            Pokemon shZard = new Charmander();
-            shZard.isWild = false;
-            Pokemon gyarados = new Gyarados();
-            gyarados.isWild = false;
-            this.selfPokemons.Add(zard);
-            this.selfPokemons.Add(gyarados);
-            this.selfPokemons.Add(squirtle);
-            this.selfPokemons.Add(shZard);
             this.selfPokemons.Add(bulbasaur);
-
-            this.InventoryPokemons.Add(zard);
-            for(int i = 0; i < 8; i++)
-            {
-                this.InventoryPokemons.Add(zard);
-            }
 
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
             Brush brushBlueOpacity = new SolidBrush(blueOpacity);
@@ -239,7 +221,7 @@ namespace pokemon_towerdefense
                         var WildPokemons = phase.GetWilds();
                         WildPokemons.ForEach(wild =>
                         {
-                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
+                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
                             {
                                 isOver = true;
                                 g.DrawImage(pokeball.BmpOpened, 
@@ -540,7 +522,7 @@ namespace pokemon_towerdefense
                 var WildPokemons = phase.GetWilds();
                 WildPokemons.ForEach(wild =>
                 {
-                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25)
+                    if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
                     {
                         if (selfPokemons.Count < 6)
                         {
