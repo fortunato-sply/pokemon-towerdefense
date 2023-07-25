@@ -94,6 +94,8 @@ namespace pokemon_towerdefense
             Color redOpacity = Color.FromArgb(150, Color.Red);
             Brush brushRedOpacity = new SolidBrush(redOpacity);
 
+            var actualWave = 0;
+
             timer.Tick += delegate
             {
                 if (isPaused)
@@ -209,15 +211,16 @@ namespace pokemon_towerdefense
                     if (phase.Waves.Count > 0)
                     {
                         var end = phase.Waves[phase.ActualWave - 1].End;
-                        if (end && phase.Waves[phase.ActualWave - 1].Pokemons.Count > 0)
+                        if (end)
                         {
+                            actualWave = phase.ActualWave;
                             delayWave = 50;
                         }
                     }
 
                     if (delayWave > 0)
                     {
-                        g.DrawString("Wave " + (phase.ActualWave - 1).ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
+                        g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
 
                         delayWave--;
                     }

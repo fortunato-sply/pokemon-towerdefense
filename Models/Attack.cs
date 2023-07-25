@@ -145,4 +145,15 @@ namespace pokemon_towerdefense.Models
             this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\petalleaf.png"));
         }
     }
+
+    public class IcyWind : Attack
+    {
+        public IcyWind()
+        {
+            this.Damage = 20;
+            this.Cooldown = 25;
+
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\icywind.png"));
+        }
+    }
 }

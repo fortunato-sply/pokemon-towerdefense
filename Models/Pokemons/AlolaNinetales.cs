@@ -17,7 +17,7 @@ namespace pokemon_towerdefense.Models
             this.Tier = 1;
 
             this.minLevel = 14;
-            this.SelectedAttack = new Meelee();
+            this.SelectedAttack = new IcyWind();
             this.Attacks = new List<Attack>();
             this.Speed = 10;
             this.Power += 3 * Level;

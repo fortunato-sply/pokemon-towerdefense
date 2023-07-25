@@ -18,7 +18,7 @@ namespace pokemon_towerdefense.Models
 
         public List<Pokemon> GetWilds()
         {
-            return Waves[0].Pokemons;
+            return Waves[ActualWave - 1].Pokemons;
         }
         public void RunPhase(Graphics graphics)
         {
@@ -149,7 +149,7 @@ namespace pokemon_towerdefense.Models
                     }
                 }
             }
-            if (alives == 0 && Waves[ActualWave - 1].Pokemons.Count > 0)
+            if (alives == 0 && Waves[ActualWave - 1].Pokemons.Count > 0 && Waves[ActualWave - 1].Pokemons.Count >= 3 + (ActualWave * 2))
                 Waves[ActualWave - 1].End = true;
         }
 
