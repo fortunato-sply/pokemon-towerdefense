@@ -134,20 +134,13 @@ namespace pokemon_towerdefense
                     
                     for(int i = 0; i < InventoryPokemons.Count; i++)
                     {
-                        if(i == 0)
-                        {
-                            g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15, contY - 25));
-                            g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60, contY - 10));
-                            Rectangle destRect = new Rectangle(contX, contY, 90, 100);
-                            InventoryPokemons[i].StaticAnimate(g, destRect);
-                        }
-                        else
-                        {
-                            g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * (i % 8)), contY - 25 + (170 * (i / 8))));
-                            g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * (i % 8)), contY - 10 + (170 * (i / 8))));
-                            Rectangle destRect = new Rectangle(contX + (160 * (i % 8)), contY + (170 * (i / 8)), 90, 100);
-                            InventoryPokemons[i].StaticAnimate(g, destRect);
-                        }
+                        var nextLineX = i == 0 ? 0 : i % 8;
+                        var nextLineY = i == 0 ? 0 : i / 8;
+
+                        g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * nextLineX), contY - 25 + (170 * nextLineY)));
+                        g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * nextLineX), contY - 10 + (170 * nextLineY)));
+                        Rectangle destRect = new Rectangle(contX + (160 * nextLineX), contY + (170 * nextLineY), 90, 100);
+                        InventoryPokemons[i].StaticAnimate(g, destRect);
                     }
 
                     // BACK INVENTORY BUTTON
