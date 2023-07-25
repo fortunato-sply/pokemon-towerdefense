@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -42,15 +38,19 @@ namespace pokemon_towerdefense.Models
             {
                 Waves.Add(new Wave(1));
             }
-            if (Waves[ActualWave-1].Pokemons.Count >= 3 + (ActualWave * 2))
+            if (Waves[ActualWave - 1].Pokemons.Count >= 3 + (ActualWave * 2))
             {
-                ActualWave++;
-                Waves.Add(new Wave(ActualWave));
+                if(Waves[ActualWave-1].IsEnded()){
+                    ActualWave++;
+                    Waves.Add(new Wave(ActualWave));
+                }
             }
-
-            if(incrementator % CoolDownSpawn == 0)
+            else
             {
-                Waves[0].AddPokemon(Id, PhasePath[0]);
+                if (incrementator % CoolDownSpawn == 0)
+                {
+                    Waves[ActualWave-1].AddPokemon(Id, PhasePath[0]);
+                }
             }
 
             incrementator++;

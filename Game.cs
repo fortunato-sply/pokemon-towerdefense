@@ -57,6 +57,7 @@ namespace pokemon_towerdefense
 
             g = Graphics.FromImage(newBmp);
             PbScreen.Image = newBmp;
+            int delayWave = 0;
 
             Pen pen = new Pen(Color.Black);
             var photo = new Bitmap(@"..\..\assets\cenario.jpg");
@@ -92,7 +93,13 @@ namespace pokemon_towerdefense
 
             timer.Tick += delegate
             {
-                if(isPaused)
+                if (phase.Waves[phase.ActualWave].IsEnded())
+                {
+                    g.DrawString("Phase " + phase.ActualWave.ToString() + "Ended", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
+                    delayWave = 50;
+                }
+
+                if (isPaused)
                 {
                     g.Clear(Color.Black);
                     g.DrawString("GAME PAUSED", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width/2 - 120, PbScreen.Height / 3 - 100));
