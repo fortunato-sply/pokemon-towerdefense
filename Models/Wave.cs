@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -36,18 +37,23 @@ namespace pokemon_towerdefense.Models
         public bool IsEnded()
         {
             var count = 0;
-            foreach (var pokemon in Pokemons)
+            if (Pokemons.Count > 0)
             {
-                if (pokemon.IsAlive)
-                    count++;
+                foreach (var pokemon in Pokemons)
+                {
+                    if (pokemon.IsAlive)
+                        count++;
+                }
+                MessageBox.Show(count.ToString());
+                if (count <= 0)
+                {
+                    End = true;
+                    return true;
+                }
+                return false;
             }
 
-            if (count <= 0)
-            {
-                End = true;
-                return true;
-            }
-            return false;
+            return true;
         }
     }
 }

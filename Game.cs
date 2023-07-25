@@ -93,12 +93,6 @@ namespace pokemon_towerdefense
 
             timer.Tick += delegate
             {
-                if (phase.Waves[phase.ActualWave].IsEnded())
-                {
-                    g.DrawString("Phase " + phase.ActualWave.ToString() + "Ended", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
-                    delayWave = 50;
-                }
-
                 if (isPaused)
                 {
                     g.Clear(Color.Black);
@@ -117,7 +111,8 @@ namespace pokemon_towerdefense
                 }
                 else if(showInventory)
                 {
-                    g.Clear(blackOpacity);
+                    g.Clear(blackOpacity); 
+                    
                     g.DrawString("INVENTORY", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 120, PbScreen.Height / 3 - 250));
 
                     for(int j = 1; j < 4; j++)
@@ -205,6 +200,24 @@ namespace pokemon_towerdefense
                         -1,
                         -1
                     );
+
+                    g.DrawString("Wave: " + phase.ActualWave.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.White, new Point(80, 50));
+
+                    if (phase.Waves.Count > 0)
+                    {
+                        var end = phase.Waves[phase.ActualWave - 1].End;
+                        if (end && phase.Waves[phase.ActualWave - 1].Pokemons.Count > 0)
+                        {
+                            delayWave = 50;
+                        }
+                    }
+
+                    if (delayWave > 0)
+                    {
+                        g.DrawString("Wave " + (phase.ActualWave - 1).ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
+
+                        delayWave--;
+                    }
 
                     // PLACEMENTS
                     this.placements.ForEach(p => {
