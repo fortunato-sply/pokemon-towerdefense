@@ -71,6 +71,7 @@
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Attack.cs" />
+    <Compile Include="Models\RareCandy.cs" />
     <Compile Include="Models\Pokemons\Alakazam.cs" />
     <Compile Include="Models\Pokemons\Kadabra.cs" />
     <Compile Include="Models\Pokemons\Blastoise.cs" />

@@ -19,39 +19,61 @@ namespace pokemon_towerdefense.Models
         public int WavesLimit = 0;
         public List<int> PhaseTiers;
         public List<string> PhaseTypes;
+        public List<RareCandy> RareCandies = new List<RareCandy>();
 
-        public Phase(List<int> tiers, List<string> types)
+        public void InitializeRareCandies(int quantity)
+        {
+            Random random = new Random();
+
+            for(int i = 0; i < quantity; i++)
+            {
+                RareCandy rareCandy = new RareCandy(new Point(PhasePath[PhasePath.Count-1].X + random.Next(-30, 30), PhasePath[PhasePath.Count-1].Y + random.Next(-30, 30)));
+
+                RareCandies.Add(rareCandy);
+            }
+        }
+
+        public Phase(List<int> tiers, List<string> types, int limit)
         {
             PhaseTiers = tiers;
             PhaseTypes = types;
+            WavesLimit = limit;
+
+            List<Point> path = new List<Point>();
+            path.Add(new Point(570, 0));
+            path.Add(new Point(570, 550));
+            path.Add(new Point(1330, 550));
+            path.Add(new Point(1330, 1000));
+            path.Add(new Point(1330, 550));
+            path.Add(new Point(570, 550));
+            path.Add(new Point(570, -200));
+            PhasePath = path;
         }
 
         public List<Pokemon> GetWilds()
         {
             return Waves[ActualWave - 1].Pokemons;
         }
-        public void RunPhase(Graphics graphics)
+
+        public void isEnded()
         {
-            if (PhasePath.Count == 0)
-            {
-                List<Point> path = new List<Point>();
-                path.Add(new Point(570, 0));
-                path.Add(new Point(570, 550));
-                path.Add(new Point(1330, 550));
-                path.Add(new Point(1330, 1000));
-                path.Add(new Point(1330, 550));
-                path.Add(new Point(570, 550));
-                path.Add(new Point(570, -200));
-                PhasePath = path;
-            }
-            
-            if(Waves.Count == 0)
+            if (ActualWave >= WavesLimit)
+                End = true;
+            else
+                End = false;
+
+        }
+        public void RunPhase(Graphics graphics)
+        {    
+            isEnded();
+
+            if(Waves.Count == 0 && !End)
             {
                 Waves.Add(new Wave(1));
             }
             if (Waves[ActualWave - 1].Pokemons.Count >= 3 + (ActualWave * 2))
             {
-                if(Waves[ActualWave-1].End){
+                if(Waves[ActualWave-1].End && !End){
                     ActualWave++;
                     Waves.Add(new Wave(ActualWave));
                 }
@@ -98,18 +120,7 @@ namespace pokemon_towerdefense.Models
                 }
             }
         }
-        public void GenerateWaves(int quantity)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                Wave wave = new Wave(i);
-                for (int j = 0; j < 3 + (i * 2); j++)
-                    wave.AddPokemon(Id, PhasePath[0], 1);
-                
-                Waves.Add(wave);
-            }
-        }
-        
+
         public void runPokemons()
         {
             var alives = 0;

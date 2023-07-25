@@ -19,7 +19,7 @@ namespace pokemon_towerdefense.Models
         }
         public void AddPokemon(int phase, Point point, int tier, string type)
         {
-            Pokemon pokemon = PokemonFactory.GetPokemonsByTier(tier, 3 + (WaveId * 2), phase, phase + 3)[0];
+            Pokemon pokemon = PokemonFactory.GetPokemonsByTypeAndTier(type, tier, 3 + (WaveId * 2), phase, phase + 3)[0];
             pokemon.Location = point;
             Pokemons.Add(pokemon);
         }

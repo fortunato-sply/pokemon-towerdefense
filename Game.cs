@@ -17,7 +17,6 @@ namespace pokemon_towerdefense
 {
     public partial class Game : Form
     {
-        Phase phase = new Phase();
         Pokeball pokeball = new Pokeball();
         Timer timer = new Timer();
 
@@ -34,9 +33,19 @@ namespace pokemon_towerdefense
 
         List<Pokemon> selfPokemons = new List<Pokemon>();
         List<Pokemon> InventoryPokemons = new List<Pokemon>();
-
+        Phase phase;
         public Game()
         {
+            List<int> tiers = new List<int>();
+            tiers.Add(1);
+            List<string> types = new List<string>();
+            types.Add("Grass");
+            types.Add("Bug");
+
+            phase = new Phase(tiers, types, 5);
+
+            phase.InitializeRareCandies(6);
+
             InitializeComponent();
             PlayBattleTheme();
 
@@ -94,6 +103,7 @@ namespace pokemon_towerdefense
             Color redOpacity = Color.FromArgb(150, Color.Red);
             Brush brushRedOpacity = new SolidBrush(redOpacity);
 
+            var nextPhase = false;
             var actualWave = 0;
 
             timer.Tick += delegate
@@ -213,12 +223,21 @@ namespace pokemon_towerdefense
                         var end = phase.Waves[phase.ActualWave - 1].End;
                         if (end)
                         {
-                            actualWave = phase.ActualWave;
-                            delayWave = 50;
+                            if (phase.End)
+                                nextPhase = true;
+                            else
+                            {
+                                actualWave = phase.ActualWave;
+                                delayWave = 50;
+                            }
                         }
                     }
 
-                    if (delayWave > 0)
+                    if (nextPhase)
+                    {
+                        g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                    }
+                    else if (delayWave > 0)
                     {
                         g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
 
@@ -282,6 +301,12 @@ namespace pokemon_towerdefense
                             767
                         );
                     }
+
+                    // RARE CANDIES
+                    phase.RareCandies.ForEach(r =>
+                    {
+                        g.DrawImage(r.Sprite, r.Position);
+                    });
 
                     // POKE CONTAINERS
                     for (int i = 0; i < 6; i++)
