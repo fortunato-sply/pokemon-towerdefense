@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -40,7 +41,7 @@ namespace pokemon_towerdefense.Models
             }
             if (Waves[ActualWave - 1].Pokemons.Count >= 3 + (ActualWave * 2))
             {
-                if(Waves[ActualWave-1].IsEnded()){
+                if(Waves[ActualWave-1].End){
                     ActualWave++;
                     Waves.Add(new Wave(ActualWave));
                 }
@@ -57,16 +58,17 @@ namespace pokemon_towerdefense.Models
             //            if (Waves.Count == 0)
             //                 GenerateWaves(3);
 
-            if (Waves[0].Pokemons.Count > 0)
+            if (Waves[ActualWave-1].Pokemons.Count > 0)
             {
                 runPokemons();
             }
+
             DrawWildPokemons(graphics);
         }
 
         public void DrawWildPokemons(Graphics graphics)
         {
-            foreach (var pokemon in Waves[0].Pokemons)
+            foreach (var pokemon in Waves[ActualWave - 1].Pokemons)
             {
                 if (pokemon.IsAlive)
                 {
@@ -115,15 +117,18 @@ namespace pokemon_towerdefense.Models
 
         public void runPokemons()
         {
-            Waves[0].IsEnded();
+            var alives = 0;
 
-            foreach (var Pokemon in Waves[0].Pokemons)
+            foreach (var Pokemon in Waves[ActualWave - 1].Pokemons)
             {
                 if (Pokemon.PathPoint < PhasePath.Count && Pokemon.isWild)
                 {
                     Pokemon.Location
                         = new Point(Pokemon.Location.Value.X + Pokemon.SpeedX,
                         Pokemon.Location.Value.Y + Pokemon.SpeedY);
+
+                    if (Pokemon.IsAlive)
+                        alives++;
 
                     if (Math.Abs(Pokemon.Location.Value.X - PhasePath[Pokemon.PathPoint].X) < 20 && Math.Abs(Pokemon.Location.Value.Y - PhasePath[Pokemon.PathPoint].Y) < 20)
                     {
@@ -144,6 +149,8 @@ namespace pokemon_towerdefense.Models
                     }
                 }
             }
+            if (alives == 0 && Waves[ActualWave - 1].Pokemons.Count > 0)
+                Waves[ActualWave - 1].End = true;
         }
 
         public void runTurrets(Graphics g, List<Placement> pokemons)
@@ -155,7 +162,7 @@ namespace pokemon_towerdefense.Models
                     p.Pokemon.SelectedAttack.AddAttackTick();
                     if (p.Pokemon.SelectedAttack.AttackTick % p.Pokemon.SelectedAttack.Cooldown == 0)
                     {
-                        p.Pokemon.selectTarget(Waves[0].Pokemons);
+                        p.Pokemon.selectTarget(Waves[ActualWave - 1].Pokemons);
                         p.Pokemon.GiveDamage(g);
                         p.Pokemon.SelectedAttack.StartAttack = true;
                         p.Pokemon.SelectedAttack.StartPosition = p.Pokemon.Location.Value;
