@@ -19,7 +19,7 @@ namespace pokemon_towerdefense.Models
             this.minLevel = 18;
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
-            this.Speed = 5;
+            this.Speed = 8;
             this.Power += 2 * Level;
             this.Life += 2 * level;
             this.XpDrop = 60;

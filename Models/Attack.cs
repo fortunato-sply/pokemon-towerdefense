@@ -156,4 +156,15 @@ namespace pokemon_towerdefense.Models
             this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\icywind.png"));
         }
     }
+
+    public class ThunderVolt : Attack
+    {
+        public ThunderVolt()
+        {
+            this.Damage = 20;
+            this.Cooldown = 20;
+
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\thundervolt.png"));
+        }
+    }
 }

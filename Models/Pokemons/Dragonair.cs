@@ -4,24 +4,24 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class AlolaNinetales : Pokemon
+    public class Dragonair : Pokemon
     {
-        public AlolaNinetales(int level = 14)
+        public Dragonair(int level = 12)
         {
-            this.Name = "Ninetales";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\alola-ninetales.png");
+            this.Name = "Dragonair";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\dragonair.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Ice");
-            this.Tier = 4;
+            this.Type = Type.GetInstance("Dragon");
+            this.Tier = 3;
 
-            this.minLevel = 14;
+            this.minLevel = 18;
             this.SelectedAttack = new IcyWind();
             this.Attacks = new List<Attack>();
-            this.Speed = 10;
-            this.Power += 3 * Level;
-            this.Life += 2 * level;
+            this.Speed = 5;
+            this.Power += 2 * Level;
+            this.Life += 3 * level;
             this.XpDrop = 60;
             ActualLife = Life;
             for (int i = 0; i < Level; i++)
@@ -29,6 +29,8 @@ namespace pokemon_towerdefense.Models
                 XpDrop += Convert.ToInt16(XpDrop * 0.15);
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
+
+            this.Evolution = new Dragonite();
         }
     }
 }

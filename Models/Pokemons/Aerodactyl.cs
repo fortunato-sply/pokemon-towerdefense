@@ -4,24 +4,24 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class AlolaNinetales : Pokemon
+    public class Aerodactyl : Pokemon
     {
-        public AlolaNinetales(int level = 14)
+        public Aerodactyl(int level = 20)
         {
-            this.Name = "Ninetales";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\alola-ninetales.png");
+            this.Name = "Aerodactyl";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\aerodactyl.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Ice");
-            this.Tier = 4;
+            this.Type = Type.GetInstance("Rock");
+            this.Tier = 5;
 
-            this.minLevel = 14;
-            this.SelectedAttack = new IcyWind();
+            this.minLevel = 20;
+            this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
             this.Speed = 10;
-            this.Power += 3 * Level;
-            this.Life += 2 * level;
+            this.Power += 5 * Level;
+            this.Life += 4 * level;
             this.XpDrop = 60;
             ActualLife = Life;
             for (int i = 0; i < Level; i++)

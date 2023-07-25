@@ -73,11 +73,16 @@
     <Compile Include="Models\Attack.cs" />
     <Compile Include="Models\Pokemons\Blastoise.cs" />
     <Compile Include="Models\Pokemons\AlolaNinetales.cs" />
+    <Compile Include="Models\Pokemons\Dratini.cs" />
+    <Compile Include="Models\Pokemons\Dragonair.cs" />
     <Compile Include="Models\Pokemons\Rattata.cs" />
     <Compile Include="Models\Pokemons\Kakuna.cs" />
     <Compile Include="Models\Pokemons\Beedrill.cs" />
     <Compile Include="Models\Pokemons\Ninetales.cs" />
+    <Compile Include="Models\Pokemons\Aerodactyl.cs" />
+    <Compile Include="Models\Pokemons\Dragonite.cs" />
     <Compile Include="Models\Pokemons\Vulpix.cs" />
+    <Compile Include="Models\Pokemons\Snorlax.cs" />
     <Compile Include="Models\Pokemons\Weedle.cs" />
     <Compile Include="Models\Pokemons\Caterpie.cs" />
     <Compile Include="Models\Pokemons\Pidgeot.cs" />

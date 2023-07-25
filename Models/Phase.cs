@@ -74,7 +74,6 @@ namespace pokemon_towerdefense.Models
                 {
                     var lifeBack = new Rectangle(pokemon.Location.Value.X, pokemon.Location.Value.Y - 8, 70, 10);
                     var lifeFront = new Rectangle(pokemon.Location.Value.X + 1, pokemon.Location.Value.Y - 7, Convert.ToInt16(0.68f * ((pokemon.ActualLife * 100) / pokemon.Life)), 8);
-                    graphics.DrawString(pokemon.Life.ToString(), new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(700, 700));
                     graphics.FillRectangle(Brushes.White, lifeBack);
 
                     if ((pokemon.ActualLife * 100) / pokemon.Life < 25)

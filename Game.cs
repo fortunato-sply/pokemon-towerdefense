@@ -78,10 +78,10 @@ namespace pokemon_towerdefense
             this.placements.Add(new Placement(new Rectangle(1414, 925, placementWidth, placementHeight)));
 
             // TESTE ADICIONANDO POKEMONS
-            Pokemon pidgey = new Vulpix();
+            Pokemon pidgey = new Dragonair();
             pidgey.isWild = false;
             this.selfPokemons.Add(pidgey);
-            Pokemon ninetales = new AlolaNinetales();
+            Pokemon ninetales = new Snorlax();
             ninetales.isWild = false;
             this.selfPokemons.Add(ninetales);
 
