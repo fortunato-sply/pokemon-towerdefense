@@ -4,22 +4,22 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Squirtle : Pokemon
+    public class Ivysaur : Pokemon
     {
-        public Squirtle(int level = 1)
+        public Ivysaur(int level = 7)
         {
-            this.Name = "Squirtle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\squirtle.png");
+            this.Name = "Ivysaur";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\ivysaur.png");
 
             this.Level = level;
 
-            this.minLevel = 1;
-            this.SelectedAttack = new Bubbles();
+            this.minLevel = 7;
+            this.SelectedAttack = new RazorLeaf();
             this.Attacks = new List<Attack>();
-            this.Speed = 3;
-            this.Power += 1 * Level;
+            this.Speed = 5;
+            this.Power += 2 * Level;
             this.Life += 2 * level;
-            this.XpDrop = 30;
+            this.XpDrop = 60;
             ActualLife = Life;
             for (int i = 0; i < Level; i++)
             {
@@ -27,7 +27,7 @@ namespace pokemon_towerdefense.Models
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
 
-            this.Evolution = new Wartotle();
+            this.Evolution = new Venusaur();
         }
     }
 }

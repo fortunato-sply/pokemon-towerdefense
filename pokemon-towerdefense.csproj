@@ -71,6 +71,13 @@
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Attack.cs" />
+    <Compile Include="Models\Pokemons\Blastoise.cs" />
+    <Compile Include="Models\Pokemons\Charmander.cs" />
+    <Compile Include="Models\Pokemons\Charmeleon.cs" />
+    <Compile Include="Models\Pokemons\Wartotle.cs" />
+    <Compile Include="Models\Pokemons\Venusaur.cs" />
+    <Compile Include="Models\Pokemons\Ivysaur.cs" />
+    <Compile Include="Models\Pokemons\Bulbasaur.cs" />
     <Compile Include="Models\Pokemons\ShinyCharizard.cs" />
     <Compile Include="Models\Pokemons\Squirtle.cs" />
     <Compile Include="Models\Pokemons\Gengar.cs" />
@@ -145,6 +152,9 @@
     <Content Include="assets\pokemons\gengar.png" />
     <Content Include="assets\pokemons\gyarados.png" />
     <Content Include="assets\pokemons\charizard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\attacks\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -97,7 +97,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 15;
             this.Cooldown = 20;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\ember-sprite.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\ember-sprite.png"));
         }
     }
     public class Bite : Attack
@@ -108,7 +108,29 @@ namespace pokemon_towerdefense.Models
             this.Cooldown = 30;
             this.IsMelee = true;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\bite-sprite.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\bite-sprite.png"));
+        }
+    }
+
+    public class Bubbles : Attack
+    {
+        public Bubbles()
+        {
+            this.Damage = 15;
+            this.Cooldown = 20;
+
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\bubbles.png"));
+        }
+    }
+
+    public class RazorLeaf : Attack
+    {
+        public RazorLeaf()
+        {
+            this.Damage = 15;
+            this.Cooldown = 20;
+
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\petalleaf.png"));
         }
     }
 }

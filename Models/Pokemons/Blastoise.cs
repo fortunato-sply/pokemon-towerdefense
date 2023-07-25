@@ -4,30 +4,28 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Squirtle : Pokemon
+    public class Blastoise : Pokemon
     {
-        public Squirtle(int level = 1)
+        public Blastoise(int level = 18)
         {
-            this.Name = "Squirtle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\squirtle.png");
+            this.Name = "Blastoise";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\blastoise.png");
 
             this.Level = level;
 
-            this.minLevel = 1;
+            this.minLevel = 18;
             this.SelectedAttack = new Bubbles();
             this.Attacks = new List<Attack>();
-            this.Speed = 3;
-            this.Power += 1 * Level;
-            this.Life += 2 * level;
-            this.XpDrop = 30;
+            this.Speed = 4;
+            this.Power += 4 * Level;
+            this.Life += 4 * level;
+            this.XpDrop = 60;
             ActualLife = Life;
             for (int i = 0; i < Level; i++)
             {
                 XpDrop += Convert.ToInt16(XpDrop * 0.15);
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
-
-            this.Evolution = new Wartotle();
         }
     }
 }

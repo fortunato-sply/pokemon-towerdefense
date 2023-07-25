@@ -69,25 +69,24 @@ namespace pokemon_towerdefense
             // TESTE ADICIONANDO POKEMONS
             Pokemon zard = new Charizard();
             zard.isWild = false;
-            Pokemon gengar = new Gengar();
-            gengar.isWild = false;
+            Pokemon bulbasaur = new Bulbasaur();
+            bulbasaur.isWild = false;
             Pokemon squirtle = new Squirtle();
             squirtle.isWild = false;
-            Pokemon shZard = new ShinyCharizard();
+            Pokemon shZard = new Charmander();
             shZard.isWild = false;
             Pokemon gyarados = new Gyarados();
             gyarados.isWild = false;
             this.selfPokemons.Add(zard);
             this.selfPokemons.Add(gyarados);
-            this.selfPokemons.Add(gengar);
             this.selfPokemons.Add(squirtle);
             this.selfPokemons.Add(shZard);
+            this.selfPokemons.Add(bulbasaur);
 
             this.InventoryPokemons.Add(zard);
-            this.InventoryPokemons.Add(gengar);
             for(int i = 0; i < 8; i++)
             {
-                this.InventoryPokemons.Add(gengar);
+                this.InventoryPokemons.Add(zard);
             }
 
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
@@ -179,7 +178,7 @@ namespace pokemon_towerdefense
 
                             g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 790));
                             g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 810));
-                            DrawXpBar(xp, 110 + (i * 215), 920, xpEvolve);
+                            DrawXpBar(xp, 110 + (i * 215), 970, xpEvolve);
 
                             if (i == grabbed)
                             {

@@ -27,7 +27,7 @@ namespace pokemon_towerdefense.Models
         public int ActualImage = 0;
         public Attack SelectedAttack {  get; protected set; }
         public List<Attack> Attacks { get; protected set; } = new List<Attack>();
-        public List<Pokemon> Evolutions = null;
+        public Pokemon Evolution = null;
         public int Range = 300;
         public Pokemon target = null;
 
@@ -54,8 +54,8 @@ namespace pokemon_towerdefense.Models
 
             clonedPokemon.Attacks = new List<Attack>(Attacks.Select(a => a));
 
-            if (Evolutions != null)
-                clonedPokemon.Evolutions = new List<Pokemon>(Evolutions.Select(p => (Pokemon)p.Clone()));
+            if (Evolution != null)
+                clonedPokemon.Evolution = Evolution.Clone();
 
             // Certifique-se de que a imagem é clonada profundamente, pois é uma referência ao Bitmap
             if (Sprite != null)
@@ -95,10 +95,32 @@ namespace pokemon_towerdefense.Models
             if (Xp >= XpEvolve)
             {
                 Level += 1;
+                VerifyEvolve();
                 Xp = Xp - XpEvolve;
                 UpdateStatus();
                 if (Xp >= XpEvolve)
                     VerifyLevelUp();
+            }
+        }
+
+        private void VerifyEvolve()
+        {
+            if (Evolution != null)
+            {
+                if (this.Level >= Evolution.minLevel)
+                {
+                    this.Name = Evolution.Name;
+                    this.Range = Evolution.Range;
+                    this.Tier = Evolution.Tier;
+                    this.Life = Evolution.Life;
+                    this.Power = Evolution.Power;
+                    this.Defense = Evolution.Defense;
+                    this.Speed = Evolution.Speed;
+                    this.Sprite = Evolution.Sprite;
+                    this.Attacks = Evolution.Attacks;
+                    this.minLevel = Evolution.minLevel;
+                    this.Evolution = Evolution.Evolution;
+                }
             }
         }
 
