@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
@@ -15,6 +16,15 @@ namespace pokemon_towerdefense.Models
         public List<Point> PhasePath { get; set; } = new List<Point> { };
         public int GameTime = 0;
         public int ActualWave = 1;
+        public int WavesLimit = 0;
+        public List<int> PhaseTiers;
+        public List<string> PhaseTypes;
+
+        public Phase(List<int> tiers, List<string> types)
+        {
+            PhaseTiers = tiers;
+            PhaseTypes = types;
+        }
 
         public List<Pokemon> GetWilds()
         {
@@ -50,7 +60,8 @@ namespace pokemon_towerdefense.Models
             {
                 if (incrementator % CoolDownSpawn == 0)
                 {
-                    Waves[ActualWave-1].AddPokemon(Id, PhasePath[0], 1);
+                    Random random = new Random();
+                    Waves[ActualWave-1].AddPokemon(Id, PhasePath[0], PhaseTiers[random.Next(0, PhaseTiers.Count)], PhaseTypes[random.Next(0, PhaseTypes.Count)]);
                 }
             }
 
