@@ -73,6 +73,9 @@
     <Compile Include="Models\Attack.cs" />
     <Compile Include="Models\RareCandy.cs" />
     <Compile Include="Models\Pokemons\Alakazam.cs" />
+    <Compile Include="Models\Pokemons\Magikarp.cs" />
+    <Compile Include="Models\Pokemons\Haunter.cs" />
+    <Compile Include="Models\Pokemons\Gastly.cs" />
     <Compile Include="Models\Pokemons\Kadabra.cs" />
     <Compile Include="Models\Pokemons\Blastoise.cs" />
     <Compile Include="Models\Pokemons\AlolaNinetales.cs" />

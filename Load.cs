@@ -41,7 +41,7 @@ namespace pokemon_towerdefense
 
         private void roundedButton2_Click(object sender, EventArgs e)
         {
-
+            Application.Exit();
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

@@ -4,22 +4,22 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Rattata : Pokemon
+    public class Magikarp : Pokemon
     {
-        public Rattata(int level = 1)
+        public Magikarp(int level = 1)
         {
-            this.Name = "Rattata";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\rattata.png");
+            this.Name = "Magikarp";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\magikarp.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Normal");
+            this.Type = Type.GetInstance("Water");
             this.Tier = 1;
 
             this.minLevel = 1;
-            this.SelectedAttack = new Bite();
+            this.SelectedAttack = new Bubbles();
             this.Attacks = new List<Attack>();
-            this.Speed = 3;
+            this.Speed = 5;
             this.Power += 1 * Level;
             this.Life += 2 * level;
             this.XpDrop = 60;
@@ -30,7 +30,7 @@ namespace pokemon_towerdefense.Models
                 XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
             }
 
-            this.Evolution = null;
+            this.Evolution = new Gyarados();
         }
     }
 }
