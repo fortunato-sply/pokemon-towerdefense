@@ -33,7 +33,7 @@ namespace pokemon_towerdefense.Models
             }    
         }
 
-        public void IsEnded()
+        public bool IsEnded()
         {
             var count = 0;
             foreach (var pokemon in Pokemons)
@@ -43,7 +43,11 @@ namespace pokemon_towerdefense.Models
             }
 
             if (count <= 0)
+            {
                 End = true;
+                return true;
+            }
+            return false;
         }
     }
 }
