@@ -26,15 +26,38 @@ namespace pokemon_towerdefense.Models
             new Bulbasaur(),
             new Ivysaur(),
             new Venusaur(),
+            new Caterpie(),
+            new Rattata(),
+            new Weedle(),
         };
 
-        public static List<Pokemon> GetPokemonsByTier(int tier)
-            => allPokemons.Where(p => p.Tier == tier).ToList();
+        public static List<Pokemon> GetPokemonsByTier(int tier, int quantity = 10, int minLevel = 1, int maxLevel = 100)
+        {
+            var pokemons = allPokemons.Where(p => p.Tier == tier).ToList();
 
-        public static List<Pokemon> GetPokemonsByType(string type)
-            => allPokemons.Where(p => p.Type.Name == type).ToList();
+            var randomPokemons = new List<Pokemon>(quantity);
+            for (int i = 0; i < quantity; i++)
+            {
+                Pokemon clonedPokemon = pokemons[rand.Next(0, pokemons.Count)].Clone(rand.Next(minLevel, maxLevel));
+                randomPokemons.Add(clonedPokemon);
+            }
 
-        private static List<Pokemon> pokemonsTier1 = allPokemons.Where(p => p.Tier == 1).ToList();
+            return randomPokemons;
+        }
+
+        public static List<Pokemon> GetPokemonsByType(string type, int quantity = 10, int minLevel = 1, int maxLevel = 100)
+        {
+            var pokemons = allPokemons.Where(p => p.Type.Name == type).ToList();
+
+            var randomPokemons = new List<Pokemon>(quantity);
+            for (int i = 0; i < quantity; i++)
+            {
+                Pokemon clonedPokemon = pokemons[rand.Next(0, pokemons.Count)].Clone(rand.Next(minLevel, maxLevel));
+                randomPokemons.Add(clonedPokemon);
+            }
+
+            return randomPokemons;
+        }
 
         public static List<Pokemon> GetRandomPokemons(int quantity, int minLevel, int maxLevel)
         {

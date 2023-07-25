@@ -93,10 +93,13 @@ namespace pokemon_towerdefense
 
             timer.Tick += delegate
             {
-                if (phase.Waves[phase.ActualWave].IsEnded())
+                if (phase.Waves.Count > 0)
                 {
-                    g.DrawString("Phase " + phase.ActualWave.ToString() + "Ended", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
-                    delayWave = 50;
+                    if (phase.Waves[phase.ActualWave - 1].IsEnded())
+                    {
+                        g.DrawString("Phase " + phase.ActualWave.ToString() + "Ended", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
+                        delayWave = 50;
+                    }
                 }
 
                 if (isPaused)
