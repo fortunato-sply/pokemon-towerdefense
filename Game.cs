@@ -39,6 +39,9 @@ namespace pokemon_towerdefense
         {
             InitializeComponent();
             PlayBattleTheme();
+
+            TypeConfigurator.ConfigureTypes();
+
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
             PbScreen.MouseDown += Form1_MouseDown;

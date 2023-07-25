@@ -13,6 +13,9 @@ namespace pokemon_towerdefense.Models
 
             this.Level = level;
 
+            this.Type = Type.GetInstance("Water");
+            this.Tier = 1;
+
             this.minLevel = 1;
             this.SelectedAttack = new Bubbles();
             this.Attacks = new List<Attack>();

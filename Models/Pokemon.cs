@@ -20,7 +20,7 @@ namespace pokemon_towerdefense.Models
         public int Xp { get; protected set; } = 0;
         protected int minLevel { get; set; }
         public int Tier { get; set; }
-
+        public Type Type { get; set; }
         public bool isWild = true;
 
         public int SpeedImage = 0;

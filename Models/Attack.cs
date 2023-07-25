@@ -92,9 +92,9 @@ namespace pokemon_towerdefense.Models
         }
     }
 
-    public class Flamethrower : Attack
+    public class Meelee : Attack
     {
-        public Flamethrower() 
+        public Meelee() 
         {
             this.Damage = 20;
             this.Cooldown = 25;

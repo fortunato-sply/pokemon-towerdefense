@@ -72,6 +72,9 @@
     </Compile>
     <Compile Include="Models\Attack.cs" />
     <Compile Include="Models\Pokemons\Blastoise.cs" />
+    <Compile Include="Models\Pokemons\Pidgeot.cs" />
+    <Compile Include="Models\Pokemons\Pidgeotto.cs" />
+    <Compile Include="Models\Pokemons\Pidgey.cs" />
     <Compile Include="Models\Pokemons\Charmander.cs" />
     <Compile Include="Models\Pokemons\Charmeleon.cs" />
     <Compile Include="Models\Pokemons\Wartotle.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Models\RoundedRect.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Models\Types.cs" />
     <Compile Include="Models\Wave.cs" />
     <Compile Include="Pause.cs">
       <SubType>Form</SubType>

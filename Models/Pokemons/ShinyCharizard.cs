@@ -13,8 +13,11 @@ namespace pokemon_towerdefense.Models
 
             this.Level = level;
 
+            this.Type = Type.GetInstance("Fire");
+            this.Tier = 3;
+
             this.minLevel = 24;
-            this.SelectedAttack = new Flamethrower();
+            this.SelectedAttack = new Ember();
             this.Attacks = new List<Attack>();
             this.Speed = 10;
             this.Power += 5 * Level;

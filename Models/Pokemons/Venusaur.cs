@@ -13,6 +13,9 @@ namespace pokemon_towerdefense.Models
 
             this.Level = level;
 
+            this.Type = Type.GetInstance("Grass");
+            this.Tier = 3;
+
             this.minLevel = 18;
             this.SelectedAttack = new RazorLeaf();
             this.Attacks = new List<Attack>();
