@@ -27,7 +27,8 @@ namespace pokemon_towerdefense.Models
 
             for(int i = 0; i < quantity; i++)
             {
-                RareCandy rareCandy = new RareCandy(new Point(PhasePath[PhasePath.Count-1].X + random.Next(-30, 30), PhasePath[PhasePath.Count-1].Y + random.Next(-30, 30)));
+                RareCandy rareCandy = new RareCandy(new Point(PhasePath[PhasePath.Count - Convert.ToInt16(Math.Ceiling((double)Convert.ToDecimal(PhasePath.Count / 2)))].X + random.Next(-30, 30), 
+                    PhasePath[PhasePath.Count - Convert.ToInt16(Math.Ceiling((double)(Convert.ToDecimal(PhasePath.Count) / 2)))].Y + random.Next(-30, 30)));
 
                 RareCandies.Add(rareCandy);
             }
@@ -127,14 +128,21 @@ namespace pokemon_towerdefense.Models
 
             foreach (var Pokemon in Waves[ActualWave - 1].Pokemons)
             {
-                if (Pokemon.PathPoint < PhasePath.Count && Pokemon.isWild)
+                if (Pokemon.PathPoint < PhasePath.Count && Pokemon.isWild && Pokemon.IsAlive)
                 {
+                    alives++;
+
                     Pokemon.Location
                         = new Point(Pokemon.Location.Value.X + Pokemon.SpeedX,
                         Pokemon.Location.Value.Y + Pokemon.SpeedY);
 
-                    if (Pokemon.IsAlive)
-                        alives++;
+                    Pokemon.CollectCandy(RareCandies);
+
+                    if(Pokemon.rareCandy != null)
+                    {
+                        RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].Position = Pokemon.Location.Value;
+                        MessageBox.Show(RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].Position.X.ToString());
+                    }
 
                     if (Math.Abs(Pokemon.Location.Value.X - PhasePath[Pokemon.PathPoint].X) < 20 && Math.Abs(Pokemon.Location.Value.Y - PhasePath[Pokemon.PathPoint].Y) < 20)
                     {
@@ -153,6 +161,11 @@ namespace pokemon_towerdefense.Models
                                         PhasePath[Pokemon.PathPoint - 1].Y - PhasePath[Pokemon.PathPoint].Y > 0 ? -Pokemon.Speed : Pokemon.SpeedY = 0;
                         }
                     }
+                }
+                else if (!Pokemon.IsAlive)
+                { 
+                    Pokemon.rareCandy = null;
+                    RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].IsStealed = false;
                 }
             }
             if (alives == 0 && Waves[ActualWave - 1].Pokemons.Count > 0 && Waves[ActualWave - 1].Pokemons.Count >= 3 + (ActualWave * 2))

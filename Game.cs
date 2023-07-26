@@ -305,7 +305,7 @@ namespace pokemon_towerdefense
                     // RARE CANDIES
                     phase.RareCandies.ForEach(r =>
                     {
-                        g.DrawImage(r.Sprite, r.Position);
+                        g.DrawImage(r.Sprite, r.Position.X, r.Position.Y) ;
                     });
 
                     // POKE CONTAINERS

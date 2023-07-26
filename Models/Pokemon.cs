@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -42,6 +39,28 @@ namespace pokemon_towerdefense.Models
         public bool IsAlive = true;
         public int XpEvolve = 100;
         public int XpDrop = 0;
+        public bool Stealing = false;
+        public RareCandy rareCandy;
+
+        public void CollectCandy(List<RareCandy> candies)
+        {
+            candies.ForEach(c =>
+            {
+                if (!c.IsStealed && !this.Stealing)
+                {
+                    int deltaX = c.Position.X - this.Location.Value.X;
+                    int deltaY = c.Position.X - this.Location.Value.Y;
+
+                    double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                    if (distance < 50)
+                    {
+                        c.IsStealed = true;
+                        this.rareCandy = c;
+                    }
+                }
+            });
+        }
 
         public virtual Pokemon Clone(int? newLevel = null, bool? isWild = null)
         {
