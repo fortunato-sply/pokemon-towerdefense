@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -82,12 +83,21 @@ namespace pokemon_towerdefense.Models
             var pokemons = allPokemons.Where(p => p.Type.Name == type && p.Tier == tier).ToList();
 
             var randomPokemons = new List<Pokemon>(quantity);
+            if (pokemons.Count == 0)
+                return null;
+
             for (int i = 0; i < quantity; i++)
             {
-                Pokemon clonedPokemon = pokemons[rand.Next(0, pokemons.Count)].Clone(rand.Next(minLevel, maxLevel));
-                randomPokemons.Add(clonedPokemon);
+                Pokemon clonedPokemon = pokemons[rand.Next(0, pokemons.Count)];
+                if (clonedPokemon != null)
+                {
+                    clonedPokemon = clonedPokemon.Clone(rand.Next(minLevel, maxLevel));
+                    randomPokemons.Add(clonedPokemon);
+                }
+                else
+                    i--;
             }
-
+            
             return randomPokemons;
         }
 

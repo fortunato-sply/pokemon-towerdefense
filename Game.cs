@@ -12,6 +12,7 @@ using System.Media;
 using System.Runtime.Remoting.Contexts;
 using static System.Windows.Forms.AxHost;
 using System.Security.Policy;
+using System.IO;
 
 namespace pokemon_towerdefense
 {
@@ -33,20 +34,62 @@ namespace pokemon_towerdefense
 
         List<Pokemon> selfPokemons = new List<Pokemon>();
         List<Pokemon> InventoryPokemons = new List<Pokemon>();
-        Phase phase;
+        Phase phase1;
+        Phase phase2;
+        Phase phase3;
+        List<Phase> phases = new List<Phase>();
+        int actualPhase = 0;
+        RoundedRect nextPhaseButton = null;
+
+        bool nextWave = false;
+        bool nextPhase = false;
+
         public Game()
         {
-            List<int> tiers = new List<int>();
-            tiers.Add(1);
-            List<string> types = new List<string>();
-            types.Add("Grass");
-            types.Add("Bug");
-            types.Add("Flying");
-            types.Add("Normal");
+            List<int> tiers1 = new List<int>();
+            tiers1.Add(1);
+            List<string> types1 = new List<string>();
+            types1.Add("Grass");
+            types1.Add("Bug");
+            types1.Add("Flying");
+            types1.Add("Normal");
+            List<Point> path1 = new List<Point>();
+            path1.Add(new Point(570, -170));
+            path1.Add(new Point(570, 550));
+            path1.Add(new Point(1330, 550));
+            path1.Add(new Point(1330, 1000));
 
-            phase = new Phase(tiers, types, 5);
+            phase1 = new Phase(1, tiers1, types1, 3, path1);
+            phase1.InitializeRareCandies(6);
 
-            phase.InitializeRareCandies(6);
+            List<int> tiers2 = new List<int>();
+            tiers2.Add(1);
+            tiers2.Add(2);
+            List<string> types2 = new List<string>();
+            types2.Add("Grass");
+            types2.Add("Bug");
+            types2.Add("Flying");
+            types2.Add("Normal");
+
+            phase2 = new Phase(2, tiers2, types2, 8, path1);
+            phase2.InitializeRareCandies(9);
+
+            List<int> tiers3 = new List<int>();
+            tiers3.Add(2);
+            tiers3.Add(3);
+            List<string> types3 = new List<string>();
+            types3.Add("Water");
+            types3.Add("Grass");
+            types3.Add("Flying");
+            types3.Add("Psychic");
+            types3.Add("Normal");
+
+            phase3 = new Phase(3, tiers3, types3, 13, path1);
+            phase3.InitializeRareCandies(9);
+
+            phases.Add(phase1);
+            phases.Add(phase2);
+            phases.Add(phase3);
 
             InitializeComponent();
             PlayBattleTheme();
@@ -58,6 +101,7 @@ namespace pokemon_towerdefense
             PbScreen.MouseDown += Form1_MouseDown;
             PbScreen.MouseDown += Inventory_MouseDown;
             PbScreen.MouseUp += Form1_MouseUp;
+            PbScreen.MouseMove += Form1_MouseMove;
             PbScreen.MouseMove += Inventory_MouseMove;
 
             PbScreen.MouseClick += Placement_MouseClick;
@@ -102,7 +146,6 @@ namespace pokemon_towerdefense
             Color redOpacity = Color.FromArgb(150, Color.Red);
             Brush brushRedOpacity = new SolidBrush(redOpacity);
 
-            var nextPhase = false;
             var actualWave = 0;
 
             timer.Tick += delegate
@@ -215,40 +258,23 @@ namespace pokemon_towerdefense
                         -1
                     );
 
-                    g.DrawString("Wave:" + phase.ActualWave.ToString() + "/" + phase.WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.White, new Point(80, 50));
+                    g.DrawString("Wave:" + phases[actualPhase].ActualWave.ToString() + "/" + phases[actualPhase].WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.White, new Point(80, 50));
 
-                    if (phase.Waves.Count > 0)
+                    if (phases[actualPhase].Waves.Count > 0)
                     {
-                        var end = phase.Waves[phase.ActualWave - 1].End;
+                        var end = phases[actualPhase].Waves[phases[actualPhase].ActualWave - 1].End;
                         if (end)
                         {
-                            if (phase.End)
-                                nextPhase = true;
+                            if (phases[actualPhase].End)
+                                nextWave = true;
                             else
                             {
-                                actualWave = phase.ActualWave;
+                                actualWave = phases[actualPhase].ActualWave;
                                 delayWave = 50;
                             }
                         }
                     }
 
-                    if (phase.GameOver)
-                    {
-                        g.DrawString("Game Over!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
-                    }
-                    else
-                    {
-                        if (nextPhase)
-                        {
-                            g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
-                        }
-                        else if (delayWave > 0)
-                        {
-                            g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
-
-                            delayWave--;
-                        }
-                    }
                     // PLACEMENTS
                     this.placements.ForEach(p => {
                         g.DrawRectangle(Pens.Black, p.rect);
@@ -271,7 +297,7 @@ namespace pokemon_towerdefense
                     if (pokeball.isDragging)
                     {
                         var isOver = false;
-                        var WildPokemons = phase.GetWilds();
+                        var WildPokemons = phases[actualPhase].GetWilds();
                         WildPokemons.ForEach(wild =>
                         {
                             if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
@@ -284,8 +310,6 @@ namespace pokemon_towerdefense
                             }
                         });
 
-                        phase.DrawWildPokemons(g);
-
                         if (!isOver) {
                             g.DrawImage(
                                 pokeball.BmpClosed,
@@ -294,11 +318,11 @@ namespace pokemon_towerdefense
                             );
                         }
                     }
-                    else if (!phase.GameOver)
+                    else if (!phases[actualPhase].GameOver && grabbed == -1)
                     {
                         //WILD POKEMONS
-                        phase.RunPhase(g);
-                        phase.runTurrets(g, this.placements);
+                        phases[actualPhase].RunPhase(g);
+                        phases[actualPhase].runTurrets(g, this.placements);
 
                         g.DrawImage(
                             pokeball.BmpClosed,
@@ -307,11 +331,60 @@ namespace pokemon_towerdefense
                         );
                     }
 
+                    // STOP MOVING POKEMONS
+                    if (pokeball.isDragging || grabbed != -1)
+                        phases[actualPhase].DrawWildPokemons(g);
+
                     // RARE CANDIES
-                    phase.RareCandies.ForEach(r =>
+                    phases[actualPhase].RareCandies.ForEach(r =>
                     {
                         g.DrawImage(r.Sprite, r.Position.X, r.Position.Y) ;
                     });
+
+                    // DRAW INFO PHASES AND WAVES
+                    if (phases[actualPhase].GameOver)
+                    {
+                        g.DrawString("Game Over!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                    }
+                    else
+                    {
+                        if (nextWave)
+                        {
+                            if (actualPhase + 1 != phases.Count)
+                            {
+                                nextPhase = true;
+                                g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+
+                                nextPhaseButton = new RoundedRect();
+                                var bg = nextPhaseButton.setRect(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
+
+                                Rectangle rect = new Rectangle(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
+                                if (nextPhaseButton != null)
+                                {
+                                    if (rect.Contains(Cursor.Position))
+                                        nextPhaseButton.Hover = true;
+                                    else
+                                        nextPhaseButton.Hover = false;
+                                }
+
+                                if (nextPhaseButton.Hover)
+                                    g.FillPath(Brushes.Blue, bg);
+                                else
+                                    g.FillPath(Brushes.Black, bg);
+                                g.DrawString("Continue", new Font("Press Start 2P", 26, FontStyle.Bold), Brushes.Red, new PointF((PbScreen.Width / 2) - 100, (PbScreen.Height / 2 + 75)));
+                            }
+                            else
+                            {
+                                g.DrawString("Congrats! You Beat the Game", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                            }
+                        }
+                        else if (delayWave > 0)
+                        {
+                            g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+
+                            delayWave--;
+                        }
+                    }
 
                     // POKE CONTAINERS
                     for (int i = 0; i < 6; i++)
@@ -451,6 +524,11 @@ namespace pokemon_towerdefense
                 }
             }
         }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
         private void Inventory_MouseDown(object sender, MouseEventArgs e)
         {
             if (inventoryGrabbed != -1)
@@ -504,6 +582,16 @@ namespace pokemon_towerdefense
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            Rectangle rect = new Rectangle(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
+            if (rect.Contains(Cursor.Position) && nextPhase)
+            {
+                actualPhase++;
+                nextWave = false;
+                phases[actualPhase].End = false;
+                phases[actualPhase].GameOver = false;
+                nextPhase = false;
+            }
+
             if (e.Location.X >= pokeball.Location.X && e.Location.X < (pokeball.Location.X + pokeball.Width) &&
                 e.Location.Y >= pokeball.Location.Y && e.Location.Y < (pokeball.Location.Y + pokeball.Height))
             {
@@ -578,7 +666,7 @@ namespace pokemon_towerdefense
         {
             if (pokeball.isDragging)
             {
-                var WildPokemons = phase.GetWilds();
+                var WildPokemons = phases[actualPhase].GetWilds();
                 WildPokemons.ForEach(wild =>
                 {
                     if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
@@ -633,7 +721,7 @@ namespace pokemon_towerdefense
         private void PlayBattleTheme()
         {
             SoundPlayer simpleSound = new SoundPlayer(@"..\..\assets\Battle_Theme.wav");
-            simpleSound.Play();
+            simpleSound.PlayLooping();
         }
     }
 }

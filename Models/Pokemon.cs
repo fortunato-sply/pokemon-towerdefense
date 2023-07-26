@@ -88,7 +88,6 @@ namespace pokemon_towerdefense.Models
 
             if(isWild != null)
                 clonedPokemon.isWild = isWild.Value;
-
             return clonedPokemon;
         }
 

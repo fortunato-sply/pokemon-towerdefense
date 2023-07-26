@@ -49,18 +49,13 @@ namespace pokemon_towerdefense.Models
             }
         }
 
-        public Phase(List<int> tiers, List<string> types, int limit)
+        public Phase(int id, List<int> tiers, List<string> types, int limit, List<Point> points)
         {
+            Id = id;
             PhaseTiers = tiers;
             PhaseTypes = types;
             WavesLimit = limit;
-
-            List<Point> path = new List<Point>();
-            path.Add(new Point(570, -170));
-            path.Add(new Point(570, 550));
-            path.Add(new Point(1330, 550));
-            path.Add(new Point(1330, 1000));
-            PhasePath = path;
+            PhasePath = points;
         }
 
         public List<Pokemon> GetWilds()
@@ -97,7 +92,14 @@ namespace pokemon_towerdefense.Models
                 if (incrementator % CoolDownSpawn == 0)
                 {
                     Random random = new Random();
-                    Waves[ActualWave-1].AddPokemon(Id, PhasePath[0], PhaseTiers[random.Next(0, PhaseTiers.Count)], PhaseTypes[random.Next(0, PhaseTypes.Count)]);
+
+                    var result = false;
+                    while (!result)
+                    {
+                        var tier = PhaseTiers[random.Next(0, PhaseTiers.Count)];
+                        var type = PhaseTypes[random.Next(0, PhaseTypes.Count)];
+                        result = Waves[ActualWave - 1].AddPokemon(Id, PhasePath[0], tier, type);
+                    }
                 }
             }
 

@@ -12,6 +12,7 @@ namespace pokemon_towerdefense.Models
     public class RoundedRect : PictureBox
     {
         public GraphicsPath path { get; set; } = new GraphicsPath();
+        public bool Hover = false;
 
         Rectangle rectangle;
          
