@@ -22,13 +22,9 @@ namespace pokemon_towerdefense.Models
             this.Speed = 10;
             this.Power += 5 * Level;
             this.Life += 2 * level;
-            this.XpDrop = 90;
-            ActualLife = Life;
-            for (int i = 0; i < Level; i++)
-            {
-                XpDrop += Convert.ToInt16(XpDrop * 0.15);
-                XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
-            }
+            this.ActualLife = Life;
+            this.XpDrop = 50 * level;
+            this.XpEvolve = 450 * level;
         }
     }
 }

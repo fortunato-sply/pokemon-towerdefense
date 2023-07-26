@@ -21,14 +21,11 @@ namespace pokemon_towerdefense.Models
             this.Attacks = new List<Attack>();
             this.Speed = 4;
             this.Power += 4 * Level;
-            this.Life += 4 * level;
-            this.XpDrop = 60;
-            ActualLife = Life;
-            for (int i = 0; i < Level; i++)
-            {
-                XpDrop += Convert.ToInt16(XpDrop * 0.15);
-                XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
-            }
+            this.Defense = 80;
+            this.Life += 4 * level; 
+            this.ActualLife = Life;
+            this.XpDrop = 35 * level;
+            this.XpEvolve = 370 * level;
         }
     }
 }

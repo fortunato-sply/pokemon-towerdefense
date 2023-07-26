@@ -20,16 +20,11 @@ namespace pokemon_towerdefense.Models
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
             this.Speed = 3;
-            this.Power += 2 * Level;
+            this.Power += 1 * Level;
             this.Life += 2 * level;
-            this.XpDrop = 60;
-            ActualLife = Life;
-            for (int i = 0; i < Level; i++)
-            {
-                XpDrop += Convert.ToInt16(XpDrop * 0.15);
-                XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
-            }
-
+            this.ActualLife = Life;
+            this.XpDrop = 12 * level;
+            this.XpEvolve = 170 * level;
             this.Evolution = new Kadabra();
         }
     }

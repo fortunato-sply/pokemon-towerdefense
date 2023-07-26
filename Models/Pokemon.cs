@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace pokemon_towerdefense.Models
 {
@@ -41,6 +42,8 @@ namespace pokemon_towerdefense.Models
         public int XpDrop = 0;
         public bool Stealing = false;
         public RareCandy rareCandy;
+        public bool ExternalStealing = false;
+        public bool RunningBack = false;
 
         public void CollectCandy(List<RareCandy> candies)
         {
@@ -49,12 +52,12 @@ namespace pokemon_towerdefense.Models
                 if (!c.IsStealed && !this.Stealing)
                 {
                     int deltaX = c.Position.X - this.Location.Value.X;
-                    int deltaY = c.Position.X - this.Location.Value.Y;
+                    int deltaY = c.Position.Y - this.Location.Value.Y;
 
                     double distance = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
-
-                    if (distance < 50)
+                    if (distance < 70)
                     {
+                        this.Stealing = true;
                         c.IsStealed = true;
                         this.rareCandy = c;
                     }
@@ -106,7 +109,7 @@ namespace pokemon_towerdefense.Models
             Life += 3;
             Power += 3;
             Defense += 3;
-            XpEvolve += Convert.ToInt16(XpEvolve * 0.15);
+            XpEvolve += XpEvolve/Level;
         }
 
         public void VerifyLevelUp()
@@ -187,8 +190,10 @@ namespace pokemon_towerdefense.Models
 
         public void TakeDamage(int damage)
         {
+            if (Defense > damage)
+                Defense = damage;
             if(this.ActualLife > 0)
-                ActualLife -= (damage - (Defense/10));
+                ActualLife -= (damage - Defense);
             if(this.ActualLife <= 0)
             {
                 ActualLife = 0;
@@ -196,7 +201,6 @@ namespace pokemon_towerdefense.Models
             }
         }
 
-        Bitmap last = null;
         private double CalculateDistance(Pokemon target)
         {
             if(this.Location != null)
@@ -229,12 +233,6 @@ namespace pokemon_towerdefense.Models
                 else
                     line = 3;
             }
-
-            int spriteWidth = 59;
-            int spriteHeight = 65;
-
-            if (line == 3)
-                spriteHeight = 63;
 
             var pbRect = new Rectangle(Location.Value.X - 8, Location.Value.Y - 10, 66, 69);
 

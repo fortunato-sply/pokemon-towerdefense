@@ -6,7 +6,7 @@ namespace pokemon_towerdefense.Models
 {
     public class Pikachu : Pokemon
     {
-        public Pikachu(int level = 12)
+        public Pikachu(int level = 1)
         {
             this.Name = "Pikachu";
             this.Sprite = new Bitmap(@"..\..\assets\pokemons\pikachu.png");
@@ -22,14 +22,9 @@ namespace pokemon_towerdefense.Models
             this.Speed = 5;
             this.Power += 3 * Level;
             this.Life += 3 * level;
-            this.XpDrop = 60;
-            ActualLife = Life;
-            for (int i = 0; i < Level; i++)
-            {
-                XpDrop += Convert.ToInt16(XpDrop * 0.15);
-                XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
-            }
-
+            this.ActualLife = Life;
+            this.XpDrop = 17 * level;
+            this.XpEvolve = 200 * level;
             this.Evolution = new Raichu();
         }
     }

@@ -41,6 +41,8 @@ namespace pokemon_towerdefense
             List<string> types = new List<string>();
             types.Add("Grass");
             types.Add("Bug");
+            types.Add("Flying");
+            types.Add("Normal");
 
             phase = new Phase(tiers, types, 5);
 
@@ -87,12 +89,9 @@ namespace pokemon_towerdefense
             this.placements.Add(new Placement(new Rectangle(1414, 925, placementWidth, placementHeight)));
 
             // TESTE ADICIONANDO POKEMONS
-            Pokemon pidgey = new Pikachu();
-            pidgey.isWild = false;
-            this.selfPokemons.Add(pidgey);
-            Pokemon ninetales = new Rattata();
-            ninetales.isWild = false;
-            this.selfPokemons.Add(ninetales);
+            Pokemon Pikachu = new Pikachu();
+            Pikachu.isWild = false;
+            this.selfPokemons.Add(Pikachu);
 
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
             Brush brushBlueOpacity = new SolidBrush(blueOpacity);
@@ -216,7 +215,7 @@ namespace pokemon_towerdefense
                         -1
                     );
 
-                    g.DrawString("Wave: " + phase.ActualWave.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.White, new Point(80, 50));
+                    g.DrawString("Wave:" + phase.ActualWave.ToString() + "/" + phase.WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.White, new Point(80, 50));
 
                     if (phase.Waves.Count > 0)
                     {
@@ -233,17 +232,23 @@ namespace pokemon_towerdefense
                         }
                     }
 
-                    if (nextPhase)
+                    if (phase.GameOver)
                     {
-                        g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                        g.DrawString("Game Over!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
                     }
-                    else if (delayWave > 0)
+                    else
                     {
-                        g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                        if (nextPhase)
+                        {
+                            g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                        }
+                        else if (delayWave > 0)
+                        {
+                            g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
 
-                        delayWave--;
+                            delayWave--;
+                        }
                     }
-
                     // PLACEMENTS
                     this.placements.ForEach(p => {
                         g.DrawRectangle(Pens.Black, p.rect);
@@ -289,7 +294,7 @@ namespace pokemon_towerdefense
                             );
                         }
                     }
-                    else
+                    else if (!phase.GameOver)
                     {
                         //WILD POKEMONS
                         phase.RunPhase(g);

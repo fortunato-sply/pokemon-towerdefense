@@ -23,13 +23,9 @@ namespace pokemon_towerdefense.Models
             this.Power += 2 * Level;
             this.Life += 2 * level;
             this.XpDrop = 60;
-            ActualLife = Life;
-            for (int i = 0; i < Level; i++)
-            {
-                XpDrop += Convert.ToInt16(XpDrop * 0.15);
-                XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
-            }
-
+            this.ActualLife = Life;
+            this.XpDrop = 14 * level;
+            this.XpEvolve = 180 * level;
             this.Evolution = new Dragonair();
         }
     }

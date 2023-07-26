@@ -21,15 +21,10 @@ namespace pokemon_towerdefense.Models
             this.Attacks = new List<Attack>();
             this.Speed = 5;
             this.Power += 1 * Level;
-            this.Life += 2 * level;
-            this.XpDrop = 60;
-            ActualLife = Life;
-            for (int i = 0; i < Level; i++)
-            {
-                XpDrop += Convert.ToInt16(XpDrop * 0.15);
-                XpEvolve += Convert.ToInt16(XpEvolve * 0.3);
-            }
-
+            this.Life += 1 * level;
+            this.ActualLife = Life;
+            this.XpDrop = 5 * level;
+            this.XpEvolve = 180 * level;
             this.Evolution = new Gyarados();
         }
     }

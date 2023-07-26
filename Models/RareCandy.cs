@@ -12,7 +12,6 @@ namespace pokemon_towerdefense.Models
 
         public RareCandy(Point position)
         {
-            MessageBox.Show(position.X.ToString(), position.Y.ToString());
             Position = position;
             IsStealed = false;
         }
