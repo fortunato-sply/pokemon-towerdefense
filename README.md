@@ -6,5 +6,5 @@
   <li>Caught system</li>
   <li>Inventory</li>
   <li>Phases and waves</li>
-  <li>Actually, almost 50 different pokémons</li>
+  <li>Actually, almost 80 different pokémons</li>
 </ul>
