@@ -4,29 +4,27 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Diglett : Pokemon
+    public class Marowak : Pokemon
     {
-        public Diglett(int level = 1)
+        public Marowak(int level = 12)
         {
-            this.Name = "Diglett";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\diglett.png");
+            this.Name = "Marowak";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\marowak.png");
 
             this.Level = level;
 
-            this.Type = Type.GetInstance("Ground");
-            this.Tier = 1;
+            this.Type = Type.GetInstance("Rock");
+            this.Tier = 2;
 
-            this.minLevel = 1;
+            this.minLevel = 12;
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
-            this.Speed = 2;
-            this.Power += 1 * Level;
+            this.Speed = 4;
+            this.Power += 2 * Level;
             this.Life += 2 * level;
             this.ActualLife = Life;
             this.XpDrop = 8 * level;
             this.XpEvolve = 160 * level;
-
-            this.Evolution = new Dugtrio();
         }
     }
 }

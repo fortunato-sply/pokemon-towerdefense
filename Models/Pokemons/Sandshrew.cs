@@ -4,27 +4,29 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Dugtrio : Pokemon
+    public class Sandshrew : Pokemon
     {
-        public Dugtrio(int level = 12)
+        public Sandshrew(int level = 1)
         {
-            this.Name = "Dugtrio";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\Dugtrio.png");
+            this.Name = "Sandshrew";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\sandshrew.png");
 
             this.Level = level;
 
             this.Type = Type.GetInstance("Ground");
-            this.Tier = 3;
+            this.Tier = 1;
 
-            this.minLevel = 12;
+            this.minLevel = 1;
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
-            this.Speed = 5;
-            this.Power += 2 * Level;
-            this.Life += 3 * level;
+            this.Speed = 3;
+            this.Power += 1 * Level;
+            this.Life += 2 * level;
             this.ActualLife = Life;
             this.XpDrop = 20 * level;
             this.XpEvolve = 250 * level;
+
+            this.Evolution = new Sandslash();
         }
     }
 }
