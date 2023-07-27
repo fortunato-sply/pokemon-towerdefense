@@ -17,13 +17,14 @@ namespace pokemon_towerdefense.Models
         public Wave(int id) {
             WaveId = id;
         }
-        public bool AddPokemon(int phase, Point point, int tier, string type)
+        public bool AddPokemon(int phase, List<Point> points, int tier, string type)
         {
             List<Pokemon> pokemons = PokemonFactory.GetPokemonsByTypeAndTier(type, tier, 3 + (WaveId * 2), phase, phase + 3);
             Pokemon pokemon = pokemons != null ? pokemons[0] : null;
             if (pokemon != null)
             {
-                pokemon.Location = point;
+                pokemon.Path = points;
+                pokemon.Location = points[0];
                 Pokemons.Add(pokemon);
                 return true;
             }

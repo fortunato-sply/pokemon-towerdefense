@@ -24,7 +24,7 @@ namespace pokemon_towerdefense.Models
             this.Life += 2 * level;
             this.XpDrop = 60;
             this.ActualLife = Life;
-            this.XpDrop = 14 * level;
+            this.XpDrop = 14 + (7 * level);
             this.XpEvolve = 180 * level;
             this.Evolution = new Dragonair();
         }

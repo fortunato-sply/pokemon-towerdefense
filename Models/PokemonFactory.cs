@@ -47,7 +47,15 @@ namespace pokemon_towerdefense.Models
             new Raichu(),
             new Abra(),
             new Kadabra(),
-            new Alakazam()
+            new Alakazam(),
+            new Aron(),
+            new Lairon(),
+            new Aggron(),
+            new Onix(),
+            new Kabuto(),
+            new Kabutops(),
+            new Diglett(),
+            new Dugtrio(),
         };
 
         public static List<Pokemon> GetPokemonsByTier(int tier, int quantity = 10, int minLevel = 1, int maxLevel = 100)

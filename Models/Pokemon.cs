@@ -15,6 +15,7 @@ namespace pokemon_towerdefense.Models
         public int SpeedY { get; set; } = 0;
         public int PathPoint { get; set; } = 0;
         public Point? Location { get; set; } = null;
+        public List<Point> Path = new List<Point>();
         public int Xp { get; protected set; } = 0;
         protected int minLevel { get; set; }
         public int Tier { get; set; }

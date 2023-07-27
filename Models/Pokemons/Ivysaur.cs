@@ -24,7 +24,7 @@ namespace pokemon_towerdefense.Models
             this.Life += 2 * level;
             this.XpDrop = 60;
             this.ActualLife = Life;
-            this.XpDrop = 24 * level;
+            this.XpDrop = 24 + (12 * level);
             this.XpEvolve = 250 * level;
             this.Evolution = new Venusaur();
         }

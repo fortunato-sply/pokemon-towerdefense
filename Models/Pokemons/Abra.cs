@@ -23,7 +23,7 @@ namespace pokemon_towerdefense.Models
             this.Power += 1 * Level;
             this.Life += 2 * level;
             this.ActualLife = Life;
-            this.XpDrop = 12 * level;
+            this.XpDrop = 12 + (6 * level);
             this.XpEvolve = 170 * level;
             this.Evolution = new Kadabra();
         }

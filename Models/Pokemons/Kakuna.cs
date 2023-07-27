@@ -24,7 +24,7 @@ namespace pokemon_towerdefense.Models
             this.Defense = 50;
             this.Life += 3 * level;
             this.ActualLife = Life;
-            this.XpDrop = 12 * level;
+            this.XpDrop = 12 + (6 * level);
             this.XpEvolve = 180 * level;
             this.Evolution = new Beedrill();
         }

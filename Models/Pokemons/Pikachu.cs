@@ -23,7 +23,7 @@ namespace pokemon_towerdefense.Models
             this.Power += 3 * Level;
             this.Life += 3 * level;
             this.ActualLife = Life;
-            this.XpDrop = 17 * level;
+            this.XpDrop = 17 + (8 * level);
             this.XpEvolve = 200 * level;
             this.Evolution = new Raichu();
         }

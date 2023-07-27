@@ -13,7 +13,7 @@ namespace pokemon_towerdefense.Models
         public int CoolDownSpawn = 40;
         public int incrementator = 1;
         public bool End { get; set; } = false;
-        public List<Point> PhasePath { get; set; } = new List<Point> { };
+        public List<List<Point>> PhasePath { get; set; } = new List<List<Point>> { };
         public int GameTime = 0;
         public int ActualWave = 1;
         public int WavesLimit = 0;
@@ -21,16 +21,27 @@ namespace pokemon_towerdefense.Models
         public List<string> PhaseTypes;
         public List<RareCandy> RareCandies = new List<RareCandy>();
         public bool GameOver = false;
+        public Bitmap Scenario = null;
+        public List<Placement> Placements = new List<Placement>();
+
+        public void DrawScenario(Graphics graphics)
+        {
+            graphics.DrawImage(Scenario, 0, 0);
+        }
+
 
         public void VerifyGameOver()
         {
             var count = 0;
             RareCandies.ForEach(r =>
-            {   
-                if (Math.Abs(r.Position.X - PhasePath[0].X) < 40 && Math.Abs(r.Position.Y - PhasePath[0].Y) < 40)
+            {
+                PhasePath.ForEach(p =>
                 {
-                    count++;
-                }
+                    if (Math.Abs(r.Position.X - p[0].X) < 40 && Math.Abs(r.Position.Y - p[0].Y) < 40)
+                    {
+                        count++;
+                    }
+                });
             });
             if (count == RareCandies.Count) 
                 GameOver = true;
@@ -40,22 +51,27 @@ namespace pokemon_towerdefense.Models
         {
             Random random = new Random();
 
-            for(int i = 0; i < quantity; i++)
+            if (PhasePath.Count > 0)
             {
-                RareCandy rareCandy = new RareCandy(new Point(PhasePath[PhasePath.Count-1].X + random.Next(-30, 30), 
-                    PhasePath[PhasePath.Count - 1].Y + random.Next(-30, 30)));
+                for (int i = 0; i < quantity; i++)
+                {
+                    RareCandy rareCandy = new RareCandy(new Point(PhasePath[0][PhasePath[0].Count - 1].X + random.Next(-30, 30),
+                        PhasePath[0][PhasePath[0].Count - 1].Y + random.Next(-30, 30)));
 
-                RareCandies.Add(rareCandy);
+                    RareCandies.Add(rareCandy);
+                }
             }
         }
 
-        public Phase(int id, List<int> tiers, List<string> types, int limit, List<Point> points)
+        public Phase(int id, List<int> tiers, List<string> types, int limit, List<List<Point>> points, Bitmap scenario, List<Placement> placements)
         {
             Id = id;
             PhaseTiers = tiers;
             PhaseTypes = types;
             WavesLimit = limit;
             PhasePath = points;
+            Scenario = scenario;
+            Placements= placements;
         }
 
         public List<Pokemon> GetWilds()
@@ -98,7 +114,7 @@ namespace pokemon_towerdefense.Models
                     {
                         var tier = PhaseTiers[random.Next(0, PhaseTiers.Count)];
                         var type = PhaseTypes[random.Next(0, PhaseTypes.Count)];
-                        result = Waves[ActualWave - 1].AddPokemon(Id, PhasePath[0], tier, type);
+                        result = Waves[ActualWave - 1].AddPokemon(Id, PhasePath[random.Next(PhasePath.Count)], tier, type);
                     }
                 }
             }
@@ -144,9 +160,12 @@ namespace pokemon_towerdefense.Models
             foreach (var Pokemon in Waves[ActualWave - 1].Pokemons)
             {
                 var verify = true;
-                if(Math.Abs(Pokemon.Location.Value.X - PhasePath[0].X) + Pokemon.SpeedX <= 20 && Math.Abs(Pokemon.Location.Value.Y - PhasePath[0].Y) + Pokemon.SpeedY <= 20 &&
-                    Pokemon.Stealing)
-                    verify = false;
+                PhasePath.ForEach(p =>
+                {
+                    if (Math.Abs(Pokemon.Location.Value.X - p[0].X) + Pokemon.SpeedX <= 20 && Math.Abs(Pokemon.Location.Value.Y - p[0].Y) + Pokemon.SpeedY <= 20 &&
+                        Pokemon.Stealing)
+                        verify = false;
+                });
                 if (verify && Pokemon.isWild && Pokemon.IsAlive)
                 {
                     alives++;
@@ -164,57 +183,60 @@ namespace pokemon_towerdefense.Models
                             Pokemon.ExternalStealing = true;
                             Pokemon.PathPoint--;
                         }
+
                         RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].Position = Pokemon.Location.Value;
 
-                        if (Math.Abs(Pokemon.Location.Value.X - PhasePath[Pokemon.PathPoint].X) < 20 && Math.Abs(Pokemon.Location.Value.Y - PhasePath[Pokemon.PathPoint].Y) < 20 && Pokemon.PathPoint > 0)
+                        if(Pokemon.PathPoint < 0)
+                            Pokemon.PathPoint = 0;
+
+                        if (Math.Abs(Pokemon.Location.Value.X - Pokemon.Path[Pokemon.PathPoint].X) < 20 && Math.Abs(Pokemon.Location.Value.Y - Pokemon.Path[Pokemon.PathPoint].Y) < 20 && Pokemon.PathPoint > 0)
                         {
                             Pokemon.PathPoint -= 1;
                             Pokemon.SpeedX = 0;
                             Pokemon.SpeedY = 0;
                         }
 
-                        if (Pokemon.PathPoint < PhasePath.Count)
+                        if (Pokemon.PathPoint < Pokemon.Path.Count)
                         {
-                            Pokemon.SpeedX = PhasePath[Pokemon.PathPoint].X - PhasePath[Pokemon.PathPoint + 1].X < 0 ? -Pokemon.Speed :
+                            Pokemon.SpeedX = Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X < 0 ? -Pokemon.Speed :
 
-                                 PhasePath[Pokemon.PathPoint].X - PhasePath[Pokemon.PathPoint + 1].X > 0 ? Pokemon.Speed : Pokemon.SpeedX = 0;
-                            Pokemon.SpeedY = PhasePath[Pokemon.PathPoint].Y - PhasePath[Pokemon.PathPoint + 1].Y < 0 ? -Pokemon.Speed :
-                                PhasePath[Pokemon.PathPoint].Y - PhasePath[Pokemon.PathPoint + 1].Y > 0 ? Pokemon.Speed : Pokemon.SpeedY = 0;
+                                 Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X > 0 ? Pokemon.Speed : Pokemon.SpeedX = 0;
+                            Pokemon.SpeedY = Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y < 0 ? -Pokemon.Speed :
+                                Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y > 0 ? Pokemon.Speed : Pokemon.SpeedY = 0;
                         }
                     }
-                    else if(Pokemon.PathPoint <= PhasePath.Count)
+                    else if(Pokemon.PathPoint <= Pokemon.Path.Count)
                     {
-                        if (Math.Abs(Pokemon.Location.Value.X - PhasePath[Pokemon.PathPoint].X) < 20 && Math.Abs(Pokemon.Location.Value.Y - PhasePath[Pokemon.PathPoint].Y) < 20)
+                        if (Math.Abs(Pokemon.Location.Value.X - Pokemon.Path[Pokemon.PathPoint].X) < 20 && Math.Abs(Pokemon.Location.Value.Y - Pokemon.Path[Pokemon.PathPoint].Y) < 20)
                         {
-                            if(Pokemon.PathPoint+1 == PhasePath.Count)
+                            if(Pokemon.PathPoint+1 == Pokemon.Path.Count)
                                Pokemon.RunningBack= true;
                             if (Pokemon.RunningBack)
                                 Pokemon.PathPoint -= 1;
                             else
                                 Pokemon.PathPoint += 1;
 
-
                             Pokemon.SpeedX = 0;
                             Pokemon.SpeedY = 0;
                         }
 
-                        if (Pokemon.PathPoint < PhasePath.Count)
+                        if (Pokemon.PathPoint < Pokemon.Path.Count)
                         {
                             if (Pokemon.SpeedX == 0 && Pokemon.SpeedY == 0)
                             {
                                 if (Pokemon.RunningBack)
                                 {
-                                    Pokemon.SpeedX = PhasePath[Pokemon.PathPoint].X - PhasePath[Pokemon.PathPoint + 1].X < 0 ? -Pokemon.Speed :
-                                        PhasePath[Pokemon.PathPoint].X - PhasePath[Pokemon.PathPoint + 1].X > 0 ? Pokemon.Speed : Pokemon.SpeedX = 0;
-                                    Pokemon.SpeedY = PhasePath[Pokemon.PathPoint].Y - PhasePath[Pokemon.PathPoint + 1].Y < 0 ? -Pokemon.Speed :
-                                        PhasePath[Pokemon.PathPoint].Y - PhasePath[Pokemon.PathPoint + 1].Y > 0 ? Pokemon.Speed : Pokemon.SpeedY = 0;
+                                    Pokemon.SpeedX = Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X < 0 ? -Pokemon.Speed :
+                                        Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X > 0 ? Pokemon.Speed : Pokemon.SpeedX = 0;
+                                    Pokemon.SpeedY = Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y < 0 ? -Pokemon.Speed :
+                                        Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y > 0 ? Pokemon.Speed : Pokemon.SpeedY = 0;
                                 }
                                 else
                                 {
-                                    Pokemon.SpeedX = PhasePath[Pokemon.PathPoint - 1].X - PhasePath[Pokemon.PathPoint].X < 0 ? Pokemon.Speed :
-                                        PhasePath[Pokemon.PathPoint - 1].X - PhasePath[Pokemon.PathPoint].X > 0 ? -Pokemon.Speed : Pokemon.SpeedX = 0;
-                                    Pokemon.SpeedY = PhasePath[Pokemon.PathPoint - 1].Y - PhasePath[Pokemon.PathPoint].Y < 0 ? Pokemon.Speed :
-                                        PhasePath[Pokemon.PathPoint - 1].Y - PhasePath[Pokemon.PathPoint].Y > 0 ? -Pokemon.Speed : Pokemon.SpeedY = 0;
+                                    Pokemon.SpeedX = Pokemon.Path[Pokemon.PathPoint - 1].X - Pokemon.Path[Pokemon.PathPoint].X < 0 ? Pokemon.Speed :
+                                        Pokemon.Path[Pokemon.PathPoint - 1].X - Pokemon.Path[Pokemon.PathPoint].X > 0 ? -Pokemon.Speed : Pokemon.SpeedX = 0;
+                                    Pokemon.SpeedY = Pokemon.Path[Pokemon.PathPoint - 1].Y - Pokemon.Path[Pokemon.PathPoint].Y < 0 ? Pokemon.Speed :
+                                        Pokemon.Path[Pokemon.PathPoint - 1].Y - Pokemon.Path[Pokemon.PathPoint].Y > 0 ? -Pokemon.Speed : Pokemon.SpeedY = 0;
                                 }
                             }
                         }

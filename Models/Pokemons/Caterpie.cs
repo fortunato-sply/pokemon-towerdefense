@@ -23,7 +23,7 @@ namespace pokemon_towerdefense.Models
             this.Power += 1 * Level;
             this.Life += 1 * level; 
             this.ActualLife = Life;
-            this.XpDrop = 8 * level;
+            this.XpDrop = 8 + (4 * level);
             this.XpEvolve = 160 * level;
             this.Evolution = null;
         }

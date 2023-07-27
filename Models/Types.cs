@@ -59,6 +59,7 @@ namespace pokemon_towerdefense.Models
             Type normalType = Type.GetInstance("Normal");
             Type groundType = Type.GetInstance("Ground");
             Type rockType = Type.GetInstance("Rock");
+            Type steelType = Type.GetInstance("Steel");
             Type bugType = Type.GetInstance("Bug");
             Type ghostType = Type.GetInstance("Ghost");
             Type flyingType = Type.GetInstance("Flying");

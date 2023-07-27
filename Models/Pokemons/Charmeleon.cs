@@ -23,7 +23,7 @@ namespace pokemon_towerdefense.Models
             this.Power += 2 * Level;
             this.Life += 2 * level;
             this.ActualLife = Life;
-            this.XpDrop = 20 * level;
+            this.XpDrop = 20 + (10 * level);
             this.XpEvolve = 240 * level;
             this.Evolution = new Charizard();
         }

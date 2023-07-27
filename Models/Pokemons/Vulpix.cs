@@ -23,7 +23,7 @@ namespace pokemon_towerdefense.Models
             this.Power += 2 * Level;
             this.Life += 2 * level;
             this.ActualLife = Life;
-            this.XpDrop = 15 * level;
+            this.XpDrop = 15 + (7 * level);
             this.XpEvolve = 220 * level;
             this.Evolution = new Ninetales();
         }

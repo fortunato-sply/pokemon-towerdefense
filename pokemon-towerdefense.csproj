@@ -71,6 +71,14 @@
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Attack.cs" />
+    <Compile Include="Models\Pokemons\Aggron.cs" />
+    <Compile Include="Models\Pokemons\Dugtrio.cs" />
+    <Compile Include="Models\Pokemons\Diglett.cs" />
+    <Compile Include="Models\Pokemons\Kabutops.cs" />
+    <Compile Include="Models\Pokemons\Onix.cs" />
+    <Compile Include="Models\Pokemons\Lairon.cs" />
+    <Compile Include="Models\Pokemons\Aron.cs" />
+    <Compile Include="Models\Pokemons\Kabuto.cs" />
     <Compile Include="Models\RareCandy.cs" />
     <Compile Include="Models\Pokemons\Alakazam.cs" />
     <Compile Include="Models\Pokemons\Magikarp.cs" />

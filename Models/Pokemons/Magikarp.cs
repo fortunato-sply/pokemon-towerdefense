@@ -23,7 +23,7 @@ namespace pokemon_towerdefense.Models
             this.Power += 1 * Level;
             this.Life += 1 * level;
             this.ActualLife = Life;
-            this.XpDrop = 5 * level;
+            this.XpDrop = 5 + (2 * level);
             this.XpEvolve = 180 * level;
             this.Evolution = new Gyarados();
         }
