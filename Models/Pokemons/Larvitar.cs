@@ -4,28 +4,29 @@ using System.Drawing;
 
 namespace pokemon_towerdefense.Models
 {
-    public class Onix : Pokemon
+    public class Larvitar : Pokemon
     {
-        public Onix(int level = 1)
+        public Larvitar(int level = 1)
         {
-            this.Name = "Onix";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\onix.png");
+            this.Name = "Larvitar";
+            this.Sprite = new Bitmap(@"..\..\assets\pokemons\larvitar.png");
 
             this.Level = level;
 
             this.Type = Type.GetInstance("Rock");
-            this.Tier = 4;
+            this.Tier = 1;
 
             this.minLevel = 1;
             this.SelectedAttack = new Meelee();
             this.Attacks = new List<Attack>();
-            this.Speed = 7;
-            this.Defense = 8;
-            this.Power += 3 * Level;
+            this.Speed = 3;
+            this.Power += 2 * Level;
             this.Life += 2 * level;
             this.ActualLife = Life;
-            this.XpDrop = 34 + (17 * level);
-            this.XpEvolve = 340 * level;
+            this.XpDrop = 25 + (12 * level);
+            this.XpEvolve = 300 * level;
+
+            this.Evolution = new Pupitar();
         }
     }
 }
