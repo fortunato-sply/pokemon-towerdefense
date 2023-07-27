@@ -422,7 +422,7 @@ namespace pokemon_towerdefense
                             }
                             else
                             {
-                                g.DrawString("Congrats! You Beat the Game", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                                g.DrawString("Congrats! You Beat the Game", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 600, PbScreen.Height / 2 - 50));
                             }
                         }
                         else if (delayWave > 0)
