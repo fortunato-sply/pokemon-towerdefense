@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
             this.PbScreen = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PbScreen)).BeginInit();
             this.SuspendLayout();
@@ -36,7 +35,6 @@
             // PbScreen
             // 
             this.PbScreen.BackColor = System.Drawing.Color.Transparent;
-            this.PbScreen.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("PbScreen.BackgroundImage")));
             this.PbScreen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.PbScreen.Location = new System.Drawing.Point(-5, 0);
             this.PbScreen.Name = "PbScreen";

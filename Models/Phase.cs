@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace pokemon_towerdefense.Models
 {
@@ -23,7 +25,6 @@ namespace pokemon_towerdefense.Models
         public bool GameOver = false;
         public Bitmap Scenario = null;
         public List<Placement> Placements = new List<Placement>();
-
         public void DrawScenario(Graphics graphics)
         {
             graphics.DrawImage(Scenario, 0, 0);
@@ -32,7 +33,16 @@ namespace pokemon_towerdefense.Models
 
         public void VerifyGameOver()
         {
+            var count = CountRareCandies();
+            
+            if (count == RareCandies.Count) 
+                GameOver = true;
+        }
+
+        public int CountRareCandies()
+        {
             var count = 0;
+
             RareCandies.ForEach(r =>
             {
                 PhasePath.ForEach(p =>
@@ -43,8 +53,8 @@ namespace pokemon_towerdefense.Models
                     }
                 });
             });
-            if (count == RareCandies.Count) 
-                GameOver = true;
+
+            return count;
         }
 
         public void InitializeRareCandies(int quantity)
@@ -160,12 +170,12 @@ namespace pokemon_towerdefense.Models
             foreach (var Pokemon in Waves[ActualWave - 1].Pokemons)
             {
                 var verify = true;
-                PhasePath.ForEach(p =>
+                
+                if (Math.Abs(Pokemon.Location.Value.X - Pokemon.Path[0].X) <= 20 && Math.Abs(Pokemon.Location.Value.Y - Pokemon.Path[0].Y) <= 20 && Pokemon.RunningBack)
                 {
-                    if (Math.Abs(Pokemon.Location.Value.X - p[0].X) + Pokemon.SpeedX <= 20 && Math.Abs(Pokemon.Location.Value.Y - p[0].Y) + Pokemon.SpeedY <= 20 &&
-                        Pokemon.Stealing)
-                        verify = false;
-                });
+                    verify = false;
+                }
+
                 if (verify && Pokemon.isWild && Pokemon.IsAlive)
                 {
                     alives++;
@@ -182,6 +192,7 @@ namespace pokemon_towerdefense.Models
                         {
                             Pokemon.ExternalStealing = true;
                             Pokemon.PathPoint--;
+                            Pokemon.RunningBack = true;
                         }
 
                         RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].Position = Pokemon.Location.Value;
@@ -196,11 +207,10 @@ namespace pokemon_towerdefense.Models
                             Pokemon.SpeedY = 0;
                         }
 
-                        if (Pokemon.PathPoint < Pokemon.Path.Count)
+                        if (Pokemon.PathPoint < Pokemon.Path.Count - 1)
                         {
                             Pokemon.SpeedX = Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X < 0 ? -Pokemon.Speed :
-
-                                 Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X > 0 ? Pokemon.Speed : Pokemon.SpeedX = 0;
+                                Pokemon.Path[Pokemon.PathPoint].X - Pokemon.Path[Pokemon.PathPoint + 1].X > 0 ? Pokemon.Speed : Pokemon.SpeedX = 0;
                             Pokemon.SpeedY = Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y < 0 ? -Pokemon.Speed :
                                 Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y > 0 ? Pokemon.Speed : Pokemon.SpeedY = 0;
                         }
@@ -211,7 +221,7 @@ namespace pokemon_towerdefense.Models
                         {
                             if(Pokemon.PathPoint+1 == Pokemon.Path.Count)
                                Pokemon.RunningBack= true;
-                            if (Pokemon.RunningBack)
+                            if (Pokemon.RunningBack && Pokemon.PathPoint > 0)
                                 Pokemon.PathPoint -= 1;
                             else
                                 Pokemon.PathPoint += 1;
@@ -231,7 +241,7 @@ namespace pokemon_towerdefense.Models
                                     Pokemon.SpeedY = Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y < 0 ? -Pokemon.Speed :
                                         Pokemon.Path[Pokemon.PathPoint].Y - Pokemon.Path[Pokemon.PathPoint + 1].Y > 0 ? Pokemon.Speed : Pokemon.SpeedY = 0;
                                 }
-                                else
+                                else if(Pokemon.PathPoint > 0)
                                 {
                                     Pokemon.SpeedX = Pokemon.Path[Pokemon.PathPoint - 1].X - Pokemon.Path[Pokemon.PathPoint].X < 0 ? Pokemon.Speed :
                                         Pokemon.Path[Pokemon.PathPoint - 1].X - Pokemon.Path[Pokemon.PathPoint].X > 0 ? -Pokemon.Speed : Pokemon.SpeedX = 0;
@@ -242,11 +252,27 @@ namespace pokemon_towerdefense.Models
                         }
                     }
                 }
-                else if (!Pokemon.IsAlive && Pokemon.Stealing)
+                else
                 {
-                    RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].IsStealed = false;
-                    Pokemon.rareCandy = null;
-                    Pokemon.Stealing = false;
+                    if (Pokemon.rareCandy != null)
+                    {
+                        if (!Pokemon.IsAlive)
+                            RareCandies.Where(r => r == Pokemon.rareCandy).ToList()[0].IsStealed = false;
+                        Pokemon.rareCandy = null;
+                        Pokemon.Stealing = false;
+                    }
+                    if (Pokemon.IsAlive)
+                    {
+                        Pokemon.RunningBack = false;
+                        Pokemon.PathPoint = 0;
+                        Pokemon.IsAlive = true;
+                        Pokemon.isWild = true;
+                        Pokemon.SpeedX = 0;
+                        Pokemon.SpeedY = 0;
+                        Pokemon.PathPoint = 0;
+                        Pokemon.ExternalStealing = false;
+                        Pokemon.Location = Pokemon.Path[0];
+                    }
                 }
             }
             if (alives == 0 && Waves[ActualWave - 1].Pokemons.Count > 0 && Waves[ActualWave - 1].Pokemons.Count >= 3 + (ActualWave * 2))

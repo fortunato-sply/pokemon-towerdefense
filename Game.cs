@@ -29,6 +29,7 @@ namespace pokemon_towerdefense
 
         bool isPaused = false;
         bool showInventory = false;
+        bool trashHover = false;
 
         List<Pokemon> selfPokemons = new List<Pokemon>();
         List<Pokemon> InventoryPokemons = new List<Pokemon>();
@@ -74,11 +75,30 @@ namespace pokemon_towerdefense
             path2.Add(path2_1);
             path2.Add(path2_2);
 
+            List<Point> path3_1 = new List<Point>();
+            path3_1.Add(new Point(430, -100));
+            path3_1.Add(new Point(430, 400));
+            path3_1.Add(new Point(1270, 400));
+            path3_1.Add(new Point(1270, 830));
+            path3_1.Add(new Point(1780, 830));
+            path3_1.Add(new Point(1780, 250));
+
+            List<Point> path3_2 = new List<Point>();
+            path3_2.Add(new Point(1270, -100));
+            path3_2.Add(new Point(1270, 830));
+            path3_2.Add(new Point(1780, 830));
+            path3_2.Add(new Point(1780, 250));
+
+            List<List<Point>> path3 = new List<List<Point>>();
+            path3.Add(path3_1);
+            path3.Add(path3_2);
+
             List<Placement> placements1 = new List<Placement>();
             List<Placement> placements2 = new List<Placement>();
+            List<Placement> placements3 = new List<Placement>();
 
-            // SETUP PLACEMENTS 1
             int placementWidth = 50, placementHeight = 55;
+            // SETUP PLACEMENTS 1
             placements1.Add(new Placement(new Rectangle(724, 455, placementWidth, placementHeight)));
             placements1.Add(new Placement(new Rectangle(854, 455, placementWidth, placementHeight)));
             placements1.Add(new Placement(new Rectangle(542, 647, placementWidth, placementHeight)));
@@ -112,8 +132,33 @@ namespace pokemon_towerdefense
             placements2.Add(new Placement(new Rectangle(610, 825, placementWidth, placementHeight)));
             placements2.Add(new Placement(new Rectangle(775, 875, placementWidth, placementHeight)));
             placements2.Add(new Placement(new Rectangle(775, 980, placementWidth, placementHeight)));
+
+            // SETUP PLACEMENTS 3
+            placements3.Add(new Placement(new Rectangle(225, 260, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(225, 155, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(225, 50, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(544, 280, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(684, 280, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(824, 280, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(964, 280, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1104, 50, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1104, 165, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1104, 280, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(544, 560, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(684, 560, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(824, 560, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(964, 560, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1104, 560, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1104, 700, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1104, 840, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1433, 490, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1433, 663, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1580, 663, placementWidth, placementHeight)));
+            placements3.Add(new Placement(new Rectangle(1580, 490, placementWidth, placementHeight)));
+
             var scenario1 = new Bitmap(@"..\..\assets\cenario1.jpg");
             var scenario2 = new Bitmap(@"..\..\assets\cenario2.jpg");
+            var scenario3 = new Bitmap(@"..\..\assets\rockcenary1.jpg");
 
             List<int> tiers1 = new List<int>();
             tiers1.Add(1);
@@ -150,12 +195,12 @@ namespace pokemon_towerdefense
             types3.Add("Normal");
 
             // CREATE PHASE 3
-            phase3 = new Phase(3, tiers3, types3, 13, path1, scenario1, placements1);
-            phase3.InitializeRareCandies(9);
+            phase3 = new Phase(3, tiers3, types3, 13, path3, scenario3, placements3);
+            phase3.InitializeRareCandies(14);
 
-            phases.Add(phase1);
-            phases.Add(phase2);
             phases.Add(phase3);
+            phases.Add(phase2);
+            phases.Add(phase1);
 
             InitializeComponent();
             PlayBattleTheme();
@@ -166,6 +211,7 @@ namespace pokemon_towerdefense
             this.FormBorderStyle = FormBorderStyle.None;
             PbScreen.MouseDown += Form1_MouseDown;
             PbScreen.MouseDown += Inventory_MouseDown;
+            PbScreen.MouseUp += Inventory_MouseUp;
             PbScreen.MouseUp += Form1_MouseUp;
             PbScreen.MouseMove += Form1_MouseMove;
             PbScreen.MouseMove += Inventory_MouseMove;
@@ -223,6 +269,16 @@ namespace pokemon_towerdefense
                     
                     g.DrawString("INVENTORY", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 120, PbScreen.Height / 3 - 250));
 
+                    Rectangle dr = new Rectangle(1800, 20, 80, 100);
+                    Rectangle sr;
+
+                    if (trashHover)
+                        sr = new Rectangle(32, 0, 32, 32);
+                    else
+                        sr = new Rectangle(0, 0, 32, 32);
+
+                    Bitmap trashIcon = new Bitmap(Image.FromFile(@"..\..\assets\thrash.png"), 64, 32);
+                    g.DrawImage(trashIcon, dr, sr, GraphicsUnit.Pixel);
                     for(int j = 1; j < 4; j++)
                     {
                         for(int i = 0; i < 8; i++)
@@ -303,9 +359,10 @@ namespace pokemon_towerdefense
                     // BACKGROUND
                     g.Clear(Color.Transparent);
 
-                    phases[actualWave].DrawScenario(g);
+                    phases[actualPhase].DrawScenario(g);
 
-                    g.DrawString("Wave:" + phases[actualPhase].ActualWave.ToString() + "/" + phases[actualPhase].WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.White, new Point(80, 50));
+                    g.DrawString("Rare Candies:" + (phases[actualPhase].RareCandies.Count - phases[actualPhase].CountRareCandies()).ToString() + "/" + phases[actualPhase].RareCandies.Count.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.Black, new Point(20, 30));
+                    g.DrawString("Wave:" + phases[actualPhase].ActualWave.ToString() + "/" + phases[actualPhase].WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.Black, new Point(20, 75));
 
                     if (phases[actualPhase].Waves.Count > 0)
                     {
@@ -340,6 +397,35 @@ namespace pokemon_towerdefense
                         }
                     });
 
+                    // STOP MOVING POKEMONS
+                    if (pokeball.isDragging || grabbed != -1)
+                    {
+                        phases[actualPhase].DrawWildPokemons(g);
+                        // RARE CANDIES
+                        phases[actualPhase].RareCandies.ForEach(r =>
+                        {
+                            g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                        });
+                    }
+                    if (!pokeball.isDragging && !phases[actualPhase].GameOver && grabbed == -1)
+                    {
+                        //WILD POKEMONS
+                        phases[actualPhase].RunPhase(g);
+                        phases[actualPhase].runTurrets(g, phases[actualPhase].Placements);
+
+                        // RARE CANDIES
+                        phases[actualPhase].RareCandies.ForEach(r =>
+                        {
+                            g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                        });
+
+                        g.DrawImage(
+                            pokeball.BmpClosed,
+                            1524,
+                            767
+                        );
+                    }
+
                     // POKEBALL
                     if (pokeball.isDragging)
                     {
@@ -350,14 +436,15 @@ namespace pokemon_towerdefense
                             if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
                             {
                                 isOver = true;
-                                g.DrawImage(pokeball.BmpOpened, 
+                                g.DrawImage(pokeball.BmpOpened,
                                     Cursor.Position.X - 100,
                                     Cursor.Position.Y - 180,
                                     200, 360);
                             }
                         });
 
-                        if (!isOver) {
+                        if (!isOver)
+                        {
                             g.DrawImage(
                                 pokeball.BmpClosed,
                                 Cursor.Position.X - (pokeball.Width / 2),
@@ -365,28 +452,6 @@ namespace pokemon_towerdefense
                             );
                         }
                     }
-                    else if (!phases[actualPhase].GameOver && grabbed == -1)
-                    {
-                        //WILD POKEMONS
-                        phases[actualPhase].RunPhase(g);
-                        phases[actualPhase].runTurrets(g, phases[actualPhase].Placements);
-
-                        g.DrawImage(
-                            pokeball.BmpClosed,
-                            1524,
-                            767
-                        );
-                    }
-
-                    // STOP MOVING POKEMONS
-                    if (pokeball.isDragging || grabbed != -1)
-                        phases[actualPhase].DrawWildPokemons(g);
-
-                    // RARE CANDIES
-                    phases[actualPhase].RareCandies.ForEach(r =>
-                    {
-                        g.DrawImage(r.Sprite, r.Position.X, r.Position.Y) ;
-                    });
 
                     // DRAW INFO PHASES AND WAVES
                     if (phases[actualPhase].GameOver)
@@ -395,7 +460,7 @@ namespace pokemon_towerdefense
                     }
                     else
                     {
-                        if (nextWave && actualWave >= phases[actualPhase].WavesLimit)
+                        if (nextWave)
                         {
                             if (actualPhase + 1 != phases.Count)
                             {
@@ -573,14 +638,38 @@ namespace pokemon_towerdefense
                     }
                 }
             }
+
+            Rectangle dr = new Rectangle(1800, 20, 80, 100);
+
+            if(dr.Contains(Cursor.Position) && inventoryGrabbed != -1)
+            {
+                trashHover = true;
+            }
+            else
+            {
+                trashHover = false;
+            }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
         }
 
+
+        private void Inventory_MouseUp(object sender, MouseEventArgs e)
+        {
+        }
+
         private void Inventory_MouseDown(object sender, MouseEventArgs e)
         {
+            Rectangle dr = new Rectangle(1800, 20, 80, 100);
+
+            if (dr.Contains(Cursor.Position) && inventoryGrabbed != -1)
+            {
+                InventoryPokemons.Remove(InventoryPokemons[inventoryGrabbed]);
+                inventoryGrabbed = -1;
+            }
+
             if (inventoryGrabbed != -1)
             {
                 if (inventoryHover != -1)
@@ -632,14 +721,23 @@ namespace pokemon_towerdefense
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            // NEXT PHASE BUTTON CLICKED
             Rectangle rect = new Rectangle(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
             if (rect.Contains(Cursor.Position) && nextPhase)
             {
+                phases[actualPhase].Placements.ForEach(p =>
+                {
+                    p.RemovePokemon();
+                });
                 actualPhase++;
                 nextWave = false;
                 phases[actualPhase].End = false;
                 phases[actualPhase].GameOver = false;
                 nextPhase = false;
+                selfPokemons.ForEach(pk =>
+                {
+                    pk.IsPlaced = false;
+                });
             }
 
             if (e.Location.X >= pokeball.Location.X && e.Location.X < (pokeball.Location.X + pokeball.Width) &&
