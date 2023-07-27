@@ -25,6 +25,8 @@ namespace pokemon_towerdefense.Models
             this.ActualLife = Life;
             this.XpDrop = 24 * level;
             this.XpEvolve = 220 * level;
+
+            this.Evolution = new Pidgeot();
         }
     }
 }
