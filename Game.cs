@@ -342,16 +342,16 @@ namespace pokemon_towerdefense
             Brush brushRedOpacity = new SolidBrush(redOpacity);
 
             var actualWave = 0;
-            Queue<DateTime> queue = new Queue<DateTime>();
-            queue.Enqueue(DateTime.Now);
+            //Queue<DateTime> queue = new Queue<DateTime>();
+            //queue.Enqueue(DateTime.Now);
 
 
             timer.Tick += delegate
             {
-                var now = DateTime.Now;
-                queue.Enqueue(now);
-                if (queue.Count > 500)
-                {
+                //var now = DateTime.Now;
+                //queue.Enqueue(now);
+                //if (queue.Count > 20)
+                //{
                     if (isPaused)
                     {
                         g.Clear(Color.Black);
@@ -694,15 +694,15 @@ namespace pokemon_towerdefense
                         }
                     }
 
-                    DateTime old = queue.Dequeue();
-                    var time = now - old;
-                    var fps = (int)(19 / time.TotalSeconds);
-                    var drawFont = new Font("Press Start 2P", 16);
-                    PointF drawPoint = new PointF(1760.0F, 50.0F);
-                    g.DrawString($"{fps} fps", drawFont, Brushes.Black, drawPoint);
+                    //DateTime old = queue.Dequeue();
+                    //var time = now - old;
+                    //var fps = (int)(19 / time.TotalSeconds);
+                    //var drawFont = new Font("Press Start 2P", 16);
+                    //PointF drawPoint = new PointF(1760.0F, 50.0F);
+                    //g.DrawString($"{fps} fps", drawFont, Brushes.Black, drawPoint);
 
                     PbScreen.Refresh();
-                }
+                //}
             };
         }
 
