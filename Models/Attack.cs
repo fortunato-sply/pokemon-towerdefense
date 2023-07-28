@@ -97,7 +97,7 @@ namespace pokemon_towerdefense.Models
         public Meelee() 
         {
             this.Damage = 20;
-            this.Cooldown = 25;
+            this.Cooldown = 35;
             this.IsMelee = true;
         }
     }
@@ -107,7 +107,7 @@ namespace pokemon_towerdefense.Models
         public Ember()
         {
             this.Damage = 15;
-            this.Cooldown = 20;
+            this.Cooldown = 40;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\ember-sprite.png"));
         }
@@ -117,7 +117,7 @@ namespace pokemon_towerdefense.Models
         public Bite()
         {
             this.Damage = 20;
-            this.Cooldown = 30;
+            this.Cooldown = 45;
             this.IsMelee = true;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\bite-sprite.png"));
@@ -129,7 +129,7 @@ namespace pokemon_towerdefense.Models
         public Bubbles()
         {
             this.Damage = 15;
-            this.Cooldown = 20;
+            this.Cooldown = 40;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\bubbles.png"));
         }
@@ -140,7 +140,7 @@ namespace pokemon_towerdefense.Models
         public RazorLeaf()
         {
             this.Damage = 15;
-            this.Cooldown = 20;
+            this.Cooldown = 35;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\petalleaf.png"));
         }
@@ -151,7 +151,7 @@ namespace pokemon_towerdefense.Models
         public IcyWind()
         {
             this.Damage = 20;
-            this.Cooldown = 25;
+            this.Cooldown = 45;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\icywind.png"));
         }
@@ -162,7 +162,7 @@ namespace pokemon_towerdefense.Models
         public ThunderVolt()
         {
             this.Damage = 20;
-            this.Cooldown = 20;
+            this.Cooldown = 35;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\thundervolt.png"));
         }
@@ -173,7 +173,7 @@ namespace pokemon_towerdefense.Models
         public ShadowBall()
         {
             this.Damage = 20;
-            this.Cooldown = 20;
+            this.Cooldown = 35;
 
             this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\shadowball.png"));
         }

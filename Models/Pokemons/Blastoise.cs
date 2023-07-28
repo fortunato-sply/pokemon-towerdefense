@@ -22,7 +22,7 @@ namespace pokemon_towerdefense.Models
             this.Speed = 4;
             this.Power += 4 * Level;
             this.Defense = 80;
-            this.Life += 4 * level; 
+            this.Life += Convert.ToInt16(2 * Tier * Level);; 
             this.ActualLife = Life;
             this.XpDrop = 35 + (17 * level);
             this.XpEvolve = 370 * level;

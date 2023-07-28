@@ -13,41 +13,89 @@ using System.Runtime.Remoting.Contexts;
 using static System.Windows.Forms.AxHost;
 using System.Security.Policy;
 using System.IO;
+using Microsoft.SqlServer.Server;
 
 namespace pokemon_towerdefense
 {
     public partial class Game : Form
     {
+        #region Variables Field
+
         Pokeball pokeball = new Pokeball();
+        
+        // Instance of All Game Timer Form
         Timer timer = new Timer();
 
+        
+        Graphics g = null;
+
+        // Controllers to Show Other Forms
+        bool isPaused = false;
+        bool showInventory = false;
+        
+        // Controller to Hover and Grabbed Status
         int grabbed = -1;
         int inventoryGrabbed = -1;
         int inventoryHover = -1;
-
-        Graphics g = null;
-
-        bool isPaused = false;
-        bool showInventory = false;
         bool trashHover = false;
 
+        // Lists of Pokemons
+        // Self Pokemons = My Actual Pokémon Team
+        // Inventory Pokemons = My Deposity of Pokémons
         List<Pokemon> selfPokemons = new List<Pokemon>();
         List<Pokemon> InventoryPokemons = new List<Pokemon>();
 
+        // Phases of Game
         Phase phase1;
         Phase phase2;
         Phase phase3;
         Phase phase4;
 
+        // List of Phases
         List<Phase> phases = new List<Phase>();
-        int actualPhase = 0;
-        RoundedRect nextPhaseButton = null;
 
+        // Var Phase Controllers
         bool nextWave = false;
         bool nextPhase = false;
+        int actualPhase = 0;
+
+        #endregion
 
         public Game()
         {
+            #region Rectangles
+            
+            // Background to Simule Retry Button on Game Over
+            RoundedRect BackRetryRect = new RoundedRect();
+            BackRetryRect.setRect(PbScreen.Width / 2 - (PbScreen.Width / 20), PbScreen.Height / 2 + (PbScreen.Height / 20), PbScreen.Width / 10, PbScreen.Height / 18);
+
+            // Retry Rectangle to get Size to Retry Text Button
+            Rectangle RetryRectangle = new Rectangle(PbScreen.Width / 2 - (PbScreen.Width / 20), PbScreen.Height / 2 + (PbScreen.Height / 20), PbScreen.Width / 10, PbScreen.Height / 18);
+            
+            // BackGround to Simule Next Phase Button
+            RoundedRect nextPhaseButton = null;
+
+            // BackGround to Simule Inventory Button
+            RoundedRect roundedRect = new RoundedRect();
+            GraphicsPath InventoryRect = roundedRect.setRect(1540, 977, 179, 60);
+
+            // BackGround to Speed Control Buttons Family
+            roundedRect = new RoundedRect();
+            var SpeedControlBackground = roundedRect.setRect(12, 986, 526, 63);
+
+            // List to get Speed Control Small Buttons
+            List<GraphicsPath> SpeedControlRectangles = new List<GraphicsPath>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                RoundedRect rndRect = new RoundedRect();
+                SpeedControlRectangles.Add(rndRect.setRect(PbScreen.Width - (PbScreen.Width/90), PbScreen.Height - (PbScreen.Height/ 50), 65, 60));
+
+            }
+
+            #endregion
+
+            #region List of Points (Phase Path)
             List<List<Point>> path1 = new List<List<Point>>();
             List<Point> path1_1 = new List<Point>();
             path1_1.Add(new Point(570, -100));
@@ -125,6 +173,10 @@ namespace pokemon_towerdefense
             path4.Add(path4_2);
             path4.Add(path4_3);
             path4.Add(path4_4);
+
+            #endregion
+
+            #region List of Placements
 
             List<Placement> placements1 = new List<Placement>();
             List<Placement> placements2 = new List<Placement>();
@@ -240,56 +292,68 @@ namespace pokemon_towerdefense
             placements4.Add(new Placement(new Rectangle(1025, 800, placementWidth, placementHeight)));
             placements4.Add(new Placement(new Rectangle(1025, 700, placementWidth, placementHeight)));
 
+            #endregion
 
+            #region Cenaries of Phases
 
             var scenario1 = new Bitmap(@"assets\cenario1.jpg");
             var scenario2 = new Bitmap(@"assets\cenario2.jpg");
             var scenario3 = new Bitmap(@"assets\rockcenary1.jpg");
             var scenario4 = new Bitmap(@"assets\watercenary1.png");
 
+            #endregion
+
+            #region Lists of Tiers
+
             List<int> tiers1 = new List<int>();
             tiers1.Add(1);
-            List<string> types1 = new List<string>();
-            types1.Add("Grass");
-            types1.Add("Bug");
-            types1.Add("Flying");
-
-            // CREATE PHASE 1
-            phase1 = new Phase(1, tiers1, types1, 3, path1, scenario1, placements1);
-            phase1.InitializeRareCandies(4);
-
             List<int> tiers2 = new List<int>();
             tiers2.Add(1);
             tiers2.Add(2);
-            List<string> types2 = new List<string>();
-            types2.Add("Grass");
-            types2.Add("Bug");
-            types2.Add("Flying");
-
-            // CREATE PHASE 2
-            phase2 = new Phase(2, tiers2, types2, 8, path2, scenario2, placements2);
-            phase2.InitializeRareCandies(8);
-
             List<int> tiers3 = new List<int>();
             tiers3.Add(1);
             tiers3.Add(2);
             tiers3.Add(3);
-            List<string> types3 = new List<string>();
-            types3.Add("Rock");
-            types3.Add("Steel");
-
-            // CREATE PHASE 3
-            phase3 = new Phase(3, tiers3, types3, 13, path3, scenario3, placements3);
-            phase3.InitializeRareCandies(16);
-
             List<int> tiers4 = new List<int>();
             tiers4.Add(1);
             tiers4.Add(2);
             tiers4.Add(3);
             tiers4.Add(4);
+
+            #endregion
+
+            #region Lists of Types
+
+            List<string> types1 = new List<string>();
+            types1.Add("Grass");
+            types1.Add("Bug");
+            types1.Add("Flying");
+            List<string> types2 = new List<string>();
+            types2.Add("Grass");
+            types2.Add("Bug");
+            types2.Add("Flying");
+            List<string> types3 = new List<string>();
+            types3.Add("Rock");
+            types3.Add("Steel");
             List<string> types4 = new List<string>();
             types4.Add("Water");
             types4.Add("Flying");
+
+            #endregion
+
+            #region Creation of Phases (SETUP)
+            // CREATE PHASE 1
+            phase1 = new Phase(1, tiers1, types1, 3, path1, scenario1, placements1);
+            phase1.InitializeRareCandies(4);
+
+            // CREATE PHASE 2
+            phase2 = new Phase(2, tiers2, types2, 8, path2, scenario2, placements2);
+            phase2.InitializeRareCandies(8);
+
+            // CREATE PHASE 3
+            phase3 = new Phase(3, tiers3, types3, 13, path3, scenario3, placements3);
+            phase3.InitializeRareCandies(16);
+
 
             // CREATE PHASE 4
             phase4 = new Phase(4, tiers4, types4, 18, path4, scenario4, placements4);
@@ -300,13 +364,23 @@ namespace pokemon_towerdefense
             phases.Add(phase3);
             phases.Add(phase4);
 
+            #endregion
+
+            #region Initialization of Phase
+            
             InitializeComponent();
             PlayBattleTheme();
+            
+            #endregion
 
             TypeConfigurator.ConfigureTypes();
 
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
+            PbScreen.Size = Screen.PrimaryScreen.Bounds.Size;
+
+            #region Mouse Events Attributions
+
             PbScreen.MouseDown += Form1_MouseDown;
             PbScreen.MouseDown += Inventory_MouseDown;
             PbScreen.MouseUp += Inventory_MouseUp;
@@ -317,6 +391,8 @@ namespace pokemon_towerdefense
             PbScreen.MouseClick += Placement_MouseClick;
             PbScreen.MouseClick += BackButtonClick;
             PbScreen.MouseClick += InventoryButtonClick;
+
+            #endregion
 
             var newBmp = new Bitmap(PbScreen.Width, PbScreen.Height);
 
@@ -332,6 +408,8 @@ namespace pokemon_towerdefense
             Pikachu.isWild = false;
             this.selfPokemons.Add(Pikachu);
 
+            #region Creation of Colors with Opacity
+
             Color blueOpacity = Color.FromArgb(150, Color.Blue);
             Brush brushBlueOpacity = new SolidBrush(blueOpacity);
 
@@ -340,6 +418,8 @@ namespace pokemon_towerdefense
 
             Color redOpacity = Color.FromArgb(150, Color.Red);
             Brush brushRedOpacity = new SolidBrush(redOpacity);
+
+            #endregion
 
             var actualWave = 0;
             //Queue<DateTime> queue = new Queue<DateTime>();
@@ -572,13 +652,25 @@ namespace pokemon_towerdefense
                                 );
                             }
                         }
-
-                        // DRAW INFO PHASES AND WAVES
-                        if (phases[actualPhase].GameOver)
+                    phases[actualPhase].GameOver = true;
+                    // DRAW INFO PHASES AND WAVES
+                    if (phases[actualPhase].GameOver)
                         {
-                            g.DrawString("Game Over!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
-                        }
-                        else
+                        #region GameOver Show and Set Items
+
+                        g.DrawString("Game Over!", new Font("Press Start 2P", (float)(0.07 * (PbScreen.Width / 2 - (PbScreen.Width/10))), FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - (float)(PbScreen.Width/5.5), PbScreen.Height / 2));
+                        
+                        g.FillPath(Brushes.Black, BackRetryRect.path);
+
+                        StringFormat format = new StringFormat();
+                        format.Alignment = StringAlignment.Center;
+                        format.LineAlignment = StringAlignment.Center;
+                        
+                        g.DrawString("RETRY", new Font("Press Start 2P", (float)(0.02 * RetryRectangle.Location.X), FontStyle.Bold), Brushes.Red, RetryRectangle, format);
+                        
+                        #endregion
+                    }
+                    else
                         {
                             if (nextWave)
                             {
@@ -664,22 +756,16 @@ namespace pokemon_towerdefense
                         }
 
                         // INVENTORY BUTTON
-                        RoundedRect roundedRect = new RoundedRect();
-                        GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
-                        g.FillPath(Brushes.Red, invRect);
+                        g.FillPath(Brushes.Red, InventoryRect);
                         g.DrawString("Inventário", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1548, 998));
 
                         // SPEED CONTROL
-                        roundedRect = new RoundedRect();
-                        var background = roundedRect.setRect(12, 986, 526, 63);
-                        g.FillPath(Brushes.Black, background);
+                        g.FillPath(Brushes.Black, SpeedControlBackground);
                         g.DrawString("Speed", new Font("Press Start 2P", 24F, FontStyle.Regular), Brushes.White, new PointF(17, 1000));
 
                         for (int i = 0; i < 4; i++)
                         {
-                            roundedRect = new RoundedRect();
-                            var rect = roundedRect.setRect(208 + (88 * i), 987, 65, 60);
-                            g.FillPath(Brushes.Red, rect);
+                            g.FillPath(Brushes.Red, SpeedControlRectangles[i]);
                         }
 
                         for (int i = 0, n = 0; i < 4; i++, n += 2)

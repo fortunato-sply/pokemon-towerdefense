@@ -27,7 +27,7 @@ namespace pokemon_towerdefense.Models
         public List<Placement> Placements = new List<Placement>();
         public void DrawScenario(Graphics graphics)
         {
-            graphics.DrawImage(Scenario, 0, 0);
+            graphics.DrawImage(Scenario, 0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
         }
 
 

@@ -148,7 +148,7 @@ namespace pokemon_towerdefense.Models
 
         public void GainXp(int dropXp)
         {
-            Xp += dropXp;
+            Xp += (dropXp / 2);
             VerifyLevelUp();
         }
 
@@ -190,8 +190,8 @@ namespace pokemon_towerdefense.Models
 
         public void TakeDamage(int damage)
         {
-            if (Defense + (2 * Level) > damage)
-                Defense = damage;
+            if (Defense > damage - 1)
+                Defense = damage - 1;
             if(this.ActualLife > 0)
                 ActualLife -= (damage - Defense);
             if(this.ActualLife <= 0)
