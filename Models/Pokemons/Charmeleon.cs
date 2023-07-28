@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Charmeleon(int level = 7)
         {
             this.Name = "Charmeleon";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\charmeleon.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\charmeleon.png");
 
             this.Level = level;
 

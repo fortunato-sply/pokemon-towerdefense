@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Magikarp(int level = 1)
         {
             this.Name = "Magikarp";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\magikarp.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\magikarp.png");
 
             this.Level = level;
 

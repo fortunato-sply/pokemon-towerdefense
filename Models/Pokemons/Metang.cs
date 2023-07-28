@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Metang(int level = 10)
         {
             this.Name = "Metang";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\metang.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\metang.png");
 
             this.Level = level;
 

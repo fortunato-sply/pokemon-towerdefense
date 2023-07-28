@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Kadabra(int level = 7)
         {
             this.Name = "Kadabra";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\kadabra.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\kadabra.png");
 
             this.Level = level;
 

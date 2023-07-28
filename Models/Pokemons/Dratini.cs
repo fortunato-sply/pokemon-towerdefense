@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Dratini(int level = 1)
         {
             this.Name = "Dratini";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\dratini.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\dratini.png");
 
             this.Level = level;
 

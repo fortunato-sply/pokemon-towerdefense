@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Psyduck(int level = 1)
         {
             this.Name = "Psyduck";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\psyduck.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\psyduck.png");
 
             this.Level = level;
 

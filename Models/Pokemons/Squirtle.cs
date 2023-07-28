@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Squirtle(int level = 1)
         {
             this.Name = "Squirtle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\squirtle.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\squirtle.png");
 
             this.Level = level;
 

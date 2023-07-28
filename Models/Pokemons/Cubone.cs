@@ -8,8 +8,8 @@ namespace pokemon_towerdefense.Models
     {
         public Cubone(int level = 1)
         {
-            this.Name = "Diglett";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\cubone.png");
+            this.Name = "Cubnone";
+            this.Sprite = new Bitmap(@"assets\pokemons\cubone.png");
 
             this.Level = level;
 

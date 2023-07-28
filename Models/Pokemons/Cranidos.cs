@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Cranidos(int level = 1)
         {
             this.Name = "Cranidos";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\cranidos.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\cranidos.png");
 
             this.Level = level;
 

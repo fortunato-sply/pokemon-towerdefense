@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Gastly(int level = 1)
         {
             this.Name = "Gastly";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\gastly.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\gastly.png");
 
             this.Level = level;
 

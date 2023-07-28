@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Growlithe(int level = 1)
         {
             this.Name = "Growlithe";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\growlithe.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\growlithe.png");
 
             this.Level = level;
 

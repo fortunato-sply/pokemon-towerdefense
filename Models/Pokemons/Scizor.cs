@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Scizor(int level = 18)
         {
             this.Name = "Scizor";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\scizor.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\scizor.png");
 
             this.Level = level;
 

@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Dragonite(int level = 18)
         {
             this.Name = "Dragonite";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\dragonite.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\dragonite.png");
 
             this.Level = level;
 

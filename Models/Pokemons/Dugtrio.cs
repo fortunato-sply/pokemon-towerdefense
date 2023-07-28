@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Dugtrio(int level = 12)
         {
             this.Name = "Dugtrio";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\Dugtrio.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\Dugtrio.png");
 
             this.Level = level;
 

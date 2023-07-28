@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Marowak(int level = 12)
         {
             this.Name = "Marowak";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\marowak.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\marowak.png");
 
             this.Level = level;
 

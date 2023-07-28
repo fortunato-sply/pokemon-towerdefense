@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Arcanine(int level = 18)
         {
             this.Name = "Arcanine";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\arcanine.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\arcanine.png");
 
             this.Level = level;
 

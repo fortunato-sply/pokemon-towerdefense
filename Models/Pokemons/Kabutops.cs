@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Kabutops(int level = 18)
         {
             this.Name = "Kabutops";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\kabutops.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\kabutops.png");
 
             this.Level = level;
 

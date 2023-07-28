@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Lombre(int level = 7)
         {
             this.Name = "Lombre";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\lombre.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\lombre.png");
 
             this.Level = level;
 

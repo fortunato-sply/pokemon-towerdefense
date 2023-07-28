@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Metagross(int level = 20)
         {
             this.Name = "Metagross";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\metagross.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\metagross.png");
 
             this.Level = level;
 

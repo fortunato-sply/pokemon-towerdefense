@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Lairon(int level = 12)
         {
             this.Name = "Lairon";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\lairon.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\lairon.png");
 
             this.Level = level;
 

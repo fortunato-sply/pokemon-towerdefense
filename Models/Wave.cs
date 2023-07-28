@@ -19,7 +19,7 @@ namespace pokemon_towerdefense.Models
         }
         public bool AddPokemon(int phase, List<Point> points, int tier, string type)
         {
-            List<Pokemon> pokemons = PokemonFactory.GetPokemonsByTypeAndTier(type, tier, 3 + (WaveId * 2), phase, phase + 3);
+            List<Pokemon> pokemons = PokemonFactory.GetPokemonsByTypeAndTier(type, tier, 3 + (WaveId * 2), 1 + ((phase-1) * 8), ((phase-1) * 8) + 4);
             Pokemon pokemon = pokemons != null ? pokemons[0] : null;
             if (pokemon != null)
             {

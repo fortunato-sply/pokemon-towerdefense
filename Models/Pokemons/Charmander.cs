@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Charmander(int level = 1)
         {
             this.Name = "Charmander";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\charmander.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\charmander.png");
 
             this.Level = level;
 

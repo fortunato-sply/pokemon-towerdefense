@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Lapras(int level = 15)
         {
             this.Name = "Lapras";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\lapras.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\lapras.png");
 
             this.Level = level;
 

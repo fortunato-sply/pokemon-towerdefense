@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Zubat(int level = 1)
         {
             this.Name = "Zubat";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\zubat.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\zubat.png");
 
             this.Level = level;
 

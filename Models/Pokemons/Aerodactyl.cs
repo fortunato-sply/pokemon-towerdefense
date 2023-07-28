@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Aerodactyl(int level = 20)
         {
             this.Name = "Aerodactyl";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\aerodactyl.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\aerodactyl.png");
 
             this.Level = level;
 

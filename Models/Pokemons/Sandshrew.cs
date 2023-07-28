@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Sandshrew(int level = 1)
         {
             this.Name = "Sandshrew";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\sandshrew.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\sandshrew.png");
 
             this.Level = level;
 

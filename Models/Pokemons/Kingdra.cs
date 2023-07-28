@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Kingdra(int level = 18)
         {
             this.Name = "Kingdra";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\kingdra.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\kingdra.png");
 
             this.Level = level;
 

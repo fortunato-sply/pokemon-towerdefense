@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Dragonair(int level = 12)
         {
             this.Name = "Dragonair";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\dragonair.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\dragonair.png");
 
             this.Level = level;
 

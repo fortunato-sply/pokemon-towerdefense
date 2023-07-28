@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Pikachu(int level = 1)
         {
             this.Name = "Pikachu";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\pikachu.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\pikachu.png");
 
             this.Level = level;
 

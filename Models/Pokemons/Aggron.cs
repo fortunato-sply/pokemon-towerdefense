@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Aggron(int level = 18)
         {
             this.Name = "Aggron";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\aggron.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\aggron.png");
 
             this.Level = level;
 

@@ -109,7 +109,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 15;
             this.Cooldown = 20;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\ember-sprite.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\ember-sprite.png"));
         }
     }
     public class Bite : Attack
@@ -120,7 +120,7 @@ namespace pokemon_towerdefense.Models
             this.Cooldown = 30;
             this.IsMelee = true;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\bite-sprite.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\bite-sprite.png"));
         }
     }
 
@@ -131,7 +131,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 15;
             this.Cooldown = 20;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\bubbles.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\bubbles.png"));
         }
     }
 
@@ -142,7 +142,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 15;
             this.Cooldown = 20;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\petalleaf.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\petalleaf.png"));
         }
     }
 
@@ -153,7 +153,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 20;
             this.Cooldown = 25;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\icywind.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\icywind.png"));
         }
     }
 
@@ -164,7 +164,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 20;
             this.Cooldown = 20;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\thundervolt.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\thundervolt.png"));
         }
     }
 
@@ -175,7 +175,7 @@ namespace pokemon_towerdefense.Models
             this.Damage = 20;
             this.Cooldown = 20;
 
-            this.Sprite = new Bitmap(Bitmap.FromFile(@"..\..\assets\attacks\shadowball.png"));
+            this.Sprite = new Bitmap(Bitmap.FromFile(@"assets\attacks\shadowball.png"));
         }
     }
 }

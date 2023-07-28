@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Beedrill(int level = 12)
         {
             this.Name = "Beedrill";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\beedrill.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\beedrill.png");
 
             this.Level = level;
 

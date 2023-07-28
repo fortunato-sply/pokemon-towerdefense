@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Haunter(int level = 7)
         {
             this.Name = "Haunter";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\haunter.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\haunter.png");
 
             this.Level = level;
 

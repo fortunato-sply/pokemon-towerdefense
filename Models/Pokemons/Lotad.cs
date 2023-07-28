@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Lotad(int level = 1)
         {
             this.Name = "Lotad";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\lotad.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\lotad.png");
 
             this.Level = level;
 

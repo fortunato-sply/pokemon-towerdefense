@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Kakuna(int level = 5)
         {
             this.Name = "Kakuna";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\kakuna.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\kakuna.png");
 
             this.Level = level;
 

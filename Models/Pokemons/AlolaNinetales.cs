@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public AlolaNinetales(int level = 14)
         {
             this.Name = "Ninetales";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\alola-ninetales.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\alola-ninetales.png");
 
             this.Level = level;
 

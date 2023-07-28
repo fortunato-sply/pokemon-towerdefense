@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Pidgey(int level = 1)
         {
             this.Name = "Pidgey";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\pidgey.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\pidgey.png");
 
             this.Level = level;
 

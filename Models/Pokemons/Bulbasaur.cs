@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Bulbasaur(int level = 1)
         {
             this.Name = "Bulbasaur";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\bulbasaur.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\bulbasaur.png");
 
             this.Level = level;
 

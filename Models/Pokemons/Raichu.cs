@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Raichu(int level = 18)
         {
             this.Name = "Raichu";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\raichu.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\raichu.png");
 
             this.Level = level;
 

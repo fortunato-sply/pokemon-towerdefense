@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Snorlax(int level = 18)
         {
             this.Name = "Snorlax";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\snorlax.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\snorlax.png");
 
             this.Level = level;
 

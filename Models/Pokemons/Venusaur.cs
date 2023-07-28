@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Venusaur(int level = 18)
         {
             this.Name = "Venusaur";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\venusaur.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\venusaur.png");
 
             this.Level = level;
 

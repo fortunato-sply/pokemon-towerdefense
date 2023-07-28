@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Gyarados(int level = 15)
         {
             this.Name = "Gyarados";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\gyarados.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\gyarados.png");
 
             this.Level = level;
 

@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Beldum(int level = 1)
         {
             this.Name = "Beldum";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\beldum.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\beldum.png");
 
             this.Level = level;
 

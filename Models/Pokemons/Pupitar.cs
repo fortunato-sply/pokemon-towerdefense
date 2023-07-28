@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Pupitar(int level = 8)
         {
             this.Name = "Pupitar";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\pupitar.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\pupitar.png");
 
             this.Level = level;
 

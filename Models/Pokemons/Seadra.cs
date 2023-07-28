@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Seadra(int level = 7)
         {
             this.Name = "Seadra";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\seadra.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\seadra.png");
 
             this.Level = level;
 

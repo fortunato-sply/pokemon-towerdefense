@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Rampardos(int level = 15)
         {
             this.Name = "Rampardos";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\rampardos.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\rampardos.png");
 
             this.Level = level;
 

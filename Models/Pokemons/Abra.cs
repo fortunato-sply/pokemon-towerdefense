@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Abra(int level = 1)
         {
             this.Name = "Abra";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\abra.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\abra.png");
 
             this.Level = level;
 

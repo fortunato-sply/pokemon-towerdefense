@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Tyranitar(int level = 18)
         {
             this.Name = "Tyranitar";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\tyranitar.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\tyranitar.png");
 
             this.Level = level;
 

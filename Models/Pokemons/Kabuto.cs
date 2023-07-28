@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Kabuto(int level = 1)
         {
             this.Name = "Kabuto";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\kabuto.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\kabuto.png");
 
             this.Level = level;
 

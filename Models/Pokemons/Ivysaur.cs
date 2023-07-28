@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Ivysaur(int level = 7)
         {
             this.Name = "Ivysaur";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\ivysaur.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\ivysaur.png");
 
             this.Level = level;
 

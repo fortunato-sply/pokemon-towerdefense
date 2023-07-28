@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Weedle(int level = 1)
         {
             this.Name = "Weedle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\weedle.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\weedle.png");
 
             this.Level = level;
 

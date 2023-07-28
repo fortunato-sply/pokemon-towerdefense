@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Horsea(int level = 1)
         {
             this.Name = "Horsea";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\horsea.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\horsea.png");
 
             this.Level = level;
 

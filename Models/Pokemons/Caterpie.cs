@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Caterpie(int level = 1)
         {
             this.Name = "Caterpie";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\caterpie.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\caterpie.png");
 
             this.Level = level;
 

@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Croconaw(int level = 7)
         {
             this.Name = "Croconaw";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\croconaw.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\croconaw.png");
 
             this.Level = level;
 

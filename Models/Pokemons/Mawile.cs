@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Mawile(int level = 15)
         {
             this.Name = "Mawile";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\mawile.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\mawile.png");
 
             this.Level = level;
 

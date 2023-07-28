@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Feraligatr(int level = 18)
         {
             this.Name = "Feraligatr";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\feraligatr.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\feraligatr.png");
 
             this.Level = level;
 

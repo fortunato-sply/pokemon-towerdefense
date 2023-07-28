@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Glalie(int level = 15)
         {
             this.Name = "Glalie";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\glalie.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\glalie.png");
 
             this.Level = level;
 

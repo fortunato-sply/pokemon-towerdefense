@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Gengar(int level = 18)
         {
             this.Name = "Gengar";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\gengar.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\gengar.png");
 
             this.Level = level;
 

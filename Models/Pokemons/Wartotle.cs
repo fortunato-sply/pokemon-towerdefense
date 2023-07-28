@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Wartotle(int level = 7)
         {
             this.Name = "Wartotle";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\wartotle.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\wartotle.png");
 
             this.Level = level;
 

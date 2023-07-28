@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Golbat(int level = 7)
         {
             this.Name = "Golbat";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\golbat.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\golbat.png");
 
             this.Level = level;
 

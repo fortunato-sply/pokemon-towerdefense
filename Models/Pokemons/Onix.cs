@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Onix(int level = 1)
         {
             this.Name = "Onix";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\onix.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\onix.png");
 
             this.Level = level;
 

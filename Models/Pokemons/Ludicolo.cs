@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Ludicolo(int level = 18)
         {
             this.Name = "Ludicolo";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\ludicolo.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\ludicolo.png");
 
             this.Level = level;
 

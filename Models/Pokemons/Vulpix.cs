@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Vulpix(int level = 1)
         {
             this.Name = "Vulpix";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\vulpix.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\vulpix.png");
 
             this.Level = level;
 

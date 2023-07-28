@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Mew(int level = 40)
         {
             this.Name = "Mew";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\mew.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\mew.png");
 
             this.Level = level;
 

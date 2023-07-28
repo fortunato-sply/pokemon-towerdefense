@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Diglett(int level = 1)
         {
             this.Name = "Diglett";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\diglett.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\diglett.png");
 
             this.Level = level;
 

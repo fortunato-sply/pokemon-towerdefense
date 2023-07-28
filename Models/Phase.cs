@@ -63,12 +63,14 @@ namespace pokemon_towerdefense.Models
 
             if (PhasePath.Count > 0)
             {
-                for (int i = 0; i < quantity; i++)
+                for (int i = 0; i < quantity / PhasePath.Count; i++)
                 {
-                    RareCandy rareCandy = new RareCandy(new Point(PhasePath[0][PhasePath[0].Count - 1].X + random.Next(-30, 30),
-                        PhasePath[0][PhasePath[0].Count - 1].Y + random.Next(-30, 30)));
+                    for (int j = 0; j < PhasePath.Count; j++) {
+                        RareCandy rareCandy = new RareCandy(new Point(PhasePath[j][PhasePath[j].Count - 1].X + random.Next(-30, 30),
+                            PhasePath[j][PhasePath[j].Count - 1].Y + random.Next(-30, 30)));
 
-                    RareCandies.Add(rareCandy);
+                        RareCandies.Add(rareCandy);
+                    }
                 }
             }
         }

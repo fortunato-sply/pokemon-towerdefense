@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Golduck(int level = 15)
         {
             this.Name = "Golduck";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\golduck.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\golduck.png");
 
             this.Level = level;
 

@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Totodile(int level = 1)
         {
             this.Name = "Totodile";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\totodile.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\totodile.png");
 
             this.Level = level;
 

@@ -33,9 +33,12 @@ namespace pokemon_towerdefense
 
         List<Pokemon> selfPokemons = new List<Pokemon>();
         List<Pokemon> InventoryPokemons = new List<Pokemon>();
+
         Phase phase1;
         Phase phase2;
         Phase phase3;
+        Phase phase4;
+
         List<Phase> phases = new List<Phase>();
         int actualPhase = 0;
         RoundedRect nextPhaseButton = null;
@@ -93,9 +96,40 @@ namespace pokemon_towerdefense
             path3.Add(path3_1);
             path3.Add(path3_2);
 
+            List<Point> path4_1 = new List<Point>();
+            path4_1.Add(new Point(50, -100));
+            path4_1.Add(new Point(50, 320));
+            path4_1.Add(new Point(740, 320));
+            path4_1.Add(new Point(740, 50));
+
+            List<Point> path4_2 = new List<Point>();
+            path4_2.Add(new Point(1820, -100));
+            path4_2.Add(new Point(1820, 320));
+            path4_2.Add(new Point(1150, 320));
+            path4_2.Add(new Point(1150, 50));
+
+            List<Point> path4_3 = new List<Point>();
+            path4_3.Add(new Point(50, 1120));
+            path4_3.Add(new Point(50, 700));
+            path4_3.Add(new Point(740, 700));
+            path4_3.Add(new Point(740, 1000));
+            
+            List<Point> path4_4 = new List<Point>();
+            path4_4.Add(new Point(1820, 1120));
+            path4_4.Add(new Point(1820, 700));
+            path4_4.Add(new Point(1150, 700));
+            path4_4.Add(new Point(1150, 1000));
+
+            List<List<Point>> path4 = new List<List<Point>>();
+            path4.Add(path4_1);
+            path4.Add(path4_2);
+            path4.Add(path4_3);
+            path4.Add(path4_4);
+
             List<Placement> placements1 = new List<Placement>();
             List<Placement> placements2 = new List<Placement>();
             List<Placement> placements3 = new List<Placement>();
+            List<Placement> placements4 = new List<Placement>();
 
             int placementWidth = 50, placementHeight = 55;
             // SETUP PLACEMENTS 1
@@ -156,9 +190,62 @@ namespace pokemon_towerdefense
             placements3.Add(new Placement(new Rectangle(1580, 663, placementWidth, placementHeight)));
             placements3.Add(new Placement(new Rectangle(1580, 490, placementWidth, placementHeight)));
 
-            var scenario1 = new Bitmap(@"..\..\assets\cenario1.jpg");
-            var scenario2 = new Bitmap(@"..\..\assets\cenario2.jpg");
-            var scenario3 = new Bitmap(@"..\..\assets\rockcenary1.jpg");
+            // SETUP PLACEMENTS 4
+            // Esquerda-Cima
+            placements4.Add(new Placement(new Rectangle(50, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(190, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(330, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(470, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(610, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(750, 420, placementWidth, placementHeight)));
+            // Esquerda-Baixo
+            placements4.Add(new Placement(new Rectangle(50, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(190, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(330, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(470, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(610, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(750, 600, placementWidth, placementHeight)));
+            // Direita-Cima
+            placements4.Add(new Placement(new Rectangle(1825, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1685, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1545, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1405, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1275, 420, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1135, 420, placementWidth, placementHeight)));
+            // Direita-Baixo
+            placements4.Add(new Placement(new Rectangle(1825, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1685, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1545, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1405, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1275, 600, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1135, 600, placementWidth, placementHeight)));
+            // Cima-Esquerda
+            placements4.Add(new Placement(new Rectangle(840, 20, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(840, 120, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(840, 220, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(840, 320, placementWidth, placementHeight)));
+            // Cima-Direta
+            placements4.Add(new Placement(new Rectangle(1025, 20, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1025, 120, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1025, 220, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1025, 320, placementWidth, placementHeight)));
+            // Baixo-Esquerda
+            placements4.Add(new Placement(new Rectangle(840, 1000, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(840, 900, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(840, 800, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(840, 700, placementWidth, placementHeight)));
+            // Baixo-Direita
+            placements4.Add(new Placement(new Rectangle(1025, 1000, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1025, 900, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1025, 800, placementWidth, placementHeight)));
+            placements4.Add(new Placement(new Rectangle(1025, 700, placementWidth, placementHeight)));
+
+
+
+            var scenario1 = new Bitmap(@"assets\cenario1.jpg");
+            var scenario2 = new Bitmap(@"assets\cenario2.jpg");
+            var scenario3 = new Bitmap(@"assets\rockcenary1.jpg");
+            var scenario4 = new Bitmap(@"assets\watercenary1.png");
 
             List<int> tiers1 = new List<int>();
             tiers1.Add(1);
@@ -169,38 +256,49 @@ namespace pokemon_towerdefense
 
             // CREATE PHASE 1
             phase1 = new Phase(1, tiers1, types1, 3, path1, scenario1, placements1);
-            phase1.InitializeRareCandies(6);
+            phase1.InitializeRareCandies(4);
 
             List<int> tiers2 = new List<int>();
             tiers2.Add(1);
             tiers2.Add(2);
             List<string> types2 = new List<string>();
             types2.Add("Grass");
-            types2.Add("Steel");
+            types2.Add("Bug");
             types2.Add("Flying");
-            types2.Add("Rock");
 
             // CREATE PHASE 2
             phase2 = new Phase(2, tiers2, types2, 8, path2, scenario2, placements2);
-            phase2.InitializeRareCandies(9);
+            phase2.InitializeRareCandies(8);
 
             List<int> tiers3 = new List<int>();
+            tiers3.Add(1);
             tiers3.Add(2);
             tiers3.Add(3);
             List<string> types3 = new List<string>();
-            types3.Add("Water");
-            types3.Add("Grass");
-            types3.Add("Flying");
-            types3.Add("Psychic");
-            types3.Add("Normal");
+            types3.Add("Rock");
+            types3.Add("Steel");
 
             // CREATE PHASE 3
             phase3 = new Phase(3, tiers3, types3, 13, path3, scenario3, placements3);
-            phase3.InitializeRareCandies(14);
+            phase3.InitializeRareCandies(16);
 
-            phases.Add(phase3);
-            phases.Add(phase2);
+            List<int> tiers4 = new List<int>();
+            tiers4.Add(1);
+            tiers4.Add(2);
+            tiers4.Add(3);
+            tiers4.Add(4);
+            List<string> types4 = new List<string>();
+            types4.Add("Water");
+            types4.Add("Flying");
+
+            // CREATE PHASE 4
+            phase4 = new Phase(4, tiers4, types4, 18, path4, scenario4, placements4);
+            phase4.InitializeRareCandies(20);
+
             phases.Add(phase1);
+            phases.Add(phase2);
+            phases.Add(phase3);
+            phases.Add(phase4);
 
             InitializeComponent();
             PlayBattleTheme();
@@ -277,7 +375,7 @@ namespace pokemon_towerdefense
                     else
                         sr = new Rectangle(0, 0, 32, 32);
 
-                    Bitmap trashIcon = new Bitmap(Image.FromFile(@"..\..\assets\thrash.png"), 64, 32);
+                    Bitmap trashIcon = new Bitmap(Image.FromFile(@"assets\thrash.png"), 64, 32);
                     g.DrawImage(trashIcon, dr, sr, GraphicsUnit.Pixel);
                     for(int j = 1; j < 4; j++)
                     {
@@ -398,7 +496,7 @@ namespace pokemon_towerdefense
                     });
 
                     // STOP MOVING POKEMONS
-                    if (pokeball.isDragging || grabbed != -1)
+                    if (grabbed != -1)
                     {
                         phases[actualPhase].DrawWildPokemons(g);
                         // RARE CANDIES
@@ -407,6 +505,7 @@ namespace pokemon_towerdefense
                             g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
                         });
                     }
+
                     if (!pokeball.isDragging && !phases[actualPhase].GameOver && grabbed == -1)
                     {
                         //WILD POKEMONS
@@ -440,11 +539,25 @@ namespace pokemon_towerdefense
                                     Cursor.Position.X - 100,
                                     Cursor.Position.Y - 180,
                                     200, 360);
+
+                                phases[actualPhase].DrawWildPokemons(g);
+                                // RARE CANDIES
+                                phases[actualPhase].RareCandies.ForEach(r =>
+                                {
+                                    g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                                });
                             }
                         });
 
                         if (!isOver)
                         {
+                            phases[actualPhase].DrawWildPokemons(g);
+                            // RARE CANDIES
+                            phases[actualPhase].RareCandies.ForEach(r =>
+                            {
+                                g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                            });
+
                             g.DrawImage(
                                 pokeball.BmpClosed,
                                 Cursor.Position.X - (pokeball.Width / 2),
@@ -871,8 +984,9 @@ namespace pokemon_towerdefense
         }
         private void PlayBattleTheme()
         {
-            SoundPlayer simpleSound = new SoundPlayer(@"..\..\assets\Battle_Theme.wav");
+            SoundPlayer simpleSound = new SoundPlayer(@"assets\Battle_Theme.wav");
             simpleSound.PlayLooping();
+            
         }
     }
 }

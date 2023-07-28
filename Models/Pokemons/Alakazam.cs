@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Alakazam(int level = 15)
         {
             this.Name = "Alakazam";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\alakazam.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\alakazam.png");
 
             this.Level = level;
 

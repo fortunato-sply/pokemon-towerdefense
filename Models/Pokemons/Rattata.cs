@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Rattata(int level = 1)
         {
             this.Name = "Rattata";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\rattata.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\rattata.png");
 
             this.Level = level;
 

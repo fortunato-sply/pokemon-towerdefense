@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Blastoise(int level = 18)
         {
             this.Name = "Blastoise";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\blastoise.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\blastoise.png");
 
             this.Level = level;
 

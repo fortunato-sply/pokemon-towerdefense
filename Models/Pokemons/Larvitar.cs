@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Larvitar(int level = 1)
         {
             this.Name = "Larvitar";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\larvitar.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\larvitar.png");
 
             this.Level = level;
 

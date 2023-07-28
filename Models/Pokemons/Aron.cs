@@ -9,7 +9,7 @@ namespace pokemon_towerdefense.Models
         public Aron(int level = 1)
         {
             this.Name = "Aron";
-            this.Sprite = new Bitmap(@"..\..\assets\pokemons\aron.png");
+            this.Sprite = new Bitmap(@"assets\pokemons\aron.png");
 
             this.Level = level;
 
