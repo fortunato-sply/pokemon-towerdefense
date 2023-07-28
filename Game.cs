@@ -342,216 +342,183 @@ namespace pokemon_towerdefense
             Brush brushRedOpacity = new SolidBrush(redOpacity);
 
             var actualWave = 0;
+            Queue<DateTime> queue = new Queue<DateTime>();
+            queue.Enqueue(DateTime.Now);
+
 
             timer.Tick += delegate
             {
-                if (isPaused)
+                var now = DateTime.Now;
+                queue.Enqueue(now);
+                if (queue.Count > 500)
                 {
-                    g.Clear(Color.Black);
-                    g.DrawString("GAME PAUSED", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width/2 - 120, PbScreen.Height / 3 - 100));
-
-                    RoundedRect roundedRect = new RoundedRect();
-                    var backBtn = roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 150, 280, 80);
-                    g.FillPath(Brushes.Red, backBtn);
-
-                    g.DrawString("Voltar", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
-                    
-                    roundedRect = new RoundedRect();
-                    var exitBtn = roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 50, 280, 80);
-                    g.FillPath(Brushes.Red, exitBtn);
-                    g.DrawString("Sair", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 50, PbScreen.Height / 2 - 20));
-                }
-                else if(showInventory)
-                {
-                    g.Clear(blackOpacity); 
-                    
-                    g.DrawString("INVENTORY", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 120, PbScreen.Height / 3 - 250));
-
-                    Rectangle dr = new Rectangle(1800, 20, 80, 100);
-                    Rectangle sr;
-
-                    if (trashHover)
-                        sr = new Rectangle(32, 0, 32, 32);
-                    else
-                        sr = new Rectangle(0, 0, 32, 32);
-
-                    Bitmap trashIcon = new Bitmap(Image.FromFile(@"assets\thrash.png"), 64, 32);
-                    g.DrawImage(trashIcon, dr, sr, GraphicsUnit.Pixel);
-                    for(int j = 1; j < 4; j++)
+                    if (isPaused)
                     {
-                        for(int i = 0; i < 8; i++)
+                        g.Clear(Color.Black);
+                        g.DrawString("GAME PAUSED", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 120, PbScreen.Height / 3 - 100));
+
+                        RoundedRect roundedRect = new RoundedRect();
+                        var backBtn = roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 150, 280, 80);
+                        g.FillPath(Brushes.Red, backBtn);
+
+                        g.DrawString("Voltar", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 70, PbScreen.Height / 2 - 120));
+
+                        roundedRect = new RoundedRect();
+                        var exitBtn = roundedRect.setRect(PbScreen.Width / 2 - 140, PbScreen.Height / 2 - 50, 280, 80);
+                        g.FillPath(Brushes.Red, exitBtn);
+                        g.DrawString("Sair", new Font("Press Start 2P", 18, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 50, PbScreen.Height / 2 - 20));
+                    }
+                    else if (showInventory)
+                    {
+                        g.Clear(blackOpacity);
+
+                        g.DrawString("INVENTORY", new Font("Press Start 2P", 16, FontStyle.Regular), Brushes.White, new PointF(PbScreen.Width / 2 - 120, PbScreen.Height / 3 - 250));
+
+                        Rectangle dr = new Rectangle(1800, 20, 80, 100);
+                        Rectangle sr;
+
+                        if (trashHover)
+                            sr = new Rectangle(32, 0, 32, 32);
+                        else
+                            sr = new Rectangle(0, 0, 32, 32);
+
+                        Bitmap trashIcon = new Bitmap(Image.FromFile(@"assets\thrash.png"), 64, 32);
+                        g.DrawImage(trashIcon, dr, sr, GraphicsUnit.Pixel);
+                        for (int j = 1; j < 4; j++)
+                        {
+                            for (int i = 0; i < 8; i++)
+                            {
+                                RoundedRect rect = new RoundedRect();
+                                var path = rect.setRect(300 + (i * 160), 170 * j, 150, 150);
+                                g.FillPath(brushBlackOpacity, path);
+                            }
+                        }
+
+                        int contX = 330;
+                        int contY = 210;
+
+                        // POKE CONTAINERS
+                        for (int i = 0; i < 6; i++)
                         {
                             RoundedRect rect = new RoundedRect();
-                            var path = rect.setRect(300 + (i * 160), 170 * j, 150, 150);
-                            g.FillPath(brushBlackOpacity, path);
-                        }
-                    }
+                            var path = rect.setRect(100 + (i * 215), 780);
 
-                    int contX = 330;
-                    int contY = 210;
+                            if (this.selfPokemons.Count > i)
+                            {
+                                var pokemon = this.selfPokemons[i];
+                                var name = pokemon.Name;
+                                var level = pokemon.Level;
+                                var sprite = pokemon.Sprite;
+                                var xp = pokemon.Xp;
+                                var xpEvolve = pokemon.XpEvolve;
 
-                    // POKE CONTAINERS
-                    for (int i = 0; i < 6; i++)
-                    {
-                        RoundedRect rect = new RoundedRect();
-                        var path = rect.setRect(100 + (i * 215), 780);
+                                if (i == inventoryHover)
+                                    g.FillPath(brushRedOpacity, path);
+                                else
+                                    g.FillPath(brushBlackOpacity, path);
 
+                                g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 790));
+                                g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 810));
+                                DrawXpBar(xp, 110 + (i * 215), 970, xpEvolve);
 
-                        if (this.selfPokemons.Count > i)
-                        {
-                            var pokemon = this.selfPokemons[i];
-                            var name = pokemon.Name;
-                            var level = pokemon.Level;
-                            var sprite = pokemon.Sprite;
-                            var xp = pokemon.Xp;
-                            var xpEvolve = pokemon.XpEvolve;
-
-                            if (i == inventoryHover)
-                                g.FillPath(brushRedOpacity, path);
-                            else
-                                g.FillPath(brushBlackOpacity, path);
-
-                            g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 790));
-                            g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 810));
-                            DrawXpBar(xp, 110 + (i * 215), 970, xpEvolve);
-
-                            Rectangle destRect = new Rectangle(135 + (i * 215), 835, 130, 120);
-                            g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
-                        }
-                        else
-                        {
-                            if (i == inventoryHover)
-                                g.FillPath(brushBlueOpacity, path);
-                            else
-                                g.FillPath(brushBlackOpacity, path);
-                        }
-                    }
-
-                    for (int i = 0; i < InventoryPokemons.Count; i++)
-                    {
-                        if (i != inventoryGrabbed)
-                        {
-                            var nextLineX = i == 0 ? 0 : i % 8;
-                            var nextLineY = i == 0 ? 0 : i / 8;
-
-                            g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * nextLineX), contY - 25 + (170 * nextLineY)));
-                            g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * nextLineX), contY - 10 + (170 * nextLineY)));
-                            Rectangle destRect = new Rectangle(contX + (160 * nextLineX), contY + (170 * nextLineY), 90, 100);
-                            InventoryPokemons[i].StaticAnimate(g, destRect);
-                        }
-                        else
-                        {
-                            Rectangle destRect = new Rectangle(Cursor.Position.X - 45, Cursor.Position.Y - 50, 90, 100);
-                            InventoryPokemons[i].StaticAnimate(g, destRect);
-                        }
-                    }
-
-                    // BACK INVENTORY BUTTON
-                    RoundedRect roundedRect = new RoundedRect();
-                    GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
-                    g.FillPath(Brushes.Red, invRect);
-                    g.DrawString("Voltar", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1580, 998));
-                }
-                else
-                {
-                    // BACKGROUND
-                    g.Clear(Color.Transparent);
-
-                    phases[actualPhase].DrawScenario(g);
-
-                    g.DrawString("Rare Candies:" + (phases[actualPhase].RareCandies.Count - phases[actualPhase].CountRareCandies()).ToString() + "/" + phases[actualPhase].RareCandies.Count.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.Black, new Point(20, 30));
-                    g.DrawString("Wave:" + phases[actualPhase].ActualWave.ToString() + "/" + phases[actualPhase].WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.Black, new Point(20, 75));
-
-                    if (phases[actualPhase].Waves.Count > 0)
-                    {
-                        var end = phases[actualPhase].Waves[phases[actualPhase].ActualWave - 1].End;
-                        if (end)
-                        {
-                            if (phases[actualPhase].End)
-                                nextWave = true;
+                                Rectangle destRect = new Rectangle(135 + (i * 215), 835, 130, 120);
+                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
+                            }
                             else
                             {
-                                actualWave = phases[actualPhase].ActualWave;
-                                delayWave = 50;
+                                if (i == inventoryHover)
+                                    g.FillPath(brushBlueOpacity, path);
+                                else
+                                    g.FillPath(brushBlackOpacity, path);
                             }
                         }
-                    }
 
-                    // PLACEMENTS
-                    phases[actualPhase].Placements.ForEach(p => {
-                        g.DrawRectangle(Pens.Black, p.rect);
-
-                        if (p.hasPokemon)
+                        for (int i = 0; i < InventoryPokemons.Count; i++)
                         {
-                            var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
-                            p.Pokemon.Animate(g);
-
-                            p.Pokemon.SpeedImage++;
-                            if (p.Pokemon.SpeedImage >= 10)
+                            if (i != inventoryGrabbed)
                             {
-                                p.Pokemon.ActualImage += 1;
-                                p.Pokemon.SpeedImage = 0;
+                                var nextLineX = i == 0 ? 0 : i % 8;
+                                var nextLineY = i == 0 ? 0 : i / 8;
+
+                                g.DrawString(InventoryPokemons[i].Name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(contX - 15 + (160 * nextLineX), contY - 25 + (170 * nextLineY)));
+                                g.DrawString("Lv " + InventoryPokemons[i].Level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(contX + 60 + (160 * nextLineX), contY - 10 + (170 * nextLineY)));
+                                Rectangle destRect = new Rectangle(contX + (160 * nextLineX), contY + (170 * nextLineY), 90, 100);
+                                InventoryPokemons[i].StaticAnimate(g, destRect);
+                            }
+                            else
+                            {
+                                Rectangle destRect = new Rectangle(Cursor.Position.X - 45, Cursor.Position.Y - 50, 90, 100);
+                                InventoryPokemons[i].StaticAnimate(g, destRect);
                             }
                         }
-                    });
 
-                    // STOP MOVING POKEMONS
-                    if (grabbed != -1)
-                    {
-                        phases[actualPhase].DrawWildPokemons(g);
-                        // RARE CANDIES
-                        phases[actualPhase].RareCandies.ForEach(r =>
-                        {
-                            g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
-                        });
+                        // BACK INVENTORY BUTTON
+                        RoundedRect roundedRect = new RoundedRect();
+                        GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
+                        g.FillPath(Brushes.Red, invRect);
+                        g.DrawString("Voltar", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1580, 998));
                     }
-
-                    if (!pokeball.isDragging && !phases[actualPhase].GameOver && grabbed == -1)
+                    else
                     {
-                        //WILD POKEMONS
-                        phases[actualPhase].RunPhase(g);
-                        phases[actualPhase].runTurrets(g, phases[actualPhase].Placements);
+                        // BACKGROUND
+                        g.Clear(Color.Transparent);
 
-                        // RARE CANDIES
-                        phases[actualPhase].RareCandies.ForEach(r =>
+                        phases[actualPhase].DrawScenario(g);
+
+                        g.DrawString("Rare Candies:" + (phases[actualPhase].RareCandies.Count - phases[actualPhase].CountRareCandies()).ToString() + "/" + phases[actualPhase].RareCandies.Count.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.Black, new Point(20, 30));
+                        g.DrawString("Wave:" + phases[actualPhase].ActualWave.ToString() + "/" + phases[actualPhase].WavesLimit.ToString(), new Font("Press Start 2P", 18, FontStyle.Bold), Brushes.Black, new Point(20, 75));
+
+                        if (phases[actualPhase].Waves.Count > 0)
                         {
-                            g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
-                        });
-
-                        g.DrawImage(
-                            pokeball.BmpClosed,
-                            1524,
-                            767
-                        );
-                    }
-
-                    // POKEBALL
-                    if (pokeball.isDragging)
-                    {
-                        var isOver = false;
-                        var WildPokemons = phases[actualPhase].GetWilds();
-                        WildPokemons.ForEach(wild =>
-                        {
-                            if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
+                            var end = phases[actualPhase].Waves[phases[actualPhase].ActualWave - 1].End;
+                            if (end)
                             {
-                                isOver = true;
-                                g.DrawImage(pokeball.BmpOpened,
-                                    Cursor.Position.X - 100,
-                                    Cursor.Position.Y - 180,
-                                    200, 360);
-
-                                phases[actualPhase].DrawWildPokemons(g);
-                                // RARE CANDIES
-                                phases[actualPhase].RareCandies.ForEach(r =>
+                                if (phases[actualPhase].End)
+                                    nextWave = true;
+                                else
                                 {
-                                    g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
-                                });
+                                    actualWave = phases[actualPhase].ActualWave;
+                                    delayWave = 50;
+                                }
+                            }
+                        }
+
+                        // PLACEMENTS
+                        phases[actualPhase].Placements.ForEach(p =>
+                        {
+                            g.DrawRectangle(Pens.Black, p.rect);
+
+                            if (p.hasPokemon)
+                            {
+                                var imgRect = new Rectangle(p.rect.X, p.rect.Y, 50, 55);
+                                p.Pokemon.Animate(g);
+
+                                p.Pokemon.SpeedImage++;
+                                if (p.Pokemon.SpeedImage >= 10)
+                                {
+                                    p.Pokemon.ActualImage += 1;
+                                    p.Pokemon.SpeedImage = 0;
+                                }
                             }
                         });
 
-                        if (!isOver)
+                        // STOP MOVING POKEMONS
+                        if (grabbed != -1)
                         {
                             phases[actualPhase].DrawWildPokemons(g);
+                            // RARE CANDIES
+                            phases[actualPhase].RareCandies.ForEach(r =>
+                            {
+                                g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                            });
+                        }
+
+                        if (!pokeball.isDragging && !phases[actualPhase].GameOver && grabbed == -1 && !nextWave)
+                        {
+                            //WILD POKEMONS
+                            phases[actualPhase].RunPhase(g);
+                            phases[actualPhase].runTurrets(g, phases[actualPhase].Placements);
+
                             // RARE CANDIES
                             phases[actualPhase].RareCandies.ForEach(r =>
                             {
@@ -560,134 +527,182 @@ namespace pokemon_towerdefense
 
                             g.DrawImage(
                                 pokeball.BmpClosed,
-                                Cursor.Position.X - (pokeball.Width / 2),
-                                Cursor.Position.Y - (pokeball.Height / 2)
+                                1524,
+                                767
                             );
                         }
-                    }
 
-                    // DRAW INFO PHASES AND WAVES
-                    if (phases[actualPhase].GameOver)
-                    {
-                        g.DrawString("Game Over!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
-                    }
-                    else
-                    {
-                        if (nextWave)
+                        // POKEBALL
+                        if (pokeball.isDragging)
                         {
-                            if (actualPhase + 1 != phases.Count)
+                            var isOver = false;
+                            var WildPokemons = phases[actualPhase].GetWilds();
+                            WildPokemons.ForEach(wild =>
                             {
-                                nextPhase = true;
-                                g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
-
-                                nextPhaseButton = new RoundedRect();
-                                var bg = nextPhaseButton.setRect(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
-
-                                Rectangle rect = new Rectangle(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
-                                if (nextPhaseButton != null)
+                                if (Math.Abs(Cursor.Position.X - wild.Location.Value.X) < 40 && Math.Abs(Cursor.Position.Y - wild.Location.Value.Y) < 40 && (wild.ActualLife * 100) / wild.Life < 25 && wild.IsAlive)
                                 {
-                                    if (rect.Contains(Cursor.Position))
-                                        nextPhaseButton.Hover = true;
+                                    isOver = true;
+                                    g.DrawImage(pokeball.BmpOpened,
+                                        Cursor.Position.X - 100,
+                                        Cursor.Position.Y - 180,
+                                        200, 360);
+
+                                    phases[actualPhase].DrawWildPokemons(g);
+                                    // RARE CANDIES
+                                    phases[actualPhase].RareCandies.ForEach(r =>
+                                    {
+                                        g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                                    });
+                                }
+                            });
+
+                            if (!isOver)
+                            {
+                                phases[actualPhase].DrawWildPokemons(g);
+                                // RARE CANDIES
+                                phases[actualPhase].RareCandies.ForEach(r =>
+                                {
+                                    g.DrawImage(r.Sprite, r.Position.X, r.Position.Y);
+                                });
+
+                                g.DrawImage(
+                                    pokeball.BmpClosed,
+                                    Cursor.Position.X - (pokeball.Width / 2),
+                                    Cursor.Position.Y - (pokeball.Height / 2)
+                                );
+                            }
+                        }
+
+                        // DRAW INFO PHASES AND WAVES
+                        if (phases[actualPhase].GameOver)
+                        {
+                            g.DrawString("Game Over!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Red, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+                        }
+                        else
+                        {
+                            if (nextWave)
+                            {
+                                if (actualPhase + 1 != phases.Count)
+                                {
+                                    nextPhase = true;
+                                    g.DrawString("Phase Clear!", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+
+                                    nextPhaseButton = new RoundedRect();
+                                    var bg = nextPhaseButton.setRect(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
+
+                                    Rectangle rect = new Rectangle(PbScreen.Width / 2 - 100, PbScreen.Height / 2 + 50, 300, 80);
+                                    if (nextPhaseButton != null)
+                                    {
+                                        if (rect.Contains(Cursor.Position))
+                                            nextPhaseButton.Hover = true;
+                                        else
+                                            nextPhaseButton.Hover = false;
+                                    }
+
+                                    if (nextPhaseButton.Hover)
+                                        g.FillPath(Brushes.Blue, bg);
                                     else
-                                        nextPhaseButton.Hover = false;
+                                        g.FillPath(Brushes.Black, bg);
+                                    g.DrawString("Continue", new Font("Press Start 2P", 26, FontStyle.Bold), Brushes.Red, new PointF((PbScreen.Width / 2) - 100, (PbScreen.Height / 2 + 75)));
+                                }
+                                else
+                                {
+                                    g.DrawString("Congrats! You Beat the Game", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 600, PbScreen.Height / 2 - 50));
+                                }
+                            }
+                            else if (delayWave > 0)
+                            {
+                                g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
+
+                                delayWave--;
+                            }
+                        }
+
+                        // POKE CONTAINERS
+                        for (int i = 0; i < 6; i++)
+                        {
+                            RoundedRect rect = new RoundedRect();
+                            var path = rect.setRect(100 + (i * 215), 730);
+
+
+                            if (this.selfPokemons.Count > i)
+                            {
+                                var pokemon = this.selfPokemons[i];
+                                var name = pokemon.Name;
+                                var level = pokemon.Level;
+                                var sprite = pokemon.Sprite;
+                                var xp = pokemon.Xp;
+                                var xpEvolve = pokemon.XpEvolve;
+
+                                if (grabbed == -1)
+                                {
+                                    if (pokemon.IsPlaced)
+                                        g.FillPath(brushBlueOpacity, path);
+                                    else
+                                        g.FillPath(brushBlackOpacity, path);
+
+                                    g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
+                                    g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
+                                    DrawXpBar(xp, 110 + (i * 215), 920, xpEvolve);
                                 }
 
-                                if (nextPhaseButton.Hover)
-                                    g.FillPath(Brushes.Blue, bg);
-                                else
-                                    g.FillPath(Brushes.Black, bg);
-                                g.DrawString("Continue", new Font("Press Start 2P", 26, FontStyle.Bold), Brushes.Red, new PointF((PbScreen.Width / 2) - 100, (PbScreen.Height / 2 + 75)));
+                                if (i == grabbed)
+                                {
+                                    Rectangle destRect = new Rectangle(Cursor.Position.X - 50, Cursor.Position.Y - 50, 100, 100);
+                                    g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
+                                }
+                                else if (grabbed == -1)
+                                {
+                                    Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
+                                    g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
+                                }
                             }
-                            else
+                            else if (grabbed == -1)
                             {
-                                g.DrawString("Congrats! You Beat the Game", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 600, PbScreen.Height / 2 - 50));
+                                g.FillPath(brushBlackOpacity, path);
                             }
                         }
-                        else if (delayWave > 0)
-                        {
-                            g.DrawString("Wave " + actualWave.ToString() + " Ended", new Font("Press Start 2P", 32, FontStyle.Bold), Brushes.Yellow, new PointF(PbScreen.Width / 2 - 180, PbScreen.Height / 2));
 
-                            delayWave--;
-                        }
-                    }
+                        // INVENTORY BUTTON
+                        RoundedRect roundedRect = new RoundedRect();
+                        GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
+                        g.FillPath(Brushes.Red, invRect);
+                        g.DrawString("Inventário", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1548, 998));
 
-                    // POKE CONTAINERS
-                    for (int i = 0; i < 6; i++)
-                    {
-                        RoundedRect rect = new RoundedRect();
-                        var path = rect.setRect(100 + (i * 215), 730);
-
-
-                        if (this.selfPokemons.Count > i)
-                        {
-                            var pokemon = this.selfPokemons[i];
-                            var name = pokemon.Name;
-                            var level = pokemon.Level;
-                            var sprite = pokemon.Sprite;
-                            var xp = pokemon.Xp;
-                            var xpEvolve = pokemon.XpEvolve;
-
-                            if (grabbed == -1)
-                            {
-                                if (pokemon.IsPlaced)
-                                    g.FillPath(brushBlueOpacity, path);
-                                else
-                                    g.FillPath(brushBlackOpacity, path);
-
-                                g.DrawString(name, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.White, new PointF(110 + (i * 215), 740));
-                                g.DrawString("Lv " + level, new Font("Press Start 2P", 8, FontStyle.Regular), Brushes.Red, new PointF(220 + (i * 215), 760));
-                                DrawXpBar(xp, 110 + (i * 215), 920, xpEvolve);
-                            }
-
-                            if (i == grabbed)
-                            {
-                                Rectangle destRect = new Rectangle(Cursor.Position.X - 50, Cursor.Position.Y - 50, 100, 100);
-                                g.DrawImage(sprite, destRect, 3, 10, 59, 55, GraphicsUnit.Pixel);
-                            }
-                            else if(grabbed == -1)
-                            {
-                                Rectangle destRect = new Rectangle(135 + (i * 215), 785, 130, 120);
-                                g.DrawImage(sprite, destRect, 3, 6, 59, 55, GraphicsUnit.Pixel);
-                            }
-                        }
-                        else if(grabbed == -1)
-                        {
-                            g.FillPath(brushBlackOpacity, path);
-                        }
-                    }
-
-                    // INVENTORY BUTTON
-                    RoundedRect roundedRect = new RoundedRect();
-                    GraphicsPath invRect = roundedRect.setRect(1540, 977, 179, 60);
-                    g.FillPath(Brushes.Red, invRect);
-                    g.DrawString("Inventário", new Font("Press Start 2P", 12, FontStyle.Regular), Brushes.White, new PointF(1548, 998));
-
-                    // SPEED CONTROL
-                    roundedRect = new RoundedRect();
-                    var background = roundedRect.setRect(12, 986, 526, 63);
-                    g.FillPath(Brushes.Black, background);
-                    g.DrawString("Speed", new Font("Press Start 2P", 24F, FontStyle.Regular), Brushes.White, new PointF(17, 1000));
-
-                    for (int i = 0; i < 4; i++)
-                    {
+                        // SPEED CONTROL
                         roundedRect = new RoundedRect();
-                        var rect = roundedRect.setRect(208 + (88 * i), 987, 65, 60);
-                        g.FillPath(Brushes.Red, rect);
+                        var background = roundedRect.setRect(12, 986, 526, 63);
+                        g.FillPath(Brushes.Black, background);
+                        g.DrawString("Speed", new Font("Press Start 2P", 24F, FontStyle.Regular), Brushes.White, new PointF(17, 1000));
+
+                        for (int i = 0; i < 4; i++)
+                        {
+                            roundedRect = new RoundedRect();
+                            var rect = roundedRect.setRect(208 + (88 * i), 987, 65, 60);
+                            g.FillPath(Brushes.Red, rect);
+                        }
+
+                        for (int i = 0, n = 0; i < 4; i++, n += 2)
+                        {
+                            var text = "";
+                            if (n == 0)
+                                text = "1X";
+                            else
+                                text = $"{n}X";
+
+                            g.DrawString(text, new Font("Press Start 2P", 14F, FontStyle.Regular), Brushes.White, new PointF(215 + (90 * i), 1008));
+                        }
                     }
 
-                    for (int i = 0, n = 0; i < 4; i++, n+= 2)
-                    {
-                        var text = "";
-                        if (n == 0)
-                            text = "1X";
-                        else
-                            text = $"{n}X";
+                    DateTime old = queue.Dequeue();
+                    var time = now - old;
+                    var fps = (int)(19 / time.TotalSeconds);
+                    var drawFont = new Font("Press Start 2P", 16);
+                    PointF drawPoint = new PointF(1760.0F, 50.0F);
+                    g.DrawString($"{fps} fps", drawFont, Brushes.Black, drawPoint);
 
-                        g.DrawString(text, new Font("Press Start 2P", 14F, FontStyle.Regular), Brushes.White, new PointF(215 + (90 * i), 1008));
-                    }
+                    PbScreen.Refresh();
                 }
-
-                PbScreen.Refresh();
             };
         }
 
@@ -851,6 +866,13 @@ namespace pokemon_towerdefense
                 {
                     pk.IsPlaced = false;
                 });
+
+                string folder = @"";
+                string fileName = "savePhase.txt";
+                string fullPath = folder + fileName;
+                string[] phase = {actualPhase.ToString()};
+                File.WriteAllLines(fullPath, phase);
+                string readText = File.ReadAllText(fullPath);
             }
 
             if (e.Location.X >= pokeball.Location.X && e.Location.X < (pokeball.Location.X + pokeball.Width) &&

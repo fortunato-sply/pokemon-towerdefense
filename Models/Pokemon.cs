@@ -190,7 +190,7 @@ namespace pokemon_towerdefense.Models
 
         public void TakeDamage(int damage)
         {
-            if (Defense > damage)
+            if (Defense + (2 * Level) > damage)
                 Defense = damage;
             if(this.ActualLife > 0)
                 ActualLife -= (damage - Defense);
